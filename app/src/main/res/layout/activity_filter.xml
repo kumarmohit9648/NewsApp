@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FilterActivity">
+
+    <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+        android:id="@+id/group_dummy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        app:tbgChildSpacing="auto"
+        app:tbgChildSpacingForLastRow="align"
+        app:tbgFlow="true"
+        app:tbgRowSpacing="8dp">
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Politics" />
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/mon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="National" />
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/tues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="International" />
+
+        <com.nex3z.togglebuttongroup.button.CircularToggle
+            android:id="@+id/wednes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Technology" />
+
+    </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+
+</LinearLayout>

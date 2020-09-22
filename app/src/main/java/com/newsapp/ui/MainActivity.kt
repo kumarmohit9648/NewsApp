@@ -1,20 +1,32 @@
-package com.newsapp
+package com.newsapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.newsapp.R
+import com.newsapp.ui.fragment.TabFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val fragmentName =
-        arrayOf("ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN")
+        arrayOf(
+            "Trending",
+            "National",
+            "International",
+            "Technology",
+            "Politics",
+            "Business",
+            "Share",
+            "Entertainment",
+            "Astrology",
+            "Health"
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewpager)
 
         add_news.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Hello World!", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, FilterActivity::class.java))
         }
     }

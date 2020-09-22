@@ -5,43 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FilterActivity">
+    tools:context=".ui.FilterActivity">
 
-    <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
-        android:id="@+id/group_dummy"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
-        app:tbgChildSpacing="auto"
-        app:tbgChildSpacingForLastRow="align"
-        app:tbgFlow="true"
-        app:tbgRowSpacing="8dp">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <com.nex3z.togglebuttongroup.button.CircularToggle
-            android:id="@+id/sun"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Politics" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.nex3z.togglebuttongroup.button.CircularToggle
-            android:id="@+id/mon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="National" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <com.nex3z.togglebuttongroup.button.CircularToggle
-            android:id="@+id/tues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="International" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.nex3z.togglebuttongroup.button.CircularToggle
-            android:id="@+id/wednes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Technology" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNewsType"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/recycler_news_type" />
 
 </LinearLayout>

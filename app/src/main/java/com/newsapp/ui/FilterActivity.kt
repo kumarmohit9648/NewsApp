@@ -1,13 +1,12 @@
 package com.newsapp.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.newsapp.R
 import com.newsapp.model.NewsType
 import com.newsapp.ui.adapter.NewsTypeAdapter
 import kotlinx.android.synthetic.main.activity_filter.*
 
-class FilterActivity : AppCompatActivity() {
+class FilterActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Home"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_home"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Breaking News"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_news"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Viral"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_viral"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Study"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_study"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Business"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_business"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Entertainment"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_clapperboard"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="International"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_international"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Photo"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_photo"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="Video"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_video_camera"
+        app:drawableTint="@color/colorText" />
+
+</LinearLayout>

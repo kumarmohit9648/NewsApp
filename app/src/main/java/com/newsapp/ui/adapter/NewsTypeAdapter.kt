@@ -23,7 +23,7 @@ class NewsTypeAdapter(private val context: Context, private var list: List<NewsT
     }
 
     override fun onBindViewHolder(holder: NewsTypeHolder, position: Int) {
-        val model = list[position]
+        /*val model = list[position]
         holder.itemView.textView.text = model.name
 
         if (model.isAdded) {
@@ -44,7 +44,7 @@ class NewsTypeAdapter(private val context: Context, private var list: List<NewsT
                 holder.itemView.add_news.setImageResource(R.drawable.ic_add)
                 // Glide.with(context).load(R.drawable.ic_add).into(holder.itemView.add_news)
             }
-        }
+        }*/
     }
 
     override fun getItemCount() = list.size

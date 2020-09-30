@@ -26,11 +26,13 @@ class DashboardActivity : BaseActivity(), KodeinAware {
 
     private val fragmentName =
         arrayOf(
-            "New",
-            "Breaking",
-            "Video",
-            "Trending",
-            "Viral"
+            "होम",
+            "भारत",
+            "चुनाव",
+            "मनोरंजन",
+            "कोरोना",
+            "जुर्म",
+            "ट्रेडिंग"
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

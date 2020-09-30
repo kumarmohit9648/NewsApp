@@ -20,7 +20,7 @@ class FilterActivity : BaseActivity() {
     }
 
     private fun setData() {
-        val list = ArrayList<NewsType>()
+        /*val list = ArrayList<NewsType>()
 
         list.add(NewsType("Trending", false))
         list.add(NewsType("National", false))
@@ -39,7 +39,7 @@ class FilterActivity : BaseActivity() {
         list.add(NewsType("Celebrities", false))
         list.add(NewsType("Religion", false))
 
-        recyclerNewsType.adapter = NewsTypeAdapter(this@FilterActivity, list)
+        recyclerNewsType.adapter = NewsTypeAdapter(this@FilterActivity, list)*/
 
     }
 

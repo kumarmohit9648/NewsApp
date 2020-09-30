@@ -23,7 +23,7 @@
         android:padding="15dp"
         android:text="ख़बरें"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_home"
+        app:drawableStartCompat="@drawable/ic_news"
         app:drawableTint="@color/colorText" />
 
     <TextView

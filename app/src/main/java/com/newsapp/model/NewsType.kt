@@ -1,3 +1,3 @@
 package com.newsapp.model
 
-data class NewsType(var name: String, var isAdded: Boolean)
+data class NewsType(var image: Int, var details: String)

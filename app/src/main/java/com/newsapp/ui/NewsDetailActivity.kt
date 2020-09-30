@@ -10,7 +10,7 @@ class NewsDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_detail)
 
-        titleName.text = "News details"
+        titleName.text = "न्यूज़ डिटेल्स"
 
         ivBack.setOnClickListener {
             supportFinishAfterTransition()

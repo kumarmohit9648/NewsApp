@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_nav_logo" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +21,7 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Home"
+        android:text="ख़बरें"
         android:textColor="@android:color/black"
         app:drawableStartCompat="@drawable/ic_home"
         app:drawableTint="@color/colorText" />
@@ -30,9 +36,9 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Breaking News"
+        android:text="राज्य"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_news"
+        app:drawableStartCompat="@drawable/ic_india"
         app:drawableTint="@color/colorText" />
 
     <TextView
@@ -45,9 +51,9 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Viral"
+        android:text="खेल"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_viral"
+        app:drawableStartCompat="@drawable/ic_running"
         app:drawableTint="@color/colorText" />
 
     <TextView
@@ -60,37 +66,7 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Study"
-        android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_study"
-        app:drawableTint="@color/colorText" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:backgroundTint="@color/colorText"
-        android:clickable="true"
-        android:drawablePadding="15dp"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="Business"
-        android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_business"
-        app:drawableTint="@color/colorText" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:backgroundTint="@color/colorText"
-        android:clickable="true"
-        android:drawablePadding="15dp"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:padding="15dp"
-        android:text="Entertainment"
+        android:text="मनोरंजन"
         android:textColor="@android:color/black"
         app:drawableStartCompat="@drawable/ic_clapperboard"
         app:drawableTint="@color/colorText" />
@@ -105,9 +81,9 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="International"
+        android:text="राजनीति"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_international"
+        app:drawableStartCompat="@drawable/ic_speech"
         app:drawableTint="@color/colorText" />
 
     <TextView
@@ -120,9 +96,9 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Photo"
+        android:text="लाइफस्टाइल"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_photo"
+        app:drawableStartCompat="@drawable/ic_peace"
         app:drawableTint="@color/colorText" />
 
     <TextView
@@ -135,9 +111,24 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:text="Video"
+        android:text="करियर"
         android:textColor="@android:color/black"
-        app:drawableStartCompat="@drawable/ic_video_camera"
+        app:drawableStartCompat="@drawable/ic_growth"
+        app:drawableTint="@color/colorText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:backgroundTint="@color/colorText"
+        android:clickable="true"
+        android:drawablePadding="15dp"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:text="विश्लेषण"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_analytics"
         app:drawableTint="@color/colorText" />
 
 </LinearLayout>

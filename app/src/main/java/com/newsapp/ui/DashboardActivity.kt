@@ -11,11 +11,18 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.newsapp.R
 import com.newsapp.ui.fragment.TabFragment
+import com.newsapp.ui.vm.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_dashboard.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import java.util.*
 
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(), KodeinAware {
+
+    override val kodein by kodein()
+    private lateinit var viewModel: DashboardViewModel
+    // private val factory: DashboardViewModelFactory by instance<DashboardViewModelFactory>()
 
     private val fragmentName =
         arrayOf(
@@ -43,13 +50,13 @@ class DashboardActivity : BaseActivity() {
             startActivity(Intent(this@DashboardActivity, SearchActivity::class.java))
         }
 
-        settings.setOnClickListener {
+        notification.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
         }
 
-        add_news.setOnClickListener {
+        /*add_news.setOnClickListener {
             startActivity(Intent(this, FilterActivity::class.java))
-        }
+        }*/
     }
 
     private fun setUpViewPager(viewpager: ViewPager) {

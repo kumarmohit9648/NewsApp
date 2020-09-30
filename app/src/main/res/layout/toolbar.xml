@@ -25,7 +25,7 @@
         android:paddingEnd="16dp"
         android:text="Title"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
+        android:textColor="#4b4b4d"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

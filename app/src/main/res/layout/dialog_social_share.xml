@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:elevation="8dp"
+    android:layout_marginBottom="?actionBarSize"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/ivFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintEnd_toStartOf="@+id/ivTwitter"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivTwitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_twitter"
+            app:layout_constraintEnd_toStartOf="@+id/ivLinkedIn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivFacebook"
+            app:layout_constraintTop_toTopOf="@id/ivFacebook" />
+
+        <ImageView
+            android:id="@+id/ivLinkedIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_linkedin"
+            app:layout_constraintEnd_toStartOf="@+id/ivWhatsApp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivTwitter"
+            app:layout_constraintTop_toTopOf="@+id/ivTwitter" />
+
+        <ImageView
+            android:id="@+id/ivWhatsApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_whatsapp"
+            app:layout_constraintEnd_toStartOf="@+id/ivPinterest"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivLinkedIn"
+            app:layout_constraintTop_toTopOf="@+id/ivLinkedIn" />
+
+        <ImageView
+            android:id="@+id/ivPinterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_pinterest"
+            app:layout_constraintEnd_toStartOf="@+id/ivTumblr"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivWhatsApp"
+            app:layout_constraintTop_toTopOf="@+id/ivWhatsApp" />
+
+        <ImageView
+            android:id="@+id/ivTumblr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_tumblr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivPinterest"
+            app:layout_constraintTop_toTopOf="@+id/ivPinterest" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

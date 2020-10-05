@@ -1,19 +1,20 @@
-package com.newsapp.ui
+package com.newsapp.ui.activity
 
 import android.os.Bundle
 import com.newsapp.R
+import com.newsapp.ui.BaseActivity
 import kotlinx.android.synthetic.main.toolbar.*
 
-class NewsDetailActivity : BaseActivity() {
+class SettingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_detail)
+        setContentView(R.layout.activity_setting)
 
-        titleName.text = "न्यूज़ डिटेल्स"
+        titleName.text = "Settings"
 
         ivBack.setOnClickListener {
-            supportFinishAfterTransition()
+            finish()
         }
     }
 }

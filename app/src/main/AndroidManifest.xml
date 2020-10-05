@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".AppController"
@@ -13,18 +15,23 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.NewsDetailActivity"></activity>
-        <activity android:name=".ui.SettingActivity" />
-        <activity android:name=".ui.SearchActivity" />
-        <activity android:name=".ui.DashboardActivity">
+        <activity android:name=".ui.activity.LoginOptionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.FilterActivity" />
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.activity.AppIntroActivity"
+            android:label="My Custom AppIntro" />
+        <activity android:name=".ui.activity.SingleNewsFeedActivity" />
+        <activity android:name=".ui.activity.NewsListActivity" />
+        <activity android:name=".ui.activity.NotificationActivity" />
+        <activity android:name=".ui.activity.NewsDetailActivity" />
+        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.DashboardActivity" />
     </application>
 
 </manifest>

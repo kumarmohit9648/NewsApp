@@ -1,4 +1,4 @@
-package com.newsapp.ui
+package com.newsapp.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +10,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.newsapp.R
+import com.newsapp.constants.AppConstant
+import com.newsapp.helper.ZoomOutPageTransformer
+import com.newsapp.ui.BaseActivity
 import com.newsapp.ui.fragment.TabFragment
 import com.newsapp.ui.vm.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_dashboard.*
+import kotlinx.android.synthetic.main.navigation_drawer_dashboard.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import java.util.*
@@ -56,12 +60,75 @@ class DashboardActivity : BaseActivity(), KodeinAware {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
         }
 
-        /*add_news.setOnClickListener {
-            startActivity(Intent(this, FilterActivity::class.java))
-        }*/
+        newsNew.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "ख़बरें")
+            )
+        }
+        newsState.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "राज्य")
+            )
+        }
+        newsSport.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "खेल")
+            )
+        }
+        newsEntertainment.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "मनोरंजन")
+            )
+        }
+        newsPolitics.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "राजनीति")
+            )
+        }
+        newsLifestyle.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "लाइफस्टाइल")
+            )
+        }
+        newsCareer.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "करियर")
+            )
+        }
+        newsAnalysis.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashboardActivity,
+                    NewsListActivity::class.java
+                ).putExtra(AppConstant.TITLE_KEY, "विश्लेषण")
+            )
+        }
+
     }
 
     private fun setUpViewPager(viewpager: ViewPager) {
+        viewpager.setPageTransformer(true, ZoomOutPageTransformer())
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in fragmentName) {
             adapter.addFrag(TabFragment(), i)

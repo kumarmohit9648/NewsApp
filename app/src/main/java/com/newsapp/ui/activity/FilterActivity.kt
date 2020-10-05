@@ -1,9 +1,8 @@
-package com.newsapp.ui
+package com.newsapp.ui.activity
 
 import android.os.Bundle
 import com.newsapp.R
-import com.newsapp.model.NewsType
-import com.newsapp.ui.adapter.NewsTypeAdapter
+import com.newsapp.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_filter.*
 
 class FilterActivity : BaseActivity() {

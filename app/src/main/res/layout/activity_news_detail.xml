@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.NewsDetailActivity">
+    tools:context=".ui.activity.NewsDetailActivity">
 
     <include layout="@layout/toolbar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize">
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="?actionBarSize">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,6 +30,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="हाथरस कांड: पीड़िता के घर जाकर दो शीर्ष अधिकारियों ने लिया संज्ञान"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsFeed" />
+
+            <TextView
+                android:id="@+id/tvDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -36,11 +50,103 @@
 पीड़िता के भाई ने सबसे पहले दर्ज कराई गई एफआईआर में बताया कि आरोपी संदीप खेत में उसकी बहन का गला घोंटने की कोशिश कर रहा था. उसकी चीख-पुकार सुनकर जब मां वहां पहुंची तो आरोपी वहां से फरार हो गया. पहली शिकायत में पीड़िता के भाई ने सिर्फ एक आरोपी संदीप का नाम लिखवाया था. अपनी शिकायत में उन्होंने वारदात का वक्त 9.30 बजे का लिखवाया था. उसके बाद एससी / एसटी अधिनियम और आईपीसी की धारा 307 के तहत एफआईआर दर्ज की गई थी. पुलिस के अनुसार, एफआईआर को दर्ज करने से पहले पीड़िता के भाई को तहरीर पढ़वाई गई और उसकी सहमति के बाद मुकदमा लिखा गया.\nपहली एफआईआर में मां का बयान
 जब मैंने अपनी बेटी को वहां देखा, तो वह नग्न अवस्था में पड़ी हुई थी और उसके शरीर से बहुत ही खून बह रहा था. मैंने उसे अपने दुपट्टे और उसके खून से लथपथ कपड़ों से ढंक दिया. हम बेहद असमंजस में थे और एकदम सदमे की हालत में थे. हमारी बेटी बेहोश थी. जाहिर है, हम हाथरस के चंदपा पुलिस थाने में पुलिस को बलात्कार या सामूहिक बलात्कार का बयान नहीं दे सकते थे, जहां पहली प्राथमिकी दर्ज की गई थी. क्योंकि तब तक हमें नहीं पता था कि बेटी के साथ सामूहिक बलात्कार हुआ था. हमारी बेटी ने अपने भाइयों के कान में एक आरोपी संदीप का नाम लिया और बेहोश हो गई. तो हमने सोचा कि गांव में रहने वाले संदीप नाम के लड़के ने उसकी पिटाई की है. यही सब पहली एफआईआर में भी दर्ज है."
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newsFeed" />
+                app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
+
+            <TextView
+                android:id="@+id/commentHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Comment"
+                android:textColor="@color/colorText"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetails" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/commentRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:background="@android:color/white"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentHeading"
+                tools:listitem="@layout/recycler_comment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/comment_bg"
+            android:layout_margin="2dp"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivLike"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/tvComment"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="Enter Comment"
+                android:inputType="textMultiLine"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:padding="4dp"
+                android:src="@drawable/ic_send"
+                app:tint="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:src="@drawable/like"
+            app:layout_constraintBottom_toBottomOf="@+id/ivShare"
+            app:layout_constraintEnd_toStartOf="@+id/ivShare"
+            app:layout_constraintTop_toTopOf="@+id/ivShare"
+            app:tint="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:src="@drawable/share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

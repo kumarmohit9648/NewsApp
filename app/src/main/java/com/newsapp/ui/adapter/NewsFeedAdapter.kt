@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.newsapp.R
 import com.newsapp.model.NewsType
-import com.newsapp.ui.NewsDetailActivity
+import com.newsapp.ui.activity.NewsDetailActivity
 import kotlinx.android.synthetic.main.recycler_news_feed.view.*
 
 class NewsFeedAdapter(private val context: Context, private var list: List<NewsType>) :

@@ -1,16 +1,15 @@
-package com.newsapp.ui
+package com.newsapp.ui.activity
 
 import android.os.Bundle
 import com.newsapp.R
-import kotlinx.android.synthetic.main.toolbar.*
+import com.newsapp.ui.BaseActivity
+import kotlinx.android.synthetic.main.activity_search.*
 
-class SettingActivity : BaseActivity() {
+class SearchActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
-
-        titleName.text = "Settings"
+        setContentView(R.layout.activity_search)
 
         ivBack.setOnClickListener {
             finish()

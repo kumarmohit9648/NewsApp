@@ -7,11 +7,13 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:src="@drawable/ic_nav_logo" />
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        android:padding="8dp"
+        android:src="@drawable/ic_header_logo" />
 
     <TextView
+        android:id="@+id/newsNew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -27,6 +29,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -42,6 +45,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsSport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -57,6 +61,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsEntertainment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -72,6 +77,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsPolitics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -87,6 +93,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsLifestyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -102,6 +109,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsCareer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
@@ -117,6 +125,7 @@
         app:drawableTint="@color/colorText" />
 
     <TextView
+        android:id="@+id/newsAnalysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"

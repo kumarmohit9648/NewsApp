@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.newsapp.R
-import com.newsapp.ui.fragment.EmptyFragment
 import com.newsapp.ui.fragment.SingleNewsFeedFragment
 import kotlinx.android.synthetic.main.recycler_single_news_feed.view.*
 import java.util.*

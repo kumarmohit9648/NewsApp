@@ -3,6 +3,7 @@ package com.newsapp.ui.activity
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroFragment
@@ -15,7 +16,6 @@ class AppIntroActivity : AppIntro() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContentView(R.layout.activity_app_intro)
 
         if (Prefs.getBoolean(AppConstant.IS_FIRST_TIME_OPEN, false))
             goToDashboard()
@@ -29,17 +29,19 @@ class AppIntroActivity : AppIntro() {
 
         addSlide(
             AppIntroFragment.newInstance(
-                "Welcome!",
-                "We will make you updated with news",
-                imageDrawable = R.drawable.app_logo
+                title = "Welcome!",
+                description = "We will make you updated with news",
+                imageDrawable = R.drawable.app_logo,
+                backgroundColor = ContextCompat.getColor(this@AppIntroActivity, R.color.orange)
             )
         )
 
         addSlide(
             AppIntroFragment.newInstance(
-                "Permission Request",
-                "In order to access your location, you must give permissions.",
-                imageDrawable = R.drawable.ic_pin
+                title = "Permission Request",
+                description = "In order to access your location, you must give permissions.",
+                imageDrawable = R.drawable.ic_pin,
+                backgroundColor = ContextCompat.getColor(this@AppIntroActivity, R.color.orange)
             )
         )
 
@@ -59,7 +61,7 @@ class AppIntroActivity : AppIntro() {
     }
 
     private fun goToDashboard() {
-        startActivity(Intent(this@AppIntroActivity, DashboardActivity::class.java))
+        startActivity(Intent(this@AppIntroActivity, LoginOptionActivity::class.java))
         finishAffinity()
     }
 

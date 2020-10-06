@@ -1,27 +1,27 @@
-package com.newsapp.ui.activity
+package com.newsapp.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.newsapp.R
-import com.newsapp.constants.AppConstant
 import com.newsapp.model.NewsType
-import com.newsapp.ui.BaseActivity
 import com.newsapp.ui.adapter.NewsFeedAdapter
-import kotlinx.android.synthetic.main.activity_news_list.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.fragment_tab.*
 
-class NewsListActivity : BaseActivity() {
+class HomeFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_list)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
 
-        val intentTitle = intent.getStringExtra(AppConstant.TITLE_KEY)
-        titleName.text = if (intentTitle.isNullOrEmpty()) "न्यूज़ डिटेल्स" else intentTitle
-
-        ivBack.setOnClickListener {
-            supportFinishAfterTransition()
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setData()
     }
 
@@ -77,6 +77,12 @@ class NewsListActivity : BaseActivity() {
             )
         )
 
-        recyclerNewsFeed.adapter = NewsFeedAdapter(this@NewsListActivity, list)
+        recyclerNewsFeed.adapter = NewsFeedAdapter(requireContext(), list)
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+    }
+
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="3565.71"
+    android:viewportHeight="3565.71">
+    <path
+        android:fillType="evenOdd"
+        android:pathData="M3565.7 1782.85A1782.85 1782.85 0 0 1 0 1782.85A1782.85 1782.85 0 0 1 3565.7 1782.85Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="406.72"
+                android:endY="3641.28"
+                android:startX="2856"
+                android:startY="248.23"
+                android:tileMode="clamp">
+                <item
+                    android:color="#3A408B"
+                    android:offset="0" />
+                <item
+                    android:color="#ED348A"
+                    android:offset="0.541176" />
+                <item
+                    android:color="#FFF212"
+                    android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:pathData="M1260.66 811.53H2305.04A449.13 449.13 0 0 1 2754.17 1260.66V2305.04A449.13 449.13 0 0 1 2305.04 2754.17H1260.66A449.13 449.13 0 0 1 811.53 2305.04V1260.66A449.13 449.13 0 0 1 1260.66 811.53Z"
+        android:strokeWidth="333.33"
+        android:strokeColor="#FEFEFE"
+        android:strokeMiterLimit="2.61313" />
+    <path
+        android:pathData="M2280.03 1782.85A497.18 497.18 0 0 1 1285.67 1782.85A497.18 497.18 0 0 1 2280.03 1782.85Z"
+        android:strokeWidth="277.78"
+        android:strokeColor="#FEFEFE"
+        android:strokeMiterLimit="2.61313" />
+    <path
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"
+        android:pathData="M2495.48 1203.64A111.95 111.95 0 0 1 2271.58 1203.64A111.95 111.95 0 0 1 2495.48 1203.64Z"
+        android:strokeWidth="6.94"
+        android:strokeColor="#FEFEFE"
+        android:strokeMiterLimit="2.61313" />
+</vector>

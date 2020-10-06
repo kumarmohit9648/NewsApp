@@ -11,7 +11,7 @@ class SettingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
-        titleName.text = "Settings"
+        titleName.text = "सेटिंग"
 
         ivBack.setOnClickListener {
             finish()

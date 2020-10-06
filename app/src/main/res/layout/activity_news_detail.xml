@@ -104,6 +104,7 @@
                 android:id="@+id/tvComment"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@android:color/white"
                 android:gravity="center_vertical"

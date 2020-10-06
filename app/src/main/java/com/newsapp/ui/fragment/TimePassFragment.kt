@@ -7,23 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.newsapp.R
 
-class EmptyFragment : Fragment() {
+class TimePassFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_empty, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_time_pass, container, false)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = EmptyFragment()
+        fun newInstance() = TimePassFragment()
     }
 
 }

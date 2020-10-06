@@ -15,19 +15,4 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="AppIntroDefaultHeading" parent="TextAppearance.AppCompat.Display1">
-        <item name="android:textColor">@color/appintro_title_color</item>
-        <item name="android:textSize">@dimen/appintro_headtext_size</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:padding">@dimen/appintro_head_padding</item>
-        <item name="android:gravity">bottom|center_horizontal</item>
-    </style>
-
-    <style name="AppIntroDefaultText" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">@color/appintro_desc_color</item>
-        <item name="android:textSize">@dimen/appintro_desctext_size</item>
-        <item name="android:padding">@dimen/appintro_desc_padding</item>
-        <item name="android:gravity">center</item>
-    </style>
-
 </resources>

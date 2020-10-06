@@ -13,7 +13,10 @@ import com.newsapp.R
 import com.newsapp.constants.AppConstant
 import com.newsapp.helper.ZoomOutPageTransformer
 import com.newsapp.ui.BaseActivity
+import com.newsapp.ui.fragment.CitizenFragment
+import com.newsapp.ui.fragment.HomeFragment
 import com.newsapp.ui.fragment.TabFragment
+import com.newsapp.ui.fragment.TimePassFragment
 import com.newsapp.ui.vm.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_dashboard.*
@@ -36,7 +39,9 @@ class DashboardActivity : BaseActivity(), KodeinAware {
             "मनोरंजन",
             "कोरोना",
             "जुर्म",
-            "ट्रेडिंग"
+            "ट्रेडिंग",
+            "गुब्बारा",
+            "सिटिज़न पर्सन"
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +62,10 @@ class DashboardActivity : BaseActivity(), KodeinAware {
         }
 
         notification.setOnClickListener {
+            startActivity(Intent(this@DashboardActivity, NotificationActivity::class.java))
+        }
+
+        settings.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
         }
 
@@ -131,7 +140,12 @@ class DashboardActivity : BaseActivity(), KodeinAware {
         viewpager.setPageTransformer(true, ZoomOutPageTransformer())
         val adapter = ViewPagerAdapter(supportFragmentManager)
         for (i in fragmentName) {
-            adapter.addFrag(TabFragment(), i)
+            when (i) {
+                "होम" -> adapter.addFrag(HomeFragment.newInstance(), i)
+                "गुब्बारा" -> adapter.addFrag(TimePassFragment.newInstance(), i)
+                "सिटिज़न पर्सन" -> adapter.addFrag(CitizenFragment.newInstance(), i)
+                else -> adapter.addFrag(TabFragment(), i)
+            }
         }
         viewpager.adapter = adapter
     }

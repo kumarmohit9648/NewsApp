@@ -5,152 +5,242 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ImageView
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        android:padding="8dp"
+        android:src="@drawable/header_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/top">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/colorPrimary"
-            android:padding="8dp"
-            android:src="@drawable/ic_header_logo" />
-
-        <TextView
-            android:id="@+id/newsNew"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="ख़बरें"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_news"
-            app:drawableTint="@color/colorText" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/newsState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="राज्य"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_india"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="ख़बरें"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_news"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsSport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="खेल"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_running"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsIndia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="भारत"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_india"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsEntertainment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="मनोरंजन"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_clapperboard"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="राज्य"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_state"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsPolitics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="राजनीति"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_speech"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsPolitics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="चुनाव"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_speech"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsLifestyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="लाइफस्टाइल"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_peace"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsEntertainment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="मनोरंजन"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_clapperboard"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsCareer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="करियर"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_growth"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsCorona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="कोरोना"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_coronavirus"
+                app:drawableTint="@color/colorText" />
 
-        <TextView
-            android:id="@+id/newsAnalysis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:backgroundTint="@color/colorText"
-            android:clickable="true"
-            android:drawablePadding="15dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="15dp"
-            android:text="विश्लेषण"
-            android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_analytics"
-            app:drawableTint="@color/colorText" />
+            <TextView
+                android:id="@+id/newsCrime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="जुर्म"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_crime"
+                app:drawableTint="@color/colorText" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/newsTrade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="भावताव"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_trade"
+                app:drawableTint="@color/colorText" />
+
+            <TextView
+                android:id="@+id/newsTimePass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="गुब्बारे"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_comedy_and_tragedy"
+                app:drawableTint="@color/colorText" />
+
+            <TextView
+                android:id="@+id/newsSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="खेल"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_running"
+                app:drawableTint="@color/colorText" />
+
+            <!--<TextView
+                android:id="@+id/newsLifestyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="लाइफस्टाइल"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_peace"
+                app:drawableTint="@color/colorText" />-->
+
+            <!--<TextView
+                android:id="@+id/newsCareer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="करियर"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_growth"
+                app:drawableTint="@color/colorText" />-->
+
+            <TextView
+                android:id="@+id/newsAnalysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="विश्लेषण"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_analytics"
+                app:drawableTint="@color/colorText" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <TextView
         android:id="@+id/settings"

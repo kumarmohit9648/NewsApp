@@ -13,10 +13,7 @@ import com.newsapp.R
 import com.newsapp.constants.AppConstant
 import com.newsapp.helper.ZoomOutPageTransformer
 import com.newsapp.ui.BaseActivity
-import com.newsapp.ui.fragment.CitizenFragment
-import com.newsapp.ui.fragment.HomeFragment
-import com.newsapp.ui.fragment.TabFragment
-import com.newsapp.ui.fragment.TimePassFragment
+import com.newsapp.ui.fragment.*
 import com.newsapp.ui.vm.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_dashboard.*
@@ -35,13 +32,16 @@ class DashboardActivity : BaseActivity(), KodeinAware {
         arrayOf(
             "होम",
             "भारत",
+            "राज्य",
             "चुनाव",
             "मनोरंजन",
             "कोरोना",
             "जुर्म",
-            "ट्रेडिंग",
-            "गुब्बारा",
-            "सिटिज़न पर्सन"
+            "भावताव",
+            "गुब्बारे",
+            "खेल",
+            "सिटिज़न रिपोर्टर",
+            "विश्लेषण"
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,68 +70,37 @@ class DashboardActivity : BaseActivity(), KodeinAware {
         }
 
         newsNew.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "ख़बरें")
-            )
+            openFragment(AppConstant.FRAGMENT_HOME, "ख़बरें")
+        }
+        newsIndia.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "भारत")
         }
         newsState.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "राज्य")
-            )
-        }
-        newsSport.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "खेल")
-            )
-        }
-        newsEntertainment.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "मनोरंजन")
-            )
+            openFragment(AppConstant.FRAGMENT_STATE, "राज्य")
         }
         newsPolitics.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "राजनीति")
-            )
+            openFragment(AppConstant.FRAGMENT_OTHER, "चुनाव")
         }
-        newsLifestyle.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "लाइफस्टाइल")
-            )
+        newsEntertainment.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "मनोरंजन")
         }
-        newsCareer.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "करियर")
-            )
+        newsCorona.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "कोरोना")
+        }
+        newsCrime.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "जुर्म")
+        }
+        newsTrade.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "भावताव")
+        }
+        newsTimePass.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_TIME_PASS, "गुब्बारे")
+        }
+        newsSport.setOnClickListener {
+            openFragment(AppConstant.FRAGMENT_OTHER, "खेल")
         }
         newsAnalysis.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardActivity,
-                    NewsListActivity::class.java
-                ).putExtra(AppConstant.TITLE_KEY, "विश्लेषण")
-            )
+            openFragment(AppConstant.FRAGMENT_OTHER, "सिटिज़न रिपोर्टर")
         }
 
     }
@@ -142,8 +111,9 @@ class DashboardActivity : BaseActivity(), KodeinAware {
         for (i in fragmentName) {
             when (i) {
                 "होम" -> adapter.addFrag(HomeFragment.newInstance(), i)
-                "गुब्बारा" -> adapter.addFrag(TimePassFragment.newInstance(), i)
-                "सिटिज़न पर्सन" -> adapter.addFrag(CitizenFragment.newInstance(), i)
+                "गुब्बारे" -> adapter.addFrag(TimePassFragment.newInstance(), i)
+                "राज्य" -> adapter.addFrag(StateListFragment.newInstance(), i)
+                "सिटिज़न रिपोर्टर" -> adapter.addFrag(CitizenReporterFragment.newInstance(), i)
                 else -> adapter.addFrag(TabFragment(), i)
             }
         }

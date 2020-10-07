@@ -1,5 +1,6 @@
 package com.newsapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.newsapp.R
 import com.newsapp.model.NewsType
+import com.newsapp.ui.activity.GeneratePostActivity
 import com.newsapp.ui.adapter.NewsFeedAdapter
-import kotlinx.android.synthetic.main.fragment_tab.*
+import kotlinx.android.synthetic.main.fragment_citizen_reporter.*
 
-class CitizenFragment : Fragment() {
+class CitizenReporterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +23,22 @@ class CitizenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_citizen, container, false)
+        return inflater.inflate(R.layout.fragment_citizen_reporter, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setData()
+
+        makeNewPost.setOnClickListener {
+            requireContext().startActivity(
+                Intent(
+                    requireContext(),
+                    GeneratePostActivity::class.java
+                )
+            )
+        }
+
     }
 
     private fun setData() {
@@ -86,6 +98,6 @@ class CitizenFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = CitizenFragment()
+        fun newInstance() = CitizenReporterFragment()
     }
 }

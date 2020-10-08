@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.fragment_citizen_reporter.*
 
 class CitizenReporterFragment(private val supportFragmentManager: FragmentManager) : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

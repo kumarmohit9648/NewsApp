@@ -29,7 +29,7 @@ class LoginOptionActivity : BaseActivity() {
             .build()
 
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         btnGoogle.setOnClickListener {
             signIn()

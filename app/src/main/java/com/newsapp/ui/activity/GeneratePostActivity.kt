@@ -2,6 +2,7 @@ package com.newsapp.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.newsapp.R
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -13,6 +14,7 @@ class GeneratePostActivity : AppCompatActivity() {
 
         titleName.text = "Make Post"
 
+        Glide.with(this).load(R.drawable.ic_close).into(ivBack)
         ivBack.setOnClickListener {
             finish()
         }

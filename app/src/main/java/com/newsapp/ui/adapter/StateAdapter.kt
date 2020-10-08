@@ -28,7 +28,7 @@ class StateAdapter(
     override fun onBindViewHolder(holder: StateHolder, position: Int) {
         val data = list[position]
         holder.itemView.stateName.text = data.state_name
-        Glide.with(context).load(data.image).into(holder.itemView.stateImage)
+        // Glide.with(context).load(data.image).into(holder.itemView.stateImage)
     }
 
     override fun getItemCount(): Int = list.size

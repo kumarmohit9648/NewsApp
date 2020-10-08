@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.newsapp.R
 import com.newsapp.model.NewsType
 import com.newsapp.ui.activity.GeneratePostActivity
 import com.newsapp.ui.adapter.NewsFeedAdapter
 import kotlinx.android.synthetic.main.fragment_citizen_reporter.*
 
-class CitizenReporterFragment : Fragment() {
+class CitizenReporterFragment(private val supportFragmentManager: FragmentManager) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +99,7 @@ class CitizenReporterFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = CitizenReporterFragment()
+        fun newInstance(supportFragmentManager: FragmentManager) =
+            CitizenReporterFragment(supportFragmentManager)
     }
 }

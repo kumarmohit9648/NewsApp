@@ -190,38 +190,6 @@
                 app:drawableStartCompat="@drawable/ic_running"
                 app:drawableTint="@color/colorText" />
 
-            <!--<TextView
-                android:id="@+id/newsLifestyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:backgroundTint="@color/colorText"
-                android:clickable="true"
-                android:drawablePadding="15dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="लाइफस्टाइल"
-                android:textColor="@android:color/black"
-                app:drawableStartCompat="@drawable/ic_peace"
-                app:drawableTint="@color/colorText" />-->
-
-            <!--<TextView
-                android:id="@+id/newsCareer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:backgroundTint="@color/colorText"
-                android:clickable="true"
-                android:drawablePadding="15dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="करियर"
-                android:textColor="@android:color/black"
-                app:drawableStartCompat="@drawable/ic_growth"
-                app:drawableTint="@color/colorText" />-->
-
             <TextView
                 android:id="@+id/newsAnalysis"
                 android:layout_width="match_parent"
@@ -236,6 +204,38 @@
                 android:text="विश्लेषण"
                 android:textColor="@android:color/black"
                 app:drawableStartCompat="@drawable/ic_analytics"
+                app:drawableTint="@color/colorText" />
+
+            <TextView
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="हमारे बारे में"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_about"
+                app:drawableTint="@color/colorText" />
+
+            <TextView
+                android:id="@+id/contactUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:backgroundTint="@color/colorText"
+                android:clickable="true"
+                android:drawablePadding="15dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="संपर्क करें"
+                android:textColor="@android:color/black"
+                app:drawableStartCompat="@drawable/ic_contact"
                 app:drawableTint="@color/colorText" />
 
         </LinearLayout>

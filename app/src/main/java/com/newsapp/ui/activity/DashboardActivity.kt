@@ -113,7 +113,11 @@ class DashboardActivity : BaseActivity(), KodeinAware {
                 "होम" -> adapter.addFrag(HomeFragment.newInstance(), i)
                 "गुब्बारे" -> adapter.addFrag(TimePassFragment.newInstance(), i)
                 "राज्य" -> adapter.addFrag(StateListFragment.newInstance(), i)
-                "सिटिज़न रिपोर्टर" -> adapter.addFrag(CitizenReporterFragment.newInstance(), i)
+                "सिटिज़न रिपोर्टर" -> adapter.addFrag(
+                    CitizenReporterFragment.newInstance(
+                        supportFragmentManager
+                    ), i
+                )
                 else -> adapter.addFrag(TabFragment(), i)
             }
         }

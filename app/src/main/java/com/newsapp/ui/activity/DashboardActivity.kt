@@ -18,13 +18,10 @@ import com.newsapp.ui.vm.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_dashboard.*
 import kotlinx.android.synthetic.main.navigation_drawer_dashboard.*
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import java.util.*
 
-class DashboardActivity : BaseActivity(), KodeinAware {
+class DashboardActivity : BaseActivity() {
 
-    override val kodein by kodein()
     private lateinit var viewModel: DashboardViewModel
     // private val factory: DashboardViewModelFactory by instance<DashboardViewModelFactory>()
 

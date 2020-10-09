@@ -21,7 +21,13 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.CameraActivity" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.camera.VideoPreviewActivity" />
+        <activity android:name=".ui.camera.PicturePreviewActivity" />
+        <activity android:name=".ui.camera.CameraActivity"></activity>
         <activity android:name=".ui.activity.OpenFragmentActivity" />
         <activity android:name=".ui.activity.GeneratePostActivity" />
         <activity android:name=".ui.activity.SplashActivity">

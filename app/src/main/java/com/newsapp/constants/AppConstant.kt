@@ -5,6 +5,9 @@ class AppConstant {
     companion object {
         const val IS_FIRST_TIME_OPEN = "is_first_time_open"
         const val TITLE_KEY = "title_key"
+        const val CAMERA_TYPE = "camera_type"
+        const val PHOTO = "photo"
+        const val VIDEO = "video"
 
         const val FRAGMENT_ID = "fragment_id"
         const val FRAGMENT_TITLE = "FRAGMENT_TITLE"

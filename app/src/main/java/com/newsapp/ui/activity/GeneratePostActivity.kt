@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.newsapp.R
+import com.newsapp.constants.AppConstant
+import com.newsapp.ui.camera.CameraActivity
 import kotlinx.android.synthetic.main.activity_generate_post.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -22,10 +24,16 @@ class GeneratePostActivity : AppCompatActivity() {
         }
 
         imageView4.setOnClickListener {
-            startActivity(Intent(this, CameraActivity::class.java))
+            startActivity(
+                Intent(this, CameraActivity::class.java)
+                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.VIDEO)
+            )
         }
         imageView3.setOnClickListener {
-            startActivity(Intent(this, CameraActivity::class.java))
+            startActivity(
+                Intent(this, CameraActivity::class.java)
+                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.PHOTO)
+            )
         }
 
     }

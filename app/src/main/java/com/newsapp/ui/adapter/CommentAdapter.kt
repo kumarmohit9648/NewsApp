@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.newsapp.R
-import com.newsapp.model.Comment
+import com.newsapp.model.posts.Comment
 
 class CommentAdapter(
     private var context: Context,

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.StateListFragment">
+    tools:context=".ui.fragment.SubCategoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerState"
@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recycler_state" />
+        tools:listitem="@layout/recycler_sub_category" />
 
 </FrameLayout>

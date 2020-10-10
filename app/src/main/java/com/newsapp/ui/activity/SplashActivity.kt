@@ -15,7 +15,7 @@ class SplashActivity : BaseActivity() {
         imageView.postDelayed({
             startActivity(Intent(this@SplashActivity, AppIntroActivity::class.java))
             finishAffinity()
-        }, 2000)
+        }, 0)
 
     }
 }

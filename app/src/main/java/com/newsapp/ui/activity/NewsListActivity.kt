@@ -3,10 +3,7 @@ package com.newsapp.ui.activity
 import android.os.Bundle
 import com.newsapp.R
 import com.newsapp.constants.AppConstant
-import com.newsapp.model.NewsType
 import com.newsapp.ui.BaseActivity
-import com.newsapp.ui.adapter.NewsFeedAdapter
-import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class NewsListActivity : BaseActivity() {
@@ -22,10 +19,10 @@ class NewsListActivity : BaseActivity() {
             supportFinishAfterTransition()
         }
 
-        setData()
+        // setData()
     }
 
-    private fun setData() {
+    /*private fun setData() {
         val list = ArrayList<NewsType>()
 
         list.add(
@@ -78,5 +75,6 @@ class NewsListActivity : BaseActivity() {
         )
 
         recyclerNewsFeed.adapter = NewsFeedAdapter(this@NewsListActivity, list)
-    }
+    }*/
+
 }

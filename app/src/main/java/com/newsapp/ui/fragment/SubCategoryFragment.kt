@@ -7,24 +7,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.newsapp.constants.AppConstant
-import com.newsapp.databinding.FragmentTabBinding
-import com.newsapp.model.posts.PostsRequest
-import com.newsapp.ui.adapter.NewsFeedAdapter
+import com.newsapp.databinding.FragmentSubCategoryBinding
+import com.newsapp.model.submenu.SubMenuRequest
+import com.newsapp.ui.adapter.SubCategoryAdapter
 import com.newsapp.ui.vm.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TabFragment : Fragment() {
+class SubCategoryFragment : Fragment() {
 
     companion object {
-        private const val TAG = "TabFragment"
+        private const val TAG = "StateListFragment"
 
         @JvmStatic
-        fun newInstance() = TabFragment()
+        fun newInstance() = SubCategoryFragment()
     }
 
     private var _id = ""
-    private var _binding: FragmentTabBinding? = null
+    private var _binding: FragmentSubCategoryBinding? = null
     private val viewModel: DashboardViewModel by viewModels()
 
     private val binding get() = _binding!!
@@ -41,7 +41,7 @@ class TabFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentTabBinding.inflate(inflater, container, false)
+        _binding = FragmentSubCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -51,14 +51,14 @@ class TabFragment : Fragment() {
     }
 
     private fun setData() {
-        viewModel.getPostsResponse.observe(viewLifecycleOwner, {
+        viewModel.getSubcategoryListResponse.observe(viewLifecycleOwner, {
             if (it.status) {
                 if (it.data!!.isNotEmpty()) {
-                    binding.recyclerNewsFeed.adapter = NewsFeedAdapter(requireContext(), it.data)
+                    binding.recyclerState.adapter = SubCategoryAdapter(requireContext(), it.data)
                 }
             }
         })
-        viewModel.getPosts(PostsRequest(_id, ""))
+        viewModel.getSubcategoryList(SubMenuRequest(_id))
     }
 
     override fun onDestroyView() {

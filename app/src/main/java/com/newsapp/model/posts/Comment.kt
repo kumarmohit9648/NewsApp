@@ -1,4 +1,4 @@
-package com.newsapp.model
+package com.newsapp.model.posts
 
 data class Comment(
     val comment: String,

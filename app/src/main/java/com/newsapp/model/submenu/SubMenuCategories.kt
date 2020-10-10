@@ -1,10 +1,8 @@
-package com.newsapp.model.menu
+package com.newsapp.model.submenu
 
-import java.io.Serializable
-
-data class MenuCategories(
+data class SubMenuCategories(
     val data: List<Data>?,
     val message: String,
     val status: Boolean,
     val status_code: String
-) : Serializable
+)

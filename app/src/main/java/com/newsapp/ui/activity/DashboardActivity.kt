@@ -3,6 +3,7 @@ package com.newsapp.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -11,129 +12,119 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.newsapp.R
 import com.newsapp.constants.AppConstant
+import com.newsapp.databinding.ActivityDashboardBinding
 import com.newsapp.helper.ZoomOutPageTransformer
+import com.newsapp.model.menu.Data
 import com.newsapp.ui.BaseActivity
-import com.newsapp.ui.fragment.*
+import com.newsapp.ui.adapter.MenuCategoryAdapter
+import com.newsapp.ui.fragment.CitizenReporterFragment
+import com.newsapp.ui.fragment.SubCategoryFragment
+import com.newsapp.ui.fragment.TabFragment
+import com.newsapp.ui.fragment.TimePassFragment
 import com.newsapp.ui.vm.DashboardViewModel
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.layout_dashboard.*
-import kotlinx.android.synthetic.main.navigation_drawer_dashboard.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.navigation_drawer_dashboard.view.*
 import java.util.*
 
+@AndroidEntryPoint
 class DashboardActivity : BaseActivity() {
 
-    private lateinit var viewModel: DashboardViewModel
-    // private val factory: DashboardViewModelFactory by instance<DashboardViewModelFactory>()
+    companion object {
+        private const val TAG = "DashboardActivity"
+    }
 
-    private val fragmentName =
-        arrayOf(
-            "होम",
-            "भारत",
-            "राज्य",
-            "चुनाव",
-            "मनोरंजन",
-            "कोरोना",
-            "जुर्म",
-            "भावताव",
-            "गुब्बारे",
-            "खेल",
-            "सिटिज़न रिपोर्टर",
-            "विश्लेषण"
-        )
+    private lateinit var binding: ActivityDashboardBinding
+    private val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setUpDrawer()
-        setUpViewPager(viewpager)
         clickListener()
 
-        tabs.setupWithViewPager(viewpager)
+        binding.layoutDashboard.tabs.setupWithViewPager(binding.layoutDashboard.viewpager)
+
+        getMenuCategory()
+
+    }
+
+    private fun getMenuCategory() {
+        viewModel.getMenuCategoryResponse.observe(this, {
+            if (it.status) {
+                if (it.data!!.isNotEmpty()) {
+                    binding.drawerLayout.recyclerMenuCategory.adapter =
+                        MenuCategoryAdapter(this, it.data)
+                    setUpViewPager(binding.layoutDashboard.viewpager, it.data)
+                }
+            }
+        })
+        viewModel.getMenuCategory()
     }
 
     private fun clickListener() {
 
-        search.setOnClickListener {
+        binding.layoutDashboard.search.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SearchActivity::class.java))
         }
 
-        notification.setOnClickListener {
+        binding.layoutDashboard.notification.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, NotificationActivity::class.java))
         }
 
-        settings.setOnClickListener {
+        binding.drawerLayout.settings.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
-        }
-
-        newsNew.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_HOME, "ख़बरें")
-        }
-        newsIndia.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "भारत")
-        }
-        newsState.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_STATE, "राज्य")
-        }
-        newsPolitics.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "चुनाव")
-        }
-        newsEntertainment.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "मनोरंजन")
-        }
-        newsCorona.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "कोरोना")
-        }
-        newsCrime.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "जुर्म")
-        }
-        newsTrade.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "भावताव")
-        }
-        newsTimePass.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_TIME_PASS, "गुब्बारे")
-        }
-        newsSport.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "खेल")
-        }
-        newsAnalysis.setOnClickListener {
-            openFragment(AppConstant.FRAGMENT_OTHER, "सिटिज़न रिपोर्टर")
         }
 
     }
 
-    private fun setUpViewPager(viewpager: ViewPager) {
+    private fun setUpViewPager(viewpager: ViewPager, menuCategories: List<Data>) {
         viewpager.setPageTransformer(true, ZoomOutPageTransformer())
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        for (i in fragmentName) {
-            when (i) {
-                "होम" -> adapter.addFrag(HomeFragment.newInstance(), i)
-                "गुब्बारे" -> adapter.addFrag(TimePassFragment.newInstance(), i)
-                "राज्य" -> adapter.addFrag(StateListFragment.newInstance(), i)
-                "सिटिज़न रिपोर्टर" -> adapter.addFrag(
-                    CitizenReporterFragment.newInstance(
-                        supportFragmentManager
-                    ), i
-                )
-                else -> adapter.addFrag(TabFragment(), i)
+        for (i in menuCategories) {
+            var fragment: Fragment? = null
+            val bundle = Bundle()
+            bundle.putString(AppConstant.CATEGORY_ID, i.id)
+            when (i.is_menu) {
+                "1" -> {
+                    fragment = SubCategoryFragment.newInstance()
+                    fragment.arguments = bundle
+                    adapter.addFrag(fragment, i.name)
+                }
+                "2" -> {
+                    fragment = TimePassFragment.newInstance()
+                    fragment.arguments = bundle
+                    adapter.addFrag(fragment, i.name)
+                }
+                "3" -> {
+                    fragment = CitizenReporterFragment.newInstance(supportFragmentManager)
+                    fragment.arguments = bundle
+                    adapter.addFrag(fragment, i.name)
+                }
+                else -> {
+                    fragment = TabFragment.newInstance()
+                    fragment.arguments = bundle
+                    adapter.addFrag(fragment, i.name)
+                }
             }
         }
         viewpager.adapter = adapter
     }
 
     private fun setUpDrawer() {
-        menu.setImageResource(R.drawable.ic_menu)
+        binding.layoutDashboard.menu.setImageResource(R.drawable.ic_menu)
 
-        menu.setOnClickListener {
-            if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START)
+        binding.layoutDashboard.menu.setOnClickListener {
+            if (binding.drawerLayout.isDrawerVisible(GravityCompat.START)) {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             } else {
-                drawerLayout.openDrawer(GravityCompat.START)
+                binding.drawerLayout.openDrawer(GravityCompat.START)
             }
 
-            drawerLayout.drawerElevation = 0F
+            binding.drawerLayout.drawerElevation = 0F
 
-            drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
                 override fun onDrawerStateChanged(p0: Int) {
                 }
 
@@ -154,8 +145,8 @@ class DashboardActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerVisible(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             finish()
         }

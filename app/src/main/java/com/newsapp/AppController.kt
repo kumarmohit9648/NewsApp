@@ -3,7 +3,9 @@ package com.newsapp
 import android.app.Application
 import android.content.ContextWrapper
 import com.pixplicity.easyprefs.library.Prefs
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class AppController : Application() {
 
     override fun onCreate() {

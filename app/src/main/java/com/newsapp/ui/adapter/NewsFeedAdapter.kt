@@ -10,11 +10,11 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.newsapp.R
-import com.newsapp.model.NewsType
+import com.newsapp.model.posts.Data
 import com.newsapp.ui.activity.NewsDetailActivity
 import kotlinx.android.synthetic.main.recycler_news_feed.view.*
 
-class NewsFeedAdapter(private val context: Context, private var list: List<NewsType>) :
+class NewsFeedAdapter(private val context: Context, private var list: List<Data>) :
     RecyclerView.Adapter<NewsFeedHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewFeed: Int): NewsFeedHolder {
@@ -30,8 +30,9 @@ class NewsFeedAdapter(private val context: Context, private var list: List<NewsT
     override fun onBindViewHolder(holder: NewsFeedHolder, position: Int) {
         val model = list[position]
 
-        Glide.with(context).load(model.image).into(holder.itemView.imageView)
-        holder.itemView.textView3.text = model.details
+        Glide.with(context).load("http://dbpnews.knovatik.com/" + model.image_big)
+            .into(holder.itemView.imageView)
+        holder.itemView.textView3.text = model.title
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, NewsDetailActivity::class.java)

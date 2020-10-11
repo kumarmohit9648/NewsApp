@@ -9,6 +9,7 @@ class AppConstant {
         const val PHOTO = "photo"
         const val VIDEO = "video"
         const val CATEGORY_ID = "category_id"
+        const val VIDEO_ID = "video_id"
 
         const val FRAGMENT_ID = "fragment_id"
         const val FRAGMENT_TITLE = "FRAGMENT_TITLE"

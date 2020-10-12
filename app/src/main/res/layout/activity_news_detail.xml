@@ -6,24 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.NewsDetailActivity">
 
-    <include layout="@layout/toolbar" />
+    <include android:id="@+id/toolbar" layout="@layout/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
-        android:layout_marginBottom="?actionBarSize">
+        android:layout_marginBottom="40dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/newsFeed"
+                android:id="@+id/newsImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/news_feed"
                 android:transitionName="news_feed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,25 +33,93 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="हाथरस कांड: पीड़िता के घर जाकर दो शीर्ष अधिकारियों ने लिया संज्ञान"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newsFeed" />
+                app:layout_constraintTop_toBottomOf="@+id/newsImage" />
 
             <TextView
                 android:id="@+id/tvDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="हाथरस कांड में पुलिस प्रशासन की भारी लापरवाही सामने आई है. इस मामले में पुलिस परिवार से अलग कहानी बयां कर रही है. जिस पर किसी को यकीन नहीं है. इस मामले में कई अलग-अलग पहलू सामने आ रहे हैं. लेकिन पुलिस ने जो कहानी गढ़ी है, उसका पीड़िता के परिवार की आपबीती से कोई मेल नहीं है. हम आपको बताते हैं कि इस मामले में कौन क्या कह रहा है. \nभाई की तहरीर पर पहली एफआईआर
-पीड़िता के भाई ने सबसे पहले दर्ज कराई गई एफआईआर में बताया कि आरोपी संदीप खेत में उसकी बहन का गला घोंटने की कोशिश कर रहा था. उसकी चीख-पुकार सुनकर जब मां वहां पहुंची तो आरोपी वहां से फरार हो गया. पहली शिकायत में पीड़िता के भाई ने सिर्फ एक आरोपी संदीप का नाम लिखवाया था. अपनी शिकायत में उन्होंने वारदात का वक्त 9.30 बजे का लिखवाया था. उसके बाद एससी / एसटी अधिनियम और आईपीसी की धारा 307 के तहत एफआईआर दर्ज की गई थी. पुलिस के अनुसार, एफआईआर को दर्ज करने से पहले पीड़िता के भाई को तहरीर पढ़वाई गई और उसकी सहमति के बाद मुकदमा लिखा गया.\nपहली एफआईआर में मां का बयान
-जब मैंने अपनी बेटी को वहां देखा, तो वह नग्न अवस्था में पड़ी हुई थी और उसके शरीर से बहुत ही खून बह रहा था. मैंने उसे अपने दुपट्टे और उसके खून से लथपथ कपड़ों से ढंक दिया. हम बेहद असमंजस में थे और एकदम सदमे की हालत में थे. हमारी बेटी बेहोश थी. जाहिर है, हम हाथरस के चंदपा पुलिस थाने में पुलिस को बलात्कार या सामूहिक बलात्कार का बयान नहीं दे सकते थे, जहां पहली प्राथमिकी दर्ज की गई थी. क्योंकि तब तक हमें नहीं पता था कि बेटी के साथ सामूहिक बलात्कार हुआ था. हमारी बेटी ने अपने भाइयों के कान में एक आरोपी संदीप का नाम लिया और बेहोश हो गई. तो हमने सोचा कि गांव में रहने वाले संदीप नाम के लड़के ने उसकी पिटाई की है. यही सब पहली एफआईआर में भी दर्ज है."
+                android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/likeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/dislikeLayout"
+                app:layout_constraintEnd_toStartOf="@+id/dislikeLayout"
+                app:layout_constraintTop_toTopOf="@id/dislikeLayout">
+
+                <ImageView
+                    android:id="@+id/ivLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_not_like"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/likeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLike"
+                    app:layout_constraintStart_toStartOf="@+id/ivLike"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLike" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dislikeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetails">
+
+                <ImageView
+                    android:id="@+id/ivDislike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:rotation="180"
+                    android:src="@drawable/ic_not_like"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/dislikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ivDislike"
+                    app:layout_constraintStart_toStartOf="@+id/ivDislike"
+                    app:layout_constraintTop_toBottomOf="@+id/ivDislike" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/commentHeading"
@@ -64,19 +131,26 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetails" />
+                app:layout_constraintTop_toBottomOf="@+id/likeLayout" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commentRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white"
+                android:maxHeight="280dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/commentHeading"
                 tools:listitem="@layout/recycler_comment" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupComment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="commentHeading, commentRecycler" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,12 +165,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/comment_bg"
             android:layout_margin="2dp"
+            android:background="@drawable/comment_bg"
             android:orientation="horizontal"
             android:paddingStart="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivLike"
+            app:layout_constraintEnd_toStartOf="@+id/ivShare"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -124,17 +198,30 @@
 
         </LinearLayout>
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/ivLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:padding="8dp"
-            android:src="@drawable/like"
+            android:padding="10dp"
+            android:src="@drawable/ic_not_like"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDislike"
+            app:layout_constraintEnd_toStartOf="@+id/ivDislike"
+            app:layout_constraintTop_toTopOf="@+id/ivDislike"
+            app:tint="@android:color/white" />-->
+
+        <!--<ImageView
+            android:id="@+id/ivDislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:rotation="180"
+            android:src="@drawable/ic_not_like"
             app:layout_constraintBottom_toBottomOf="@+id/ivShare"
             app:layout_constraintEnd_toStartOf="@+id/ivShare"
             app:layout_constraintTop_toTopOf="@+id/ivShare"
-            app:tint="@android:color/white" />
+            app:tint="@android:color/white" />-->
 
         <ImageView
             android:id="@+id/ivShare"
@@ -142,11 +229,10 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:padding="8dp"
-            android:src="@drawable/share"
+            android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,8 @@ package com.newsapp.constants
 class AppConstant {
 
     companion object {
+        const val IS_LOGIN = "is_login"
+        const val AUTH_TOKEN = "auth_token"
         const val IS_FIRST_TIME_OPEN = "is_first_time_open"
         const val TITLE_KEY = "title_key"
         const val CAMERA_TYPE = "camera_type"

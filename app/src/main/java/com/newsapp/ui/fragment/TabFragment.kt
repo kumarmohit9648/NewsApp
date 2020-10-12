@@ -11,6 +11,7 @@ import com.newsapp.databinding.FragmentTabBinding
 import com.newsapp.model.posts.PostsRequest
 import com.newsapp.ui.adapter.NewsFeedAdapter
 import com.newsapp.ui.vm.DashboardViewModel
+import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,13 +53,17 @@ class TabFragment : Fragment() {
 
     private fun setData() {
         viewModel.getPostsResponse.observe(viewLifecycleOwner, {
-            if (it.status) {
-                if (it.data!!.isNotEmpty()) {
-                    binding.recyclerNewsFeed.adapter = NewsFeedAdapter(requireContext(), it.data)
+            try {
+                if (it.status) {
+                    if (it.data!!.isNotEmpty()) {
+                        binding.recyclerNewsFeed.adapter =
+                            NewsFeedAdapter(requireContext(), it.data)
+                    }
                 }
+            } catch (e: Exception) {
             }
         })
-        viewModel.getPosts(PostsRequest(_id, ""))
+        viewModel.getPosts(PostsRequest(_id, "", Prefs.getString(AppConstant.AUTH_TOKEN, "")))
     }
 
     override fun onDestroyView() {

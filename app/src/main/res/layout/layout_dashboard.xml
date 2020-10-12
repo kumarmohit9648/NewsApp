@@ -84,6 +84,24 @@
                     app:layout_constraintEnd_toStartOf="@+id/search"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/notificationCount"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/badge_background"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:text=""
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/notification"
+                    app:layout_constraintEnd_toEndOf="@+id/notification"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintStart_toStartOf="@+id/notification"
+                    app:layout_constraintTop_toTopOf="@+id/notification"
+                    app:layout_constraintVertical_bias="0.1" />
+
                 <ImageView
                     android:id="@+id/search"
                     android:layout_width="wrap_content"

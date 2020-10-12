@@ -5,6 +5,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.newsapp.model.AuthToken
+import com.newsapp.model.like.LikeResponse
 import com.newsapp.model.menu.MenuCategories
 import com.newsapp.model.posts.Posts
 import com.newsapp.model.posts.PostsRequest
@@ -39,6 +41,14 @@ class DashboardViewModel @ViewModelInject constructor(
     fun getPosts(postsRequest: PostsRequest) {
         Coroutines.main {
             getPostsResponse.postValue(repository.getPosts(postsRequest))
+        }
+    }
+
+    private var _getNotificationCountResponse = MutableLiveData<LikeResponse>()
+    val getNotificationCountResponse get() = _getNotificationCountResponse
+    fun getNotificationCount(authToken: AuthToken) {
+        Coroutines.main {
+            getNotificationCountResponse.postValue(repository.getNotificationCount(authToken))
         }
     }
 

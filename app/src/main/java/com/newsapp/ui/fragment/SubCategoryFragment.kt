@@ -52,10 +52,13 @@ class SubCategoryFragment : Fragment() {
 
     private fun setData() {
         viewModel.getSubcategoryListResponse.observe(viewLifecycleOwner, {
-            if (it.status) {
-                if (it.data!!.isNotEmpty()) {
-                    binding.recyclerState.adapter = SubCategoryAdapter(requireContext(), it.data)
+            try {
+                if (it.status) {
+                    if (it.data!!.isNotEmpty()) {
+                        binding.recyclerState.adapter = SubCategoryAdapter(requireContext(), it.data)
+                    }
                 }
+            } catch (e: Exception) {
             }
         })
         viewModel.getSubcategoryList(SubMenuRequest(_id))

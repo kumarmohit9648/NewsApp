@@ -14,7 +14,9 @@ import com.newsapp.R
 import com.newsapp.constants.AppConstant
 import com.newsapp.databinding.ActivityDashboardBinding
 import com.newsapp.helper.ZoomOutPageTransformer
+import com.newsapp.model.AuthToken
 import com.newsapp.model.menu.Data
+import com.newsapp.network.utils.Coroutines
 import com.newsapp.ui.BaseActivity
 import com.newsapp.ui.adapter.MenuCategoryAdapter
 import com.newsapp.ui.fragment.CitizenReporterFragment
@@ -22,9 +24,11 @@ import com.newsapp.ui.fragment.SubCategoryFragment
 import com.newsapp.ui.fragment.TabFragment
 import com.newsapp.ui.fragment.TimePassFragment
 import com.newsapp.ui.vm.DashboardViewModel
+import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.navigation_drawer_dashboard.view.*
 import java.util.*
+import kotlin.math.min
 
 @AndroidEntryPoint
 class DashboardActivity : BaseActivity() {
@@ -48,19 +52,57 @@ class DashboardActivity : BaseActivity() {
 
         getMenuCategory()
 
+        viewModel.getNotificationCountResponse.observe(this, {
+            Coroutines.main {
+                try {
+                    if (it.status) {
+                        setupBadge((it.data as String).toInt())
+                    }
+                } catch (e: Exception) {
+                }
+            }
+        })
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getNotificationCount(AuthToken(Prefs.getString(AppConstant.AUTH_TOKEN, "")))
     }
 
     private fun getMenuCategory() {
         viewModel.getMenuCategoryResponse.observe(this, {
-            if (it.status) {
-                if (it.data!!.isNotEmpty()) {
-                    binding.drawerLayout.recyclerMenuCategory.adapter =
-                        MenuCategoryAdapter(this, it.data)
-                    setUpViewPager(binding.layoutDashboard.viewpager, it.data)
+            try {
+                if (it.status) {
+                    if (it.data!!.isNotEmpty()) {
+                        binding.drawerLayout.recyclerMenuCategory.adapter =
+                            MenuCategoryAdapter(this, it.data)
+                        setUpViewPager(binding.layoutDashboard.viewpager, it.data)
+                        setupBadge(0)
+                    }
                 }
+            } catch (e: Exception) {
             }
         })
         viewModel.getMenuCategory()
+    }
+
+    private fun setupBadge(count: Int) {
+        if (count == 0) {
+            if (binding.layoutDashboard.notificationCount.visibility != View.GONE) {
+                binding.layoutDashboard.notificationCount.visibility = View.GONE
+            }
+        } else {
+            binding.layoutDashboard.notificationCount.text = java.lang.String.valueOf(
+                min(
+                    count,
+                    99
+                )
+            )
+            if (binding.layoutDashboard.notificationCount.visibility != View.VISIBLE) {
+                binding.layoutDashboard.notificationCount.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun clickListener() {

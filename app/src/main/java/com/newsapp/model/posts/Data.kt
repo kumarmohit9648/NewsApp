@@ -9,5 +9,7 @@ data class Data(
     val like_count: String,
     val share_count: String,
     val summary: String,
-    val title: String
+    val title: String,
+    val like_status: String,
+    val comment_list: List<Comment>
 )

@@ -11,7 +11,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.newsapp.R
+import com.newsapp.constants.AppConstant
 import com.newsapp.ui.BaseActivity
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_login_option.*
 
 class LoginOptionActivity : BaseActivity() {
@@ -21,6 +23,11 @@ class LoginOptionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_option)
+
+        if (Prefs.getBoolean(AppConstant.IS_LOGIN, false)) {
+            startActivity(Intent(this@LoginOptionActivity, DashboardActivity::class.java))
+            finishAffinity()
+        }
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -40,13 +47,21 @@ class LoginOptionActivity : BaseActivity() {
         }
 
         btnMobile.setOnClickListener {
-
+            startActivity(Intent(this@LoginOptionActivity, RegistrationActivity::class.java))
         }
 
         btnSkip.setOnClickListener {
             goToAppIntro()
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        // updateUI(account)
     }
 
     private fun goToAppIntro() {
@@ -68,7 +83,7 @@ class LoginOptionActivity : BaseActivity() {
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+            Log.w(TAG, "signInResult:failed code =" + e.statusCode)
             Toast.makeText(this@LoginOptionActivity, "Unable to authenticate", Toast.LENGTH_SHORT)
                 .show()
         }

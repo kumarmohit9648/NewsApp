@@ -1,8 +1,12 @@
 package com.newsapp.network.interfaces
 
+import com.newsapp.model.AuthToken
+import com.newsapp.model.like.LikeRequest
+import com.newsapp.model.like.LikeResponse
 import com.newsapp.model.menu.MenuCategories
-import com.newsapp.model.posts.Posts
-import com.newsapp.model.posts.PostsRequest
+import com.newsapp.model.posts.*
+import com.newsapp.model.register.RegisterRequest
+import com.newsapp.model.register.RegisterResponse
 import com.newsapp.model.submenu.SubMenuCategories
 import com.newsapp.model.submenu.SubMenuRequest
 import okhttp3.Interceptor
@@ -20,6 +24,18 @@ interface Api {
 
     @POST("get-post")
     suspend fun getPosts(@Body subMenuRequest: PostsRequest): Response<Posts>
+
+    @POST("get-post-detail")
+    suspend fun getPostsDetail(@Body postDetailRequest: PostDetailRequest): Response<PostDetail>
+
+    @POST("save-post-like-status")
+    suspend fun savePostLikeStatus(@Body likeRequest: LikeRequest): Response<PostStatus>
+
+    @POST("user-registration")
+    suspend fun userRegistration(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
+
+    @POST("get-notification-count")
+    suspend fun getNotificationCount(@Body authToken: AuthToken): Response<LikeResponse>
 
     class CustomInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

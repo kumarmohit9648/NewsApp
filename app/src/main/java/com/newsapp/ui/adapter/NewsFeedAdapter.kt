@@ -32,7 +32,8 @@ class NewsFeedAdapter(private val context: Context, private var list: List<Data>
         Glide.with(context).load("http://dbpnews.knovatik.com/" + model.image_big)
             .into(holder.itemView.imageView)
         holder.itemView.textView3.text = model.title
-
+        // TODO : make dynamic update time
+        holder.itemView.updatedTime.text = "2 hours"
         holder.itemView.setOnClickListener {
             val intent =
                 /*val option = ActivityOptionsCompat.makeSceneTransitionAnimation(

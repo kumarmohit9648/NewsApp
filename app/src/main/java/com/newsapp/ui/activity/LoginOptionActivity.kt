@@ -47,11 +47,15 @@ class LoginOptionActivity : BaseActivity() {
         }
 
         btnMobile.setOnClickListener {
-            startActivity(Intent(this@LoginOptionActivity, RegistrationActivity::class.java))
+            startActivity(Intent(this@LoginOptionActivity, LoginActivity::class.java))
         }
 
         btnSkip.setOnClickListener {
             goToAppIntro()
+        }
+
+        btnRegister.setOnClickListener {
+            startActivity(Intent(this@LoginOptionActivity, RegisterActivity::class.java))
         }
 
     }

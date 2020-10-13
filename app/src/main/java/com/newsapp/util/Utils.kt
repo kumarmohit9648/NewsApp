@@ -1,7 +1,10 @@
 package com.newsapp.util
 
+import android.app.Activity
 import android.content.Context
 import android.util.Patterns
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlin.math.abs
 
@@ -26,3 +29,8 @@ fun Context.toast(message: String) {
 
 fun String?.isValidEmail(email: String) =
     !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}

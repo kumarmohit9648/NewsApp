@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.NewsDetailActivity">
 
-    <include android:id="@+id/toolbar" layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -189,9 +191,11 @@
                 android:textSize="12sp" />
 
             <ImageView
+                android:id="@+id/ivSend"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="end"
+                android:adjustViewBounds="true"
                 android:padding="4dp"
                 android:src="@drawable/ic_send"
                 app:tint="@color/colorPrimary" />

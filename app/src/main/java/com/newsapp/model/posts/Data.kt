@@ -11,5 +11,6 @@ data class Data(
     val summary: String,
     val title: String,
     val like_status: String,
+    val share_link: String,
     val comment_list: List<Comment>
 )

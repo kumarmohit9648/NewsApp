@@ -1,40 +1,38 @@
 package com.newsapp.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.newsapp.R
-import com.newsapp.constants.AppConstant
+import com.newsapp.databinding.ActivityGeneratePostBinding
 import com.newsapp.ui.BaseActivity
-import com.newsapp.ui.camera.CameraActivity
-import kotlinx.android.synthetic.main.activity_generate_post.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class GeneratePostActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityGeneratePostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generate_post)
 
-        titleName.text = "Make Post"
+        binding.toolbar.titleName.text = "Make Post"
 
-        Glide.with(this).load(R.drawable.ic_close).into(ivBack)
-        ivBack.setOnClickListener {
+        Glide.with(this).load(R.drawable.ic_close).into(binding.toolbar.ivBack)
+        binding.toolbar.ivBack.setOnClickListener {
             finish()
         }
 
-        imageView4.setOnClickListener {
+        /*binding.imageView4.setOnClickListener {
             startActivity(
                 Intent(this, CameraActivity::class.java)
                     .putExtra(AppConstant.CAMERA_TYPE, AppConstant.VIDEO)
             )
         }
-        imageView3.setOnClickListener {
+        binding.imageView3.setOnClickListener {
             startActivity(
                 Intent(this, CameraActivity::class.java)
                     .putExtra(AppConstant.CAMERA_TYPE, AppConstant.PHOTO)
             )
-        }
+        }*/
 
     }
 }

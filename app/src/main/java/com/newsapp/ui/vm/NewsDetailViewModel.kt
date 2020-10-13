@@ -5,8 +5,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.newsapp.model.comment.CommentRequest
+import com.newsapp.model.comment.CommentResponse
 import com.newsapp.model.like.LikeRequest
-import com.newsapp.model.like.LikeResponse
 import com.newsapp.model.posts.PostDetail
 import com.newsapp.model.posts.PostDetailRequest
 import com.newsapp.model.posts.PostStatus
@@ -31,6 +32,14 @@ class NewsDetailViewModel @ViewModelInject constructor(
     fun savePostLikeStatus(likeRequest: LikeRequest) {
         Coroutines.main {
             savePostLikeStatusResponse.postValue(repository.savePostLikeStatus(likeRequest))
+        }
+    }
+
+    private var _savePostCommentResponse = MutableLiveData<CommentResponse>()
+    val savePostCommentResponse get() = _savePostCommentResponse
+    fun savePostComment(commentRequest: CommentRequest) {
+        Coroutines.main {
+            savePostCommentResponse.postValue(repository.savePostComment(commentRequest))
         }
     }
 

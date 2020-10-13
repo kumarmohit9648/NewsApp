@@ -1,9 +1,13 @@
 package com.newsapp.network
 
 import com.newsapp.model.AuthToken
+import com.newsapp.model.comment.CommentRequest
+import com.newsapp.model.comment.CommentResponse
 import com.newsapp.model.like.LikeRequest
 import com.newsapp.model.like.LikeResponse
+import com.newsapp.model.login.LoginRequest
 import com.newsapp.model.menu.MenuCategories
+import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
@@ -25,60 +29,90 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         return response
     }
 
-    suspend fun getSubcategoryList(subMenuRequest: SubMenuRequest): SubMenuCategories {
+    suspend fun getSubcategoryList(request: SubMenuRequest): SubMenuCategories {
         var response = SubMenuCategories(null, "Network Error", false, "")
         try {
-            response = apiRequest { _api.getSubcategoryList(subMenuRequest) }
+            response = apiRequest { _api.getSubcategoryList(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return response
     }
 
-    suspend fun getPosts(postsRequest: PostsRequest): Posts {
+    suspend fun getPosts(request: PostsRequest): Posts {
         var response = Posts(null, "Network Error", false, "")
         try {
-            response = apiRequest { _api.getPosts(postsRequest) }
+            response = apiRequest { _api.getPosts(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return response
     }
 
-    suspend fun getPostsDetail(postDetailRequest: PostDetailRequest): PostDetail {
+    suspend fun getPostsDetail(request: PostDetailRequest): PostDetail {
         var response = PostDetail(null, "Network Error", false, "")
         try {
-            response = apiRequest { _api.getPostsDetail(postDetailRequest) }
+            response = apiRequest { _api.getPostsDetail(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return response
     }
 
-    suspend fun savePostLikeStatus(likeRequest: LikeRequest): PostStatus {
+    suspend fun savePostLikeStatus(request: LikeRequest): PostStatus {
         var response = PostStatus("Network Error", null, "", false, "")
         try {
-            response = apiRequest { _api.savePostLikeStatus(likeRequest) }
+            response = apiRequest { _api.savePostLikeStatus(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return response
     }
 
-    suspend fun getNotificationCount(authToken: AuthToken): LikeResponse {
+    suspend fun getNotificationCount(request: AuthToken): LikeResponse {
         var response = LikeResponse(null, "Network Error", false, "")
         try {
-            response = apiRequest { _api.getNotificationCount(authToken) }
+            response = apiRequest { _api.getNotificationCount(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         return response
     }
 
-    suspend fun userRegistration(registerRequest: RegisterRequest): RegisterResponse {
+    suspend fun getNotificationList(request: AuthToken): Notification {
+        var response = Notification(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.getNotificationList(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun userRegistration(request: RegisterRequest): RegisterResponse {
         var response = RegisterResponse(null, "Network Error", false, "")
         try {
-            response = apiRequest { _api.userRegistration(registerRequest) }
+            response = apiRequest { _api.userRegistration(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun savePostComment(request: CommentRequest): CommentResponse {
+        var response = CommentResponse("", false, "")
+        try {
+            response = apiRequest { _api.savePostComment(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun login(request: LoginRequest): RegisterResponse {
+        var response = RegisterResponse(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.login(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -9,9 +9,9 @@
 
     <color name="colorText">#414141</color>
 
-    <color name="orange">#f58634</color>
+    <color name="orange">#E6F63B01</color>
     <color name="greyBlack">#373435</color>
-    <color name="green">#00a859</color>
-    <color name="yellow">#fff212</color>
+    <color name="green">#00A859</color>
+    <color name="yellow">#FFF212</color>
 
 </resources>

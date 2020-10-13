@@ -305,8 +305,8 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
             message("Can't record HQ videos while in PICTURE mode.", false)
         }
         if (camera.isTakingPicture || camera.isTakingVideo) return
-        message("Recording for 5 seconds...", true)
-        camera.takeVideo(File(filesDir, "video.mp4"), 5000)
+        // message("Recording for 5 seconds...", true)
+        camera.takeVideo(File(filesDir, "video.mp4")/*, 5000*/)
     }
 
     private fun captureVideoSnapshot() {

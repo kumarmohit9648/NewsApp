@@ -1,9 +1,13 @@
 package com.newsapp.network.interfaces
 
 import com.newsapp.model.AuthToken
+import com.newsapp.model.comment.CommentRequest
+import com.newsapp.model.comment.CommentResponse
 import com.newsapp.model.like.LikeRequest
 import com.newsapp.model.like.LikeResponse
+import com.newsapp.model.login.LoginRequest
 import com.newsapp.model.menu.MenuCategories
+import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
@@ -36,6 +40,15 @@ interface Api {
 
     @POST("get-notification-count")
     suspend fun getNotificationCount(@Body authToken: AuthToken): Response<LikeResponse>
+
+    @POST("save-post-comment")
+    suspend fun savePostComment(@Body commentRequest: CommentRequest): Response<CommentResponse>
+
+    @POST("login")
+    suspend fun login(@Body loginRequest: LoginRequest): Response<RegisterResponse>
+
+    @POST("get-notification-list")
+    suspend fun getNotificationList(@Body authToken: AuthToken): Response<Notification>
 
     class CustomInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

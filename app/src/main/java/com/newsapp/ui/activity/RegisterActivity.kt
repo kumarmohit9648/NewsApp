@@ -6,7 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.newsapp.constants.AppConstant
-import com.newsapp.databinding.ActivityRegistrationBinding
+import com.newsapp.databinding.ActivityRegisterBinding
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.ui.BaseActivity
 import com.newsapp.ui.vm.RegisterViewModel
@@ -15,41 +15,47 @@ import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationActivity : BaseActivity() {
+class RegisterActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "RegistrationActivity"
     }
 
-    private lateinit var binding: ActivityRegistrationBinding
+    private lateinit var binding: ActivityRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegistrationBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.register.setOnClickListener {
-            viewModel.userRegistrationResponse.observe(this, Observer {
-                try {
-                    if (it.status) {
-                        if (it.data != null) {
-                            Prefs.putString(AppConstant.AUTH_TOKEN, it.data.token)
-                            Prefs.putBoolean(AppConstant.IS_LOGIN, true)
-                            startActivity(
-                                Intent(
-                                    this@RegistrationActivity,
-                                    DashboardActivity::class.java
-                                )
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
+        viewModel.userRegistrationResponse.observe(this, Observer {
+            try {
+                if (it.status) {
+                    if (it.data != null) {
+                        Prefs.putString(AppConstant.AUTH_TOKEN, it.data.token)
+                        Prefs.putBoolean(AppConstant.IS_LOGIN, true)
+                        startActivity(
+                            Intent(
+                                this@RegisterActivity,
+                                DashboardActivity::class.java
                             )
-                            finishAffinity()
-                        }
+                        )
+                        finishAffinity()
                     }
-                } catch (e: Exception) {
-                } finally {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-            })
+                } else
+                    toast(it.message)
+            } catch (e: Exception) {
+            } finally {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+        })
+
+        binding.register.setOnClickListener {
             if (validation()) {
                 viewModel.userRegistration(
                     RegisterRequest(

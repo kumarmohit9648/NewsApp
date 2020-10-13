@@ -4,48 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activity.RegistrationActivity">
+    android:background="#E6F63B01"
+    tools:context=".ui.activity.LoginActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3C3C3C">
+        android:backgroundTint="#CCF63B01"
+        android:elevation="8dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivBack"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="8dp"
-            android:padding="2dp"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="?actionBarSize"
-            android:src="@drawable/header_logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivBack"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:padding="6dp"
+                android:src="@drawable/header_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:background="@drawable/register_bg">
+        android:layout_marginTop="?actionBarSize">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:text="पंजीकरण"
+            android:text="लॉग इन करें"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -67,41 +74,14 @@
             app:layout_constraintVertical_bias="0.3">
 
             <EditText
-                android:id="@+id/user_name"
+                android:id="@+id/username"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="56dp"
                 android:background="@drawable/edit_bg"
-                android:hint="Name"
+                android:hint="Email or mobile number"
                 android:inputType="text"
-                android:padding="16dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-
-            <EditText
-                android:id="@+id/user_email"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_bg"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="16dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-
-            <EditText
-                android:id="@+id/user_number"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_bg"
-                android:hint="Mobile Number"
-                android:inputType="number"
-                android:maxLength="10"
                 android:padding="16dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
@@ -119,30 +99,35 @@
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
 
-            <EditText
-                android:id="@+id/user_confirm_password"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_bg"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:padding="16dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
-
             <Button
-                android:id="@+id/register"
-                android:layout_width="wrap_content"
+                android:id="@+id/login"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/button_bg"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="Register"
-                android:textColor="@android:color/white" />
+                android:text="login"
+                android:textColor="#E6F63B01"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/forRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp"
+                android:text="पंजीकरण करें"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 

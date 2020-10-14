@@ -13,5 +13,6 @@
     <color name="greyBlack">#373435</color>
     <color name="green">#00A859</color>
     <color name="yellow">#FFF212</color>
+    <color name="emoji_yellow">#FCC21B</color>
 
 </resources>

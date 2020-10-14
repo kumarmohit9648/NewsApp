@@ -13,8 +13,14 @@ import com.newsapp.model.posts.Data
 import com.newsapp.ui.activity.NewsDetailActivity
 import kotlinx.android.synthetic.main.recycler_news_feed.view.*
 
-class NewsFeedAdapter(private val context: Context, private var list: List<Data>) :
+class NewsFeedAdapter(private val context: Context, private var list: MutableList<Data>) :
     RecyclerView.Adapter<NewsFeedHolder>() {
+
+    fun setList(mList: List<Data>) {
+        list.clear()
+        list.addAll(mList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewFeed: Int): NewsFeedHolder {
         return NewsFeedHolder(

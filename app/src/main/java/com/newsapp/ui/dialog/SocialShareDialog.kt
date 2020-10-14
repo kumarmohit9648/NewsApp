@@ -41,6 +41,7 @@ class SocialShareDialog(private val activity: Activity, private val shareLink: S
         ivWhatsApp.setOnClickListener(this@SocialShareDialog)
         ivPinterest.setOnClickListener(this@SocialShareDialog)
         ivTumblr.setOnClickListener(this@SocialShareDialog)
+        ivInstagram.setOnClickListener(this@SocialShareDialog)
     }
 
     private fun shareLink(directory: String) {
@@ -50,7 +51,7 @@ class SocialShareDialog(private val activity: Activity, private val shareLink: S
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
         shareIntent.`package` = directory
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareLink);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareLink)
 
         if (isAppInstalled) {
             context.startActivity(shareIntent)
@@ -88,6 +89,9 @@ class SocialShareDialog(private val activity: Activity, private val shareLink: S
             }
             R.id.ivTumblr -> {
                 shareLink("com.tumblr")
+            }
+            R.id.ivInstagram -> {
+                shareLink("com.instagram.android")
             }
         }
     }

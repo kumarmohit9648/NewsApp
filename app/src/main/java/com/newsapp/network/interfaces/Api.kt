@@ -11,6 +11,7 @@ import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
+import com.newsapp.model.search.SearchRequest
 import com.newsapp.model.submenu.SubMenuCategories
 import com.newsapp.model.submenu.SubMenuRequest
 import okhttp3.Interceptor
@@ -49,6 +50,9 @@ interface Api {
 
     @POST("get-notification-list")
     suspend fun getNotificationList(@Body authToken: AuthToken): Response<Notification>
+
+    @POST("search-news")
+    suspend fun searchNews(@Body searchRequest: SearchRequest): Response<Posts>
 
     class CustomInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.newsapp.constants.AppConstant
 import com.newsapp.databinding.FragmentTabBinding
+import com.newsapp.model.posts.Data
 import com.newsapp.model.posts.PostsRequest
 import com.newsapp.ui.adapter.NewsFeedAdapter
 import com.newsapp.ui.vm.DashboardViewModel
@@ -57,7 +58,7 @@ class TabFragment : Fragment() {
                 if (it.status) {
                     if (it.data!!.isNotEmpty()) {
                         binding.recyclerNewsFeed.adapter =
-                            NewsFeedAdapter(requireContext(), it.data)
+                            NewsFeedAdapter(requireContext(), it.data as MutableList<Data>)
                     }
                 }
             } catch (e: Exception) {

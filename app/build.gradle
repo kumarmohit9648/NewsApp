@@ -117,4 +117,10 @@ dependencies {
     // Play service
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
+    // Jzvd/JZVideo
+    implementation 'cn.jzvd:jiaozivideoplayer:7.5.0'
+
+    // Custom Tabs
+    implementation "androidx.browser:browser:1.2.0"
+
 }

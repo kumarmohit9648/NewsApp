@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.newsapp.constants.AppConstant
 import com.newsapp.databinding.FragmentCitizenReporterBinding
+import com.newsapp.model.posts.Data
 import com.newsapp.model.posts.PostsRequest
 import com.newsapp.ui.activity.GeneratePostActivity
 import com.newsapp.ui.adapter.NewsFeedAdapter
@@ -17,9 +18,11 @@ import com.newsapp.ui.vm.DashboardViewModel
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_citizen_reporter.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class CitizenReporterFragment(private val supportFragmentManager: FragmentManager) : Fragment() {
+class CitizenReporterFragment @Inject constructor(private val supportFragmentManager: FragmentManager) :
+    Fragment() {
 
     companion object {
         private const val TAG = "CitizenReporterFragment"
@@ -72,7 +75,7 @@ class CitizenReporterFragment(private val supportFragmentManager: FragmentManage
                 if (it.status) {
                     if (it.data!!.isNotEmpty()) {
                         binding.recyclerNewsFeed.adapter =
-                            NewsFeedAdapter(requireContext(), it.data)
+                            NewsFeedAdapter(requireContext(), it.data as MutableList<Data>)
                     }
                 }
             } catch (e: Exception) {

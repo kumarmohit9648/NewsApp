@@ -56,7 +56,7 @@ class DashboardActivity : BaseActivity() {
             Coroutines.main {
                 try {
                     if (it.status) {
-                        setupBadge((it.data as String).toInt())
+                        setupBadge((it.data as Double).toInt())
                     }
                 } catch (e: Exception) {
                 }
@@ -78,7 +78,6 @@ class DashboardActivity : BaseActivity() {
                         binding.drawerLayout.recyclerMenuCategory.adapter =
                             MenuCategoryAdapter(this, it.data)
                         setUpViewPager(binding.layoutDashboard.viewpager, it.data)
-                        setupBadge(0)
                     }
                 }
             } catch (e: Exception) {

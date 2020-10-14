@@ -11,6 +11,7 @@ import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
+import com.newsapp.model.search.SearchRequest
 import com.newsapp.model.submenu.SubMenuCategories
 import com.newsapp.model.submenu.SubMenuRequest
 import com.newsapp.network.interfaces.Api
@@ -43,6 +44,16 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         var response = Posts(null, "Network Error", false, "")
         try {
             response = apiRequest { _api.getPosts(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun searchNews(request: SearchRequest): Posts {
+        var response = Posts(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.searchNews(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }

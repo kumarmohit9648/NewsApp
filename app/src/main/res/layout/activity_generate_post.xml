@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     app:behavior_hideable="false"
     app:behavior_peekHeight="90dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     tools:context=".ui.activity.GeneratePostActivity">
 
     <include
@@ -44,6 +43,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/edit_post_top_right_bg"
+                android:inputType="text"
                 android:padding="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCategory"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +68,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/edit_post_bottom_right_bg"
+                android:inputType="text"
                 android:padding="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -95,9 +96,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/edit_post_bg"
+                android:gravity="top"
                 android:inputType="textMultiLine"
                 android:lines="3"
                 android:maxLength="200"
+                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -123,9 +126,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/edit_post_bg"
+                android:gravity="top"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:maxLength="200"
+                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -143,28 +148,44 @@
                 app:layout_constraintTop_toBottomOf="@+id/edDescription">
 
                 <EditText
+                    android:id="@+id/etState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
                     android:hint="State"
+                    android:inputType="text"
                     android:padding="16dp" />
 
                 <EditText
+                    android:id="@+id/etDistrict"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
                     android:hint="District"
+                    android:inputType="text"
                     android:padding="16dp" />
 
                 <EditText
+                    android:id="@+id/idArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
                     android:hint="Area"
+                    android:inputType="text"
                     android:padding="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Choose only one media"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -185,10 +206,11 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/btn_image"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@color/orange"
-                        android:text="button"
+                        android:text="capture"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -217,10 +239,11 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/btn_video"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@color/orange"
-                        android:text="button"
+                        android:text="record"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -249,10 +272,11 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/btn_audio"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@color/orange"
-                        android:text="button"
+                        android:text="record"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -263,6 +287,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -14,7 +14,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/recycler_news_feed" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/makeNewPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +25,10 @@
         android:clickable="true"
         android:elevation="8dp"
         android:focusable="true"
-        android:src="@drawable/ic_baseline_add" />
+        android:text="अपना वीडियो पब्लिश करें"
+        android:textColor="@android:color/white"
+        app:icon="@drawable/ic_add_news"
+        app:iconGravity="end"
+        app:iconTint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

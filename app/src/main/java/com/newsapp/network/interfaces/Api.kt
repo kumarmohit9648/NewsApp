@@ -1,6 +1,7 @@
 package com.newsapp.network.interfaces
 
 import com.newsapp.model.AuthToken
+import com.newsapp.model.CommonResponse
 import com.newsapp.model.comment.CommentRequest
 import com.newsapp.model.comment.CommentResponse
 import com.newsapp.model.like.LikeRequest
@@ -17,6 +18,8 @@ import com.newsapp.model.submenu.SubMenuRequest
 import okhttp3.Interceptor
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface Api {
@@ -53,6 +56,18 @@ interface Api {
 
     @POST("search-news")
     suspend fun searchNews(@Body searchRequest: SearchRequest): Response<Posts>
+
+    @FormUrlEncoded
+    @POST("upload-content")
+    suspend fun uploadContent(
+        @Field("auth_token") auth_token: String,
+        @Field("title") title: String,
+        @Field("content") content: String,
+        @Field("state") state: String,
+        @Field("district") district: String,
+        @Field("village") village: String,
+        @Field("address") address: String,
+    ): Response<CommonResponse>
 
     class CustomInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

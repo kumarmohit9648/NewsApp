@@ -1,12 +1,15 @@
 package com.newsapp.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.newsapp.R
+import com.newsapp.constants.AppConstant
 import com.newsapp.model.submenu.Data
+import com.newsapp.ui.activity.NewsListActivity
 import kotlinx.android.synthetic.main.recycler_sub_category.view.*
 
 class SubCategoryAdapter(
@@ -29,7 +32,11 @@ class SubCategoryAdapter(
         holder.itemView.stateName.text = data.name
 
         holder.itemView.setOnClickListener {
-            // context.startActivity(Intent(context))
+            context.startActivity(
+                Intent(context, NewsListActivity::class.java)
+                    .putExtra(AppConstant.CATEGORY_ID, "2")
+                    .putExtra(AppConstant.SUB_CATEGORY_ID, data.id)
+            )
         }
     }
 

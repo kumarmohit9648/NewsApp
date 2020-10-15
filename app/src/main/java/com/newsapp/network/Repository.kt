@@ -1,6 +1,7 @@
 package com.newsapp.network
 
 import com.newsapp.model.AuthToken
+import com.newsapp.model.CommonResponse
 import com.newsapp.model.comment.CommentRequest
 import com.newsapp.model.comment.CommentResponse
 import com.newsapp.model.like.LikeRequest
@@ -124,6 +125,34 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         var response = RegisterResponse(null, "Network Error", false, "")
         try {
             response = apiRequest { _api.login(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun uploadContent(
+        auth_token: String,
+        title: String,
+        content: String,
+        state: String,
+        district: String,
+        village: String,
+        address: String
+    ): CommonResponse {
+        var response = CommonResponse(null, "Network Error", false, "")
+        try {
+            response = apiRequest {
+                _api.uploadContent(
+                    auth_token,
+                    title,
+                    content,
+                    state,
+                    district,
+                    village,
+                    address
+                )
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

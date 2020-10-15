@@ -22,60 +22,6 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tvCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edit_post_top_left_bg"
-                android:padding="16dp"
-                android:text="Category"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="@+id/textView4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/etCategory"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/edit_post_top_right_bg"
-                android:inputType="text"
-                android:padding="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvCategory"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvCategory"
-                app:layout_constraintTop_toTopOf="@+id/tvCategory" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/edit_post_bottom_left_bg"
-                android:padding="16dp"
-                android:text="Sub-Category"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/edit_post_bottom_right_bg"
-                android:inputType="text"
-                android:padding="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/textView4" />
-
-            <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,10 +29,10 @@
                 android:layout_marginTop="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="News Title"
+                android:text="News Title / न्यूज़ टाइटल"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/edTitle"
@@ -113,7 +59,7 @@
                 android:layout_marginTop="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="News Description"
+                android:text="News Description / न्यूज़ के बारे में कम से कम 50 शब्द ..."
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edTitle" />
@@ -153,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
-                    android:hint="State"
+                    android:hint="राज्य"
                     android:inputType="text"
                     android:padding="16dp" />
 
@@ -163,28 +109,39 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
-                    android:hint="District"
+                    android:hint="जिला"
                     android:inputType="text"
                     android:padding="16dp" />
 
                 <EditText
-                    android:id="@+id/idArea"
+                    android:id="@+id/idVillage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_post_bg"
-                    android:hint="Area"
+                    android:hint="गाँव"
+                    android:inputType="text"
+                    android:padding="16dp" />
+
+                <EditText
+                    android:id="@+id/idAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_post_bg"
+                    android:hint="एड्रेस"
                     android:inputType="text"
                     android:padding="16dp" />
 
                 <TextView
+                    android:id="@+id/chooseFile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Choose only one media"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -197,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        android:text="Upload Image "
+                        android:text="Upload Image"
                         android:textStyle="bold" />
 
                     <View
@@ -205,12 +162,33 @@
                         android:layout_height="1dp"
                         android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/btn_image"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/btn_image_direct"
+                        android:layout_width="100dp"
                         android:layout_height="32dp"
+                        android:layout_gravity="center"
                         android:background="@color/orange"
-                        android:text="capture"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="CAPTURE"
+                        android:textColor="@android:color/white" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/btn_image_file"
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:background="@color/orange"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="BROWSE"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -230,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        android:text="Upload Video "
+                        android:text="Upload Video"
                         android:textStyle="bold" />
 
                     <View
@@ -238,12 +216,33 @@
                         android:layout_height="1dp"
                         android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/btn_video"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/btn_video_direct"
+                        android:layout_width="100dp"
                         android:layout_height="32dp"
+                        android:layout_gravity="center"
                         android:background="@color/orange"
-                        android:text="record"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="RECORD"
+                        android:textColor="@android:color/white" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/btn_video_file"
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:background="@color/orange"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="BROWSE"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -263,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        android:text="Upload Audio "
+                        android:text="Upload Audio"
                         android:textStyle="bold" />
 
                     <View
@@ -271,12 +270,16 @@
                         android:layout_height="1dp"
                         android:layout_weight="1" />
 
-                    <Button
-                        android:id="@+id/btn_audio"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/btn_audio_file"
+                        android:layout_width="100dp"
                         android:layout_height="32dp"
+                        android:layout_gravity="center"
                         android:background="@color/orange"
-                        android:text="record"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="BROWSE"
                         android:textColor="@android:color/white" />
 
                     <View

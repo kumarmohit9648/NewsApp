@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import com.newsapp.R
 import com.otaliastudios.cameraview.VideoResult
 import com.otaliastudios.cameraview.size.AspectRatio
+import kotlinx.android.synthetic.main.activity_picture_preview.*
 
 class VideoPreviewActivity : AppCompatActivity() {
 
@@ -70,9 +71,18 @@ class VideoPreviewActivity : AppCompatActivity() {
                 Log.e("VideoPreview", "The video full size is " + videoWidth + "x" + videoHeight)
             }
         }
+
+        pass.setOnClickListener {
+            finish()
+        }
+        fail.setOnClickListener {
+            startActivity(Intent(this, CameraActivity::class.java))
+            finish()
+        }
+
     }
 
-    fun playVideo() {
+    private fun playVideo() {
         if (!videoView.isPlaying) {
             videoView.start()
         }

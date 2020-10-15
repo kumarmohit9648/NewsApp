@@ -17,6 +17,7 @@ import com.otaliastudios.cameraview.CameraUtils
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.PictureFormat
 import com.otaliastudios.cameraview.size.AspectRatio
+import kotlinx.android.synthetic.main.activity_picture_preview.*
 import java.io.File
 
 class PicturePreviewActivity : AppCompatActivity() {
@@ -71,6 +72,15 @@ class PicturePreviewActivity : AppCompatActivity() {
                 )
             }
         }
+
+        pass.setOnClickListener {
+            finish()
+        }
+        fail.setOnClickListener {
+            startActivity(Intent(this, CameraActivity::class.java))
+            finish()
+        }
+
     }
 
     override fun onDestroy() {

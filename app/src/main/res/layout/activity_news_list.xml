@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.NewsListActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerNewsFeed"
@@ -15,5 +17,17 @@
         android:layout_marginTop="?actionBarSize"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/recycler_news_feed" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/notFound"
+        layout="@layout/not_found"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -55,7 +55,6 @@ class SearchActivity : BaseActivity() {
                             notFound.visibility = View.GONE
                             binding.recyclerNewsFeed.visibility = View.VISIBLE
                             adapter.setList(it.data)
-                            notFound.visibility = View.GONE
                             adapter.notifyDataSetChanged()
                         } else {
                             notFound.visibility = View.VISIBLE

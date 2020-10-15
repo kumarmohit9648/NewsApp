@@ -35,9 +35,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.camera.VideoPreviewActivity" />
         <activity android:name=".ui.camera.PicturePreviewActivity" />
-        <activity android:name=".ui.camera.CameraActivity" />
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".ui.activity.OpenFragmentActivity" />
-        <activity android:name=".ui.activity.GeneratePostActivity" />
+        <activity android:name=".ui.activity.GeneratePostActivity"></activity>
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -213,6 +213,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
             if (captureTime == 0L) captureTime = callbackTime - 300
             LOG.w("onPictureTaken called! Launching activity. Delay:", callbackTime - captureTime)
             PicturePreviewActivity.pictureResult = result
+            AppConstant.pictureResult = result
             val intent = Intent(this@CameraActivity, PicturePreviewActivity::class.java)
             intent.putExtra("delay", callbackTime - captureTime)
             startActivity(intent)
@@ -224,6 +225,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
             super.onVideoTaken(result)
             LOG.w("onVideoTaken called! Launching activity.")
             VideoPreviewActivity.videoResult = result
+            AppConstant.videoResult = result
             val intent = Intent(this@CameraActivity, VideoPreviewActivity::class.java)
             startActivity(intent)
             LOG.w("onVideoTaken called! Launched activity.")
@@ -305,7 +307,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
             message("Can't record HQ videos while in PICTURE mode.", false)
         }
         if (camera.isTakingPicture || camera.isTakingVideo) return
-        message("Recording for 1 minute...", true)
+        message("Recording for 10 seconds...", true)
         camera.takeVideo(File(filesDir, "video.mp4"), 1 * 10 * 1000)
     }
 

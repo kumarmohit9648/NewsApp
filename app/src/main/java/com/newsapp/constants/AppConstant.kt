@@ -1,5 +1,10 @@
 package com.newsapp.constants
 
+import com.otaliastudios.cameraview.PictureResult
+import com.otaliastudios.cameraview.VideoResult
+import java.text.SimpleDateFormat
+import java.util.*
+
 class AppConstant {
 
     companion object {
@@ -22,5 +27,9 @@ class AppConstant {
         const val FRAGMENT_CITIZEN_REPORTER = "fragment_citizen_reporter"
         const val FRAGMENT_OTHER = "fragment_other"
 
+        var pictureResult: PictureResult? = null
+        var videoResult: VideoResult? = null
+
+        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy_hh:mm", Locale.ENGLISH)
     }
 }

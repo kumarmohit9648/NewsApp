@@ -123,4 +123,7 @@ dependencies {
     // Custom Tabs
     implementation "androidx.browser:browser:1.2.0"
 
+    // Networking
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
 }

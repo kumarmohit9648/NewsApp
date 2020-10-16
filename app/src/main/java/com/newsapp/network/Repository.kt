@@ -13,10 +13,14 @@ import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
 import com.newsapp.model.search.SearchRequest
+import com.newsapp.model.section.SectionItem
+import com.newsapp.model.section.SectionItemRequest
 import com.newsapp.model.submenu.SubMenuCategories
 import com.newsapp.model.submenu.SubMenuRequest
 import com.newsapp.network.interfaces.Api
 import com.newsapp.network.retrofit.SafeApiRequest
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
@@ -131,19 +135,35 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         return response
     }
 
+    suspend fun getSectionItem(request: SectionItemRequest): SectionItem {
+        var response = SectionItem(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.getSectionItem(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
     suspend fun uploadContent(
-        auth_token: String,
-        title: String,
-        content: String,
-        state: String,
-        district: String,
-        village: String,
-        address: String
+        image_file: MultipartBody.Part,
+        video_file: MultipartBody.Part,
+        audio_file: MultipartBody.Part,
+        auth_token: RequestBody,
+        title: RequestBody,
+        content: RequestBody,
+        state: RequestBody,
+        district: RequestBody,
+        village: RequestBody,
+        address: RequestBody
     ): CommonResponse {
         var response = CommonResponse(null, "Network Error", false, "")
         try {
             response = apiRequest {
                 _api.uploadContent(
+                    image_file,
+                    video_file,
+                    audio_file,
                     auth_token,
                     title,
                     content,

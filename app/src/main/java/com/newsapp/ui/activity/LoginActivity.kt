@@ -50,7 +50,7 @@ class LoginActivity : BaseActivity() {
                     toast(it.message)
             } catch (e: Exception) {
             } finally {
-                binding.progressBar.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             }
         })
 

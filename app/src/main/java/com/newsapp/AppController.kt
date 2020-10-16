@@ -2,6 +2,8 @@ package com.newsapp
 
 import android.app.Application
 import android.content.ContextWrapper
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.HiltAndroidApp
 
@@ -13,6 +15,9 @@ class AppController : Application() {
 
         // Initialize Easy Preference
         initSharedPref()
+
+        AndroidNetworking.initialize(applicationContext);
+        AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
     }
 
     private fun initSharedPref() {

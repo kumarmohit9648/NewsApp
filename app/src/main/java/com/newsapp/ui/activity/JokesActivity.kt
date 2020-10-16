@@ -1,9 +1,15 @@
 package com.newsapp.ui.activity
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import com.newsapp.constants.AppConstant
 import com.newsapp.databinding.ActivityJokesBinding
+import com.newsapp.model.section.SectionItemRequest
 import com.newsapp.ui.BaseActivity
 import com.newsapp.ui.adapter.JokesAdapter
+import com.newsapp.ui.vm.JokesViewModel
+import com.newsapp.util.toast
+import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_jokes.*
 
@@ -11,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_jokes.*
 class JokesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityJokesBinding
+    private val viewModel: JokesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +30,25 @@ class JokesActivity : BaseActivity() {
             finish()
         }
 
-        recyclerJokes.adapter = JokesAdapter(this, null)
+        setData()
 
+        viewModel.getSectionItemResponse.observe(this, {
+            if (it.status) {
+                if (it.data != null) {
+                    recyclerJokes.adapter = JokesAdapter(this, it.data)
+                }
+            }
+            toast(it.message)
+        })
+
+    }
+
+    private fun setData() {
+        viewModel.getSectionItem(
+            SectionItemRequest(
+                Prefs.getString(AppConstant.AUTH_TOKEN, ""),
+                "1"
+            )
+        )
     }
 }

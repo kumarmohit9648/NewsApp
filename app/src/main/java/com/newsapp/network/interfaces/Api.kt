@@ -13,14 +13,18 @@ import com.newsapp.model.posts.*
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
 import com.newsapp.model.search.SearchRequest
+import com.newsapp.model.section.SectionItem
+import com.newsapp.model.section.SectionItemRequest
 import com.newsapp.model.submenu.SubMenuCategories
 import com.newsapp.model.submenu.SubMenuRequest
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface Api {
 
@@ -57,16 +61,22 @@ interface Api {
     @POST("search-news")
     suspend fun searchNews(@Body searchRequest: SearchRequest): Response<Posts>
 
-    @FormUrlEncoded
+    @POST("get-section-item")
+    suspend fun getSectionItem(@Body sectionItemRequest: SectionItemRequest): Response<SectionItem>
+
+    @Multipart
     @POST("upload-content")
     suspend fun uploadContent(
-        @Field("auth_token") auth_token: String,
-        @Field("title") title: String,
-        @Field("content") content: String,
-        @Field("state") state: String,
-        @Field("district") district: String,
-        @Field("village") village: String,
-        @Field("address") address: String,
+        @Part image_file: MultipartBody.Part,
+        @Part video_file: MultipartBody.Part,
+        @Part audio_file: MultipartBody.Part,
+        @Part("auth_token") auth_token: RequestBody,
+        @Part("title") title: RequestBody,
+        @Part("content") content: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("district") district: RequestBody,
+        @Part("village") village: RequestBody,
+        @Part("address") address: RequestBody,
     ): Response<CommonResponse>
 
     class CustomInterceptor : Interceptor {

@@ -38,19 +38,12 @@ class NewsFeedAdapter(private val context: Context, private var list: MutableLis
         Glide.with(context).load("http://dbpnews.knovatik.com/" + model.image_big)
             .into(holder.itemView.imageView)
         holder.itemView.textView3.text = model.title
-        // TODO : make dynamic update time
         holder.itemView.updatedTime.text = model.aging
         holder.itemView.setOnClickListener {
             val intent =
-                /*val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    context as Activity,
-                    holder.itemView.imageView,
-                    "news_feed"
-                )*/
                 context.startActivity(
                     Intent(context, NewsDetailActivity::class.java)
                         .putExtra(AppConstant.VIDEO_ID, model.id)
-                    /*, option.toBundle()*/
                 )
         }
     }

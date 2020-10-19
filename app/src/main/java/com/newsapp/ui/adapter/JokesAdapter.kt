@@ -3,6 +3,9 @@ package com.newsapp.ui.adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +16,6 @@ import cn.jzvd.Jzvd
 import com.bumptech.glide.Glide
 import com.newsapp.R
 import com.newsapp.model.section.Data
-import com.newsapp.util.Helper
 import kotlinx.android.synthetic.main.recycler_audio.view.*
 import kotlinx.android.synthetic.main.recycler_jokes.view.*
 import kotlinx.android.synthetic.main.recycler_video.view.*
@@ -22,6 +24,13 @@ class JokesAdapter(
     private var context: Context,
     private var list: List<Data>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val TAG = "JokesAdapter"
+    }
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var currentMusicId = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
@@ -69,7 +78,7 @@ class JokesAdapter(
             else -> {
                 return VideoHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.recycler_jokes,
+                        R.layout.recycler_video,
                         parent,
                         false
                     )
@@ -84,44 +93,85 @@ class JokesAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = list[position]
-        when (holder.itemViewType) {
-            // CONTENT
-            1 -> {
-                holder.itemView.view.setBackgroundColor(Color.parseColor(data.color))
-                holder.itemView.tvJokes.text = HtmlCompat.fromHtml(
-                    data.content,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-                holder.itemView.ivShare.setOnClickListener {
-                    val shareIntent = Intent()
-                    shareIntent.action = Intent.ACTION_SEND
-                    shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, data.link)
-                    context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+        try {
+            when (holder.itemViewType) {
+                // CONTENT
+                1 -> {
+                    holder.itemView.view.setBackgroundColor(Color.parseColor(data.color))
+                    holder.itemView.tvJokes.text = HtmlCompat.fromHtml(
+                        data.content,
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                    holder.itemView.ivShare.setOnClickListener {
+                        val shareIntent = Intent()
+                        shareIntent.action = Intent.ACTION_SEND
+                        shareIntent.type = "text/plain"
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, data.link)
+                        context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+                    }
+                }
+                // AUDIO
+                2 -> {
+                    holder.itemView.musicName.text = HtmlCompat.fromHtml(
+                        data.content,
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+
+                    if (data.isPlay == 0)
+                        Glide.with(context).load(R.drawable.ic_play_button)
+                            .into(holder.itemView.ivPlay)
+                    else
+                        Glide.with(context).load(R.drawable.ic_pause_button)
+                            .into(holder.itemView.ivPlay)
+
+                    holder.itemView.setOnClickListener {
+                        if (mediaPlayer != null) {
+                            if (mediaPlayer?.isPlaying!!) {
+                                mediaPlayer?.stop()
+                            }
+                        }
+                        if (currentMusicId != position) {
+                            mediaPlayer = MediaPlayer().apply {
+                                setAudioAttributes(
+                                    AudioAttributes.Builder()
+                                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                                        .build()
+                                )
+                                setDataSource(data.content_url)
+                                prepare() // might take long! (for buffering, etc)
+                            }
+                            mediaPlayer?.start()
+                            list[currentMusicId].isPlay = 0
+                            list[position].isPlay = 1
+                            currentMusicId = position
+                        } else {
+                            list[currentMusicId].isPlay = 0
+                        }
+                        notifyDataSetChanged()
+                    }
+                }
+                // VIDEO
+                3 -> {
+                    val jzDataSource = JZDataSource(data.content_url)
+                    jzDataSource.looping = true
+                    holder.itemView.videoPlayer.setUp(jzDataSource, Jzvd.SCREEN_NORMAL)
+                    // Glide.with(context).load(Helper.retrieveVideoFrameFromVideo(data.video_url)).into(holder.itemView.videoPlayer.posterImageView)
+                }
+                // IMAGE
+                4 -> {
+                    // holder.itemView
+                }
+                // DEFAULT
+                else -> {
+                    val jzDataSource = JZDataSource(data.content_url)
+                    jzDataSource.looping = true
+                    holder.itemView.videoPlayer.setUp(jzDataSource, Jzvd.SCREEN_NORMAL)
+                    // Glide.with(context).load(Helper.retrieveVideoFrameFromVideo(data.video_url)).into(holder.itemView.videoPlayer.posterImageView)
                 }
             }
-            // AUDIO
-            2 -> {
-                holder.itemView.musicName.text = data.content
-            }
-            // VIDEO
-            3 -> {
-                val jzDataSource = JZDataSource(data.content_url)
-                jzDataSource.looping = true
-                holder.itemView.videoPlayer.setUp(jzDataSource, Jzvd.SCREEN_NORMAL)
-                // Glide.with(context).load(Helper.retrieveVideoFrameFromVideo(data.video_url)).into(holder.itemView.videoPlayer.posterImageView)
-            }
-            // IMAGE
-            4 -> {
-                // holder.itemView
-            }
-            // DEFAULT
-            else -> {
-                val jzDataSource = JZDataSource(data.content_url)
-                jzDataSource.looping = true
-                holder.itemView.videoPlayer.setUp(jzDataSource, Jzvd.SCREEN_NORMAL)
-                // Glide.with(context).load(Helper.retrieveVideoFrameFromVideo(data.video_url)).into(holder.itemView.videoPlayer.posterImageView)
-            }
+        } catch (e: Exception) {
+            Log.e(TAG, "onBindViewHolder: " + e.message)
         }
     }
 

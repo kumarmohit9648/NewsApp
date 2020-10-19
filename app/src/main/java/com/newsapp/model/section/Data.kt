@@ -9,5 +9,6 @@ data class Data(
     val link: String,
     val type: Int,
     val video_url: String,
-    val section_id: String
+    val section_id: String,
+    var isPlay: Int = 0
 )

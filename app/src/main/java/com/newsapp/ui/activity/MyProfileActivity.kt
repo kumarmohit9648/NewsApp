@@ -1,5 +1,6 @@
 package com.newsapp.ui.activity
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -35,7 +36,7 @@ class MyProfileActivity : BaseActivity(),
 
     private lateinit var binding: ActivityMyProfileBinding
     private val viewModel: MyProfileViewModel by viewModels()
-    private lateinit var userDetail: Data
+    private var userDetail: Data? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +45,6 @@ class MyProfileActivity : BaseActivity(),
 
         binding.toolbar.ivBack.setOnClickListener {
             finish()
-        }
-
-        binding.userProfileImage.setOnClickListener {
-            val singleSelectionPicker: BSImagePicker =
-                BSImagePicker.Builder("com.newsapp.fileprovider")
-                    .setMaximumDisplayingImages(Integer.MAX_VALUE) // Default: Integer.MAX_VALUE. Don't worry about performance :)
-                    .setSpanCount(3) // Default: 3. This is the number of columns
-                    .setGridSpacing(Utils.dp2px(2)) // Default: 2dp. Remember to pass in a value in pixel.
-                    .setPeekHeight(Utils.dp2px(360)) // Default: 360dp. This is the initial height of the dialog.
-                    .hideGalleryTile() // Default: show. Set this if you don't want to further let user select from a gallery app. In such case, I suggest you to set maximum displaying images to Integer.MAX_VALUE.
-                    .setTag(PROFILE_IMAGE) // Default: null. Set this if you need to identify which picker is calling back your fragment / activity.
-                    .useFrontCamera() // Default: false. Launching camera by intent has no reliable way to open front camera so this does not always work.
-                    .build()
-
-            singleSelectionPicker.show(supportFragmentManager, "PICKER")
         }
 
         viewModel.getProfileResponse.observe(this, {
@@ -81,6 +67,30 @@ class MyProfileActivity : BaseActivity(),
                 }
             }
         })
+
+        binding.userProfileImage.setOnClickListener {
+            val singleSelectionPicker: BSImagePicker =
+                BSImagePicker.Builder("com.newsapp.fileprovider")
+                    .setMaximumDisplayingImages(Integer.MAX_VALUE) // Default: Integer.MAX_VALUE. Don't worry about performance :)
+                    .setSpanCount(3) // Default: 3. This is the number of columns
+                    .setGridSpacing(Utils.dp2px(2)) // Default: 2dp. Remember to pass in a value in pixel.
+                    .setPeekHeight(Utils.dp2px(360)) // Default: 360dp. This is the initial height of the dialog.
+                    .hideGalleryTile() // Default: show. Set this if you don't want to further let user select from a gallery app. In such case, I suggest you to set maximum displaying images to Integer.MAX_VALUE.
+                    .setTag(PROFILE_IMAGE) // Default: null. Set this if you need to identify which picker is calling back your fragment / activity.
+                    .useFrontCamera() // Default: false. Launching camera by intent has no reliable way to open front camera so this does not always work.
+                    .build()
+
+            singleSelectionPicker.show(supportFragmentManager, "PICKER")
+        }
+
+        binding.btnUpdateProfile.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MyProfileActivity,
+                    UpdateProfileActivity::class.java
+                ).putExtra(AppConstant.PROFILE_DETAIL, userDetail)
+            )
+        }
 
     }
 

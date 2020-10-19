@@ -8,6 +8,7 @@ import android.util.Base64
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import com.google.android.material.snackbar.Snackbar
@@ -60,4 +61,9 @@ fun getEncoded64ImageStringFromBitmap(bitmap: Bitmap): String? {
     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
     val byteFormat = stream.toByteArray()
     return Base64.encodeToString(byteFormat, Base64.NO_WRAP)
+}
+
+fun EditText.setErrorWithFocus(message: String) {
+    requestFocus()
+    error = message
 }

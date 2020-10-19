@@ -19,7 +19,7 @@ class JokesViewModel @ViewModelInject constructor(
     val getSectionItemResponse get() = _getSectionItemResponse
     fun getSectionItem(request: SectionItemRequest) {
         Coroutines.main {
-            getSectionItemResponse.postValue(repository.getSectionItem(request))
+            _getSectionItemResponse.postValue(repository.getSectionItem(request))
         }
     }
 

@@ -24,7 +24,7 @@ class DashboardViewModel @ViewModelInject constructor(
     val getMenuCategoryResponse get() = _getMenuCategoryResponse
     fun getMenuCategory() {
         Coroutines.main {
-            getMenuCategoryResponse.postValue(repository.getMenuCategory())
+            _getMenuCategoryResponse.postValue(repository.getMenuCategory())
         }
     }
 
@@ -32,7 +32,7 @@ class DashboardViewModel @ViewModelInject constructor(
     val getSubcategoryListResponse get() = _getSubcategoryListResponse
     fun getSubcategoryList(subMenuRequest: SubMenuRequest) {
         Coroutines.main {
-            getSubcategoryListResponse.postValue(repository.getSubcategoryList(subMenuRequest))
+            _getSubcategoryListResponse.postValue(repository.getSubcategoryList(subMenuRequest))
         }
     }
 
@@ -40,7 +40,7 @@ class DashboardViewModel @ViewModelInject constructor(
     val getPostsResponse get() = _getPostsResponse
     fun getPosts(postsRequest: PostsRequest) {
         Coroutines.main {
-            getPostsResponse.postValue(repository.getPosts(postsRequest))
+            _getPostsResponse.postValue(repository.getPosts(postsRequest))
         }
     }
 
@@ -48,7 +48,7 @@ class DashboardViewModel @ViewModelInject constructor(
     val getNotificationCountResponse get() = _getNotificationCountResponse
     fun getNotificationCount(authToken: AuthToken) {
         Coroutines.main {
-            getNotificationCountResponse.postValue(repository.getNotificationCount(authToken))
+            _getNotificationCountResponse.postValue(repository.getNotificationCount(authToken))
         }
     }
 

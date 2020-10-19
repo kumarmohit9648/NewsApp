@@ -3,6 +3,7 @@ package com.newsapp.ui.activity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import cn.jzvd.Jzvd
@@ -48,16 +49,19 @@ class JokesActivity : BaseActivity() {
         setData(sectionId)
 
         val viewPagerLayoutManager = ViewPagerLayoutManager(this, OrientationHelper.VERTICAL)
+        val linearLayoutManager = LinearLayoutManager(this)
 
         viewModel.getSectionItemResponse.observe(this, {
             if (it.status) {
                 if (it.data != null) {
                     if (sectionId == "3")
                         binding.recyclerJokes.layoutManager = viewPagerLayoutManager
+                    else
+                        binding.recyclerJokes.layoutManager = linearLayoutManager
                     binding.recyclerJokes.adapter = JokesAdapter(this, it.data)
                 }
-            }
-            toast(it.message)
+            } else
+                toast(it.message)
         })
 
         viewPagerLayoutManager.setOnViewPagerListener(object : OnViewPagerListener {

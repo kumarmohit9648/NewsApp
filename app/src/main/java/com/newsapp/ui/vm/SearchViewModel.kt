@@ -19,7 +19,7 @@ class SearchViewModel @ViewModelInject constructor(
     val searchNewsResponse get() = _searchNewsResponse
     fun searchNews(searchRequest: SearchRequest) {
         Coroutines.main {
-            searchNewsResponse.postValue(repository.searchNews(searchRequest))
+            _searchNewsResponse.postValue(repository.searchNews(searchRequest))
         }
     }
 

@@ -2,6 +2,7 @@ package com.newsapp.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
@@ -81,9 +82,13 @@ class DashboardActivity : BaseActivity() {
                     }
                 }
             } catch (e: Exception) {
+                Log.e(TAG, "getMenuCategory: ", e)
+            } finally {
+                binding.layoutDashboard.progressBar.visibility = View.GONE
             }
         })
         viewModel.getMenuCategory()
+        binding.layoutDashboard.progressBar.visibility = View.VISIBLE
     }
 
     private fun setupBadge(count: Int) {
@@ -122,35 +127,41 @@ class DashboardActivity : BaseActivity() {
             startActivity(Intent(this@DashboardActivity, MyProfileActivity::class.java))
         }
 
+        binding.drawerLayout.logout.setOnClickListener {
+            Prefs.putBoolean(AppConstant.IS_LOGIN, false)
+            startActivity(Intent(this@DashboardActivity, LoginOptionActivity::class.java))
+            finishAffinity()
+        }
+
     }
 
     private fun setUpViewPager(viewpager: ViewPager, menuCategories: List<Data>) {
         viewpager.setPageTransformer(true, ZoomOutPageTransformer())
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        for (i in menuCategories) {
+        for (i in 0..menuCategories.size - 3) {
             var fragment: Fragment? = null
             val bundle = Bundle()
-            bundle.putString(AppConstant.CATEGORY_ID, i.id)
-            when (i.is_menu) {
+            bundle.putString(AppConstant.CATEGORY_ID, menuCategories[i].id)
+            when (menuCategories[i].is_menu) {
                 "1" -> {
                     fragment = SubCategoryFragment.newInstance()
                     fragment.arguments = bundle
-                    adapter.addFrag(fragment, i.name)
+                    adapter.addFrag(fragment, menuCategories[i].name)
                 }
                 "2" -> {
                     fragment = TimePassFragment.newInstance()
                     fragment.arguments = bundle
-                    adapter.addFrag(fragment, i.name)
+                    adapter.addFrag(fragment, menuCategories[i].name)
                 }
                 "3" -> {
                     fragment = CitizenReporterFragment.newInstance(supportFragmentManager)
                     fragment.arguments = bundle
-                    adapter.addFrag(fragment, i.name)
+                    adapter.addFrag(fragment, menuCategories[i].name)
                 }
                 else -> {
                     fragment = TabFragment.newInstance()
                     fragment.arguments = bundle
-                    adapter.addFrag(fragment, i.name)
+                    adapter.addFrag(fragment, menuCategories[i].name)
                 }
             }
         }

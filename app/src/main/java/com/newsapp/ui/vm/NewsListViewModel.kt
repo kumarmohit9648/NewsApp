@@ -19,7 +19,7 @@ class NewsListViewModel @ViewModelInject constructor(
     val getPostsResponse get() = _getPostsResponse
     fun getPosts(postsRequest: PostsRequest) {
         Coroutines.main {
-            getPostsResponse.postValue(repository.getPosts(postsRequest))
+            _getPostsResponse.postValue(repository.getPosts(postsRequest))
         }
     }
 

@@ -19,7 +19,7 @@ class LoginViewModel @ViewModelInject constructor(
     val loginResponse get() = _loginResponse
     fun login(request: LoginRequest) {
         Coroutines.main {
-            loginResponse.postValue(repository.login(request))
+            _loginResponse.postValue(repository.login(request))
         }
     }
 

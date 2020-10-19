@@ -33,6 +33,8 @@ class AppConstant {
         var pictureResult: PictureResult? = null
         var videoResult: VideoResult? = null
 
+        const val PROFILE_DETAIL = "profile_detail"
+
         val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy_hh:mm", Locale.ENGLISH)
     }
 }

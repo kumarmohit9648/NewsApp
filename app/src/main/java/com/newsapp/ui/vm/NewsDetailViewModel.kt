@@ -23,7 +23,7 @@ class NewsDetailViewModel @ViewModelInject constructor(
     val getPostsDetailResponse get() = _getPostsDetailResponse
     fun getPostsDetail(postDetailRequest: PostDetailRequest) {
         Coroutines.main {
-            getPostsDetailResponse.postValue(repository.getPostsDetail(postDetailRequest))
+            _getPostsDetailResponse.postValue(repository.getPostsDetail(postDetailRequest))
         }
     }
 
@@ -31,7 +31,7 @@ class NewsDetailViewModel @ViewModelInject constructor(
     val savePostLikeStatusResponse get() = _savePostLikeStatusResponse
     fun savePostLikeStatus(likeRequest: LikeRequest) {
         Coroutines.main {
-            savePostLikeStatusResponse.postValue(repository.savePostLikeStatus(likeRequest))
+            _savePostLikeStatusResponse.postValue(repository.savePostLikeStatus(likeRequest))
         }
     }
 
@@ -39,7 +39,7 @@ class NewsDetailViewModel @ViewModelInject constructor(
     val savePostCommentResponse get() = _savePostCommentResponse
     fun savePostComment(commentRequest: CommentRequest) {
         Coroutines.main {
-            savePostCommentResponse.postValue(repository.savePostComment(commentRequest))
+            _savePostCommentResponse.postValue(repository.savePostComment(commentRequest))
         }
     }
 

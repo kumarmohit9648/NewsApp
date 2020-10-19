@@ -19,7 +19,7 @@ class RegisterViewModel @ViewModelInject constructor(
     val userRegistrationResponse get() = _userRegistrationResponse
     fun userRegistration(registerRequest: RegisterRequest) {
         Coroutines.main {
-            userRegistrationResponse.postValue(repository.userRegistration(registerRequest))
+            _userRegistrationResponse.postValue(repository.userRegistration(registerRequest))
         }
     }
 

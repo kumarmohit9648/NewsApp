@@ -5,21 +5,21 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.newsapp.model.AuthToken
-import com.newsapp.model.notification.Notification
+import com.newsapp.model.profile.ProfileDetail
+import com.newsapp.model.profile.UpdateProfile
 import com.newsapp.network.Repository
 import com.newsapp.network.utils.Coroutines
 
-class NotificationViewModel @ViewModelInject constructor(
+class UpdateProfileViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
-    private var _getNotificationListResponse = MutableLiveData<Notification>()
-    val getNotificationListResponse get() = _getNotificationListResponse
-    fun getNotificationList(request: AuthToken) {
+    private var _updateProfileResponse = MutableLiveData<ProfileDetail>()
+    val updateProfileResponse get() = _updateProfileResponse
+    fun updateProfile(request: UpdateProfile) {
         Coroutines.main {
-            _getNotificationListResponse.postValue(repository.getNotificationList(request))
+            _updateProfileResponse.postValue(repository.updateProfile(request))
         }
     }
 

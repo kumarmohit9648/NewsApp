@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.newsapp.util.CustomJzvd.JzvdStdTikTok
-        android:id="@+id/videoplayer"
+        android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -38,24 +38,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNetworkInterceptors(@ApplicationContext context: Context): NetworkInterceptors {
-        return NetworkInterceptors(context = context)
-    }
-
-    @Singleton
-    @Provides
-    fun provideCustomInterceptor(): Api.CustomInterceptor {
-        return Api.CustomInterceptor()
-    }
-
-    @Singleton
-    @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor()
-    }
-
-    @Singleton
-    @Provides
     fun provideOkHttpClient(
         networkInterceptors: NetworkInterceptors,
         headerInterceptor: Api.CustomInterceptor,
@@ -66,6 +48,24 @@ object AppModule {
             .addInterceptor(headerInterceptor)
             .addInterceptor(interceptor)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkInterceptors(@ApplicationContext context: Context): NetworkInterceptors {
+        return NetworkInterceptors(context = context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCustomInterceptor(): Api.CustomInterceptor {
+        return Api.CustomInterceptor()
     }
 
 }

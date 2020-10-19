@@ -27,6 +27,9 @@ class AppConstant {
         const val FRAGMENT_CITIZEN_REPORTER = "fragment_citizen_reporter"
         const val FRAGMENT_OTHER = "fragment_other"
 
+        const val SECTION_NAME = "section_name"
+        const val SECTION_ID = "section_id"
+
         var pictureResult: PictureResult? = null
         var videoResult: VideoResult? = null
 

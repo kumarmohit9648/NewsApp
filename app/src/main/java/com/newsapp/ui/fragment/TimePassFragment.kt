@@ -1,16 +1,15 @@
 package com.newsapp.ui.fragment
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import com.newsapp.R
+import com.newsapp.constants.AppConstant
 import com.newsapp.ui.activity.JokesActivity
-import com.newsapp.ui.activity.TikTokActivity
+import com.newsapp.util.loadUrl
 import kotlinx.android.synthetic.main.fragment_time_pass.*
 
 class TimePassFragment : Fragment() {
@@ -31,38 +30,64 @@ class TimePassFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cvJokes.setOnClickListener {
-            requireContext().startActivity(Intent(requireContext(), JokesActivity::class.java))
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "चुटकुले")
+                    .putExtra(AppConstant.SECTION_ID, "1")
+            )
         }
         cvMusic.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "संगीत")
+                    .putExtra(AppConstant.SECTION_ID, "2")
+            )
         }
         cvVideo.setOnClickListener {
-            requireContext().startActivity(Intent(requireContext(), TikTokActivity::class.java))
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "वीडियो")
+                    .putExtra(AppConstant.SECTION_ID, "3")
+            )
         }
         cvPopular.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "फिल्म")
+                    .putExtra(AppConstant.SECTION_ID, "4")
+            )
         }
         cvBhakti.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "भक्ति")
+                    .putExtra(AppConstant.SECTION_ID, "5")
+            )
         }
         cvFilmy.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "वायरल")
+                    .putExtra(AppConstant.SECTION_ID, "7")
+            )
         }
         cvAstrology.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "ज्योतिष")
+                    .putExtra(AppConstant.SECTION_ID, "8")
+            )
         }
         cvRadio.setOnClickListener {
-            loadUrl("http://radio.garden/")
+            requireContext().loadUrl("http://radio.garden/")
         }
         cvLifestyle.setOnClickListener {
-
+            requireContext().startActivity(
+                Intent(requireContext(), JokesActivity::class.java)
+                    .putExtra(AppConstant.SECTION_NAME, "लाइफस्टाइल")
+                    .putExtra(AppConstant.SECTION_ID, "2")
+            )
         }
-    }
-
-    private fun loadUrl(url: String) {
-        val builder = CustomTabsIntent.Builder();
-        val customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(requireContext(), Uri.parse(url));
     }
 
 }

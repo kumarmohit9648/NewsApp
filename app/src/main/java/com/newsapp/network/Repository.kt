@@ -10,6 +10,9 @@ import com.newsapp.model.login.LoginRequest
 import com.newsapp.model.menu.MenuCategories
 import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
+import com.newsapp.model.profile.ProfileDetail
+import com.newsapp.model.profile.UpdateProfile
+import com.newsapp.model.profile.UpdateProfileImage
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
 import com.newsapp.model.search.SearchRequest
@@ -139,6 +142,36 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         var response = SectionItem(null, "Network Error", false, "")
         try {
             response = apiRequest { _api.getSectionItem(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun getProfile(request: AuthToken): ProfileDetail {
+        var response = ProfileDetail(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.getProfile(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun updateProfile(request: UpdateProfile): ProfileDetail {
+        var response = ProfileDetail(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.updateProfile(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun updateProfileImage(request: UpdateProfileImage): CommonResponse {
+        var response = CommonResponse(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.updateProfileImage(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }

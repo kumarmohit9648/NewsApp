@@ -58,7 +58,7 @@ class TikTokActivity : BaseActivity() {
         if (binding.rvTiktok.getChildAt(0) == null) {
             return
         }
-        val player: JzvdStdTikTok = binding.rvTiktok.getChildAt(0).findViewById(R.id.videoplayer)
+        val player: JzvdStdTikTok = binding.rvTiktok.getChildAt(0).findViewById(R.id.videoPlayer)
         player.startVideoAfterPreloading()
     }
 

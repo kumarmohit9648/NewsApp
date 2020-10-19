@@ -2,10 +2,16 @@ package com.newsapp.util
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Base64
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
+import com.google.android.material.snackbar.Snackbar
+import java.io.ByteArrayOutputStream
 import kotlin.math.abs
 
 fun likeCountFormat(number: String): String {
@@ -33,4 +39,25 @@ fun String?.isValidEmail(email: String) =
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Context.loadUrl(url: String) {
+    val builder = CustomTabsIntent.Builder();
+    val customTabsIntent = builder.build();
+    customTabsIntent.launchUrl(this, Uri.parse(url));
+}
+
+fun View.snackbar(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).also { snackbar ->
+        snackbar.setAction("Dismiss") {
+            snackbar.dismiss()
+        }
+    }.show()
+}
+
+fun getEncoded64ImageStringFromBitmap(bitmap: Bitmap): String? {
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+    val byteFormat = stream.toByteArray()
+    return Base64.encodeToString(byteFormat, Base64.NO_WRAP)
 }

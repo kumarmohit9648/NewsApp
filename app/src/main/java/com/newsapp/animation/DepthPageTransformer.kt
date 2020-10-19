@@ -1,4 +1,4 @@
-package com.newsapp.helper
+package com.newsapp.animation
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.newsapp.R
+import com.newsapp.animation.ZoomOutPageTransformer
 import com.newsapp.constants.AppConstant
 import com.newsapp.databinding.ActivityDashboardBinding
-import com.newsapp.helper.ZoomOutPageTransformer
 import com.newsapp.model.AuthToken
 import com.newsapp.model.menu.Data
 import com.newsapp.network.utils.Coroutines
@@ -116,6 +116,10 @@ class DashboardActivity : BaseActivity() {
 
         binding.drawerLayout.settings.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
+        }
+
+        binding.drawerLayout.profile.setOnClickListener {
+            startActivity(Intent(this@DashboardActivity, MyProfileActivity::class.java))
         }
 
     }

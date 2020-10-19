@@ -10,6 +10,9 @@ import com.newsapp.model.login.LoginRequest
 import com.newsapp.model.menu.MenuCategories
 import com.newsapp.model.notification.Notification
 import com.newsapp.model.posts.*
+import com.newsapp.model.profile.ProfileDetail
+import com.newsapp.model.profile.UpdateProfile
+import com.newsapp.model.profile.UpdateProfileImage
 import com.newsapp.model.register.RegisterRequest
 import com.newsapp.model.register.RegisterResponse
 import com.newsapp.model.search.SearchRequest
@@ -63,6 +66,15 @@ interface Api {
 
     @POST("get-section-item")
     suspend fun getSectionItem(@Body sectionItemRequest: SectionItemRequest): Response<SectionItem>
+
+    @POST("get-profile")
+    suspend fun getProfile(@Body request: AuthToken): Response<ProfileDetail>
+
+    @POST("update-profile")
+    suspend fun updateProfile(@Body request: UpdateProfile): Response<ProfileDetail>
+
+    @POST("update-profile-image")
+    suspend fun updateProfileImage(@Body request: UpdateProfileImage): Response<CommonResponse>
 
     @Multipart
     @POST("upload-content")

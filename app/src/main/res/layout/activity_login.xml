@@ -112,18 +112,17 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/forRegister"
+                android:id="@+id/forgetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:padding="8dp"
-                android:text="पंजीकरण करें"
+                android:text="पासवर्ड भूल गए?"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

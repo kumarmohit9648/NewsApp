@@ -48,19 +48,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.newsapp.ui.camera.MessageView
+    <com.knovatik.navadesh.ui.camera.MessageView
         android:id="@+id/nativeCaptureResolution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <com.newsapp.ui.camera.MessageView
+    <com.knovatik.navadesh.ui.camera.MessageView
         android:id="@+id/captureLatency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <com.newsapp.ui.camera.MessageView
+    <com.knovatik.navadesh.ui.camera.MessageView
         android:id="@+id/exifRotation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

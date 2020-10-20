@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawerLayout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -14,14 +14,15 @@
         layout="@layout/layout_dashboard" />
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="24dp"
         android:fitsSystemWindows="true">
 
-        <include layout="@layout/navigation_drawer_dashboard" />
+        <include
+            android:id="@+id/drawer"
+            layout="@layout/navigation_drawer_dashboard" />
 
     </com.google.android.material.navigation.NavigationView>
 

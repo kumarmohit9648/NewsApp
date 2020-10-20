@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.newsapp.util.CustomJzvd.JzvdStdTikTok
+    <com.knovatik.navadesh.util.CustomJzvd.JzvdStdTikTok
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

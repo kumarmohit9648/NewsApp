@@ -11,7 +11,6 @@ import com.knovatik.navadesh.model.register.RegisterRequest
 import com.knovatik.navadesh.ui.BaseActivity
 import com.knovatik.navadesh.ui.vm.RegisterViewModel
 import com.knovatik.navadesh.util.toast
-import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +28,17 @@ class RegisterActivity : BaseActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val isSocial = intent.getBooleanExtra(AppConstant.IS_SOCIAL, false)
+        val username = intent.getStringExtra(AppConstant.USERNAME)
+        val email = intent.getStringExtra(AppConstant.EMAIL)
+
+        if (isSocial) {
+            binding.userName.setText(username)
+            binding.userName.isEnabled = false
+            binding.userEmail.setText(email)
+            binding.userEmail.isEnabled = false
+        }
+
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -37,15 +47,16 @@ class RegisterActivity : BaseActivity() {
             try {
                 if (it.status) {
                     if (it.data != null) {
-                        Prefs.putString(AppConstant.AUTH_TOKEN, it.data.token)
-                        Prefs.putBoolean(AppConstant.IS_LOGIN, true)
+                        // Prefs.putString(AppConstant.AUTH_TOKEN, it.data.token)
+                        // Prefs.putBoolean(AppConstant.IS_LOGIN, true)
                         startActivity(
                             Intent(
                                 this@RegisterActivity,
-                                DashboardActivity::class.java
+                                ForgetPasswordActivity::class.java
                             )
+                                .putExtra(AppConstant.MOBILE_NUMBER, it.data.mobile_no)
+                                .putExtra(AppConstant.EMAIL, it.data.email)
                         )
-                        finishAffinity()
                     }
                 } else
                     toast(it.message)

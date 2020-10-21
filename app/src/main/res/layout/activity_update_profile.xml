@@ -45,29 +45,33 @@
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
+                android:focusable="false"
+                android:inputType="none"
                 android:singleLine="true" />
-
-            <!--<TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile Number"
-                    android:textColor="@android:color/black" />
-
-            <EditText
-                    android:id="@+id/user_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:singleLine="true" />-->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gender"
+                android:text="Mobile Number"
                 android:textColor="@android:color/black" />
 
-            <RadioGroup
+            <EditText
+                android:id="@+id/user_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:singleLine="true" />
+
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textColor="@android:color/black" />-->
+
+            <!--<RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +99,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
 
-            </RadioGroup>
+            </RadioGroup>-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true" />
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pincode"
@@ -157,7 +161,7 @@
                 android:id="@+id/user_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true" />
+                android:singleLine="true" />-->
 
             <Button
                 android:id="@+id/user_btn"

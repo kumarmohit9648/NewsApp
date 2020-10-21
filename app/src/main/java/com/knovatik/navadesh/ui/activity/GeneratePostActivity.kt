@@ -1,21 +1,32 @@
 package com.knovatik.navadesh.ui.activity
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
+import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
+import com.knovatik.navadesh.BuildConfig
 import com.knovatik.navadesh.R
 import com.knovatik.navadesh.constants.AppConstant
 import com.knovatik.navadesh.databinding.ActivityGeneratePostBinding
-import com.knovatik.navadesh.ui.BaseActivity
-import com.knovatik.navadesh.ui.camera.CameraActivity
 import com.knovatik.navadesh.ui.vm.GeneratePostViewModel
-import com.knovatik.navadesh.util.FilePath
+import com.knovatik.navadesh.util.compressImageFile
 import com.knovatik.navadesh.util.toast
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -23,19 +34,30 @@ import java.io.File
 import java.util.*
 
 @AndroidEntryPoint
-class GeneratePostActivity : BaseActivity() {
+class GeneratePostActivity : ParentActivity() {
 
     companion object {
         private const val TAG = "GeneratePostActivity"
-        private const val TAKE_PHOTO = "1"
-        private const val TAKE_VIDEO = "2"
-        private const val BROWSE_PHOTO = "3"
-        private const val BROWSE_VIDEO = "4"
-        private const val BROWSE_AUDIO = "5"
-        private const val REQUEST_PHOTO = 97
-        private const val REQUEST_VIDEO = 98
-        private const val REQUEST_AUDIO = 99
+        private const val IS_PHOTO = "91"
+        private const val IS_VIDEO = "92"
+        private const val IS_AUDIO = "93"
+        // private const val TAKE_PHOTO = "1"
+        // private const val TAKE_VIDEO = "2"
+        // private const val BROWSE_PHOTO = "3"
+        // private const val BROWSE_VIDEO = "4"
+        // private const val BROWSE_AUDIO = "5"
+        // private const val REQUEST_PHOTO = 97
+        // private const val REQUEST_VIDEO = 98
+        // private const val REQUEST_AUDIO = 99
+
+        private const val REQ_CAPTURE = 100
+        private const val RES_IMAGE = 100
     }
+
+    private var queryImageUrl: String = ""
+    private var imgPath: String = ""
+    private var imageUri: Uri? = null
+    private val permissions = arrayOf(Manifest.permission.CAMERA)
 
     private val viewModel: GeneratePostViewModel by viewModels()
     private lateinit var binding: ActivityGeneratePostBinding
@@ -65,46 +87,64 @@ class GeneratePostActivity : BaseActivity() {
             }
         })
 
-        binding.btnImageDirect.setOnClickListener {
-            _chooseFile = TAKE_PHOTO
-            binding.chooseFile.text = "इमेज उप्लोडेड"
-            startActivity(
-                Intent(this, CameraActivity::class.java)
-                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.PHOTO)
-            )
+        binding.btnImage.setOnClickListener {
+            if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
+                chooseImage()
+            }
         }
-        binding.btnImageFile.setOnClickListener {
-            _chooseFile = BROWSE_PHOTO
-            binding.chooseFile.text = "इमेज उप्लोडेड"
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_PHOTO)
+
+        binding.btnVideo.setOnClickListener {
+            /*if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
+                chooseImage()
+            }*/
         }
-        binding.btnVideoDirect.setOnClickListener {
-            _chooseFile = TAKE_VIDEO
-            binding.chooseFile.text = "वीडियो उप्लोडेड"
-            startActivity(
-                Intent(this, CameraActivity::class.java)
-                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.VIDEO)
-            )
+
+        binding.btnAudio.setOnClickListener {
+            /*if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
+                chooseImage()
+            }*/
         }
-        binding.btnVideoFile.setOnClickListener {
-            _chooseFile = BROWSE_VIDEO
-            binding.chooseFile.text = "वीडियो उप्लोडेड"
-            val intent = Intent()
-            intent.type = "video/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_VIDEO)
-        }
-        binding.btnAudioFile.setOnClickListener {
-            _chooseFile = BROWSE_AUDIO
-            binding.chooseFile.text = "ऑडियो उप्लोडेड"
-            val intent = Intent()
-            intent.type = "audio/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_AUDIO)
-        }
+
+//        binding.btnImageDirect.setOnClickListener {
+//            _chooseFile = TAKE_PHOTO
+//            binding.chooseFile.text = "इमेज उप्लोडेड"
+//            startActivity(
+//                Intent(this, CameraActivity::class.java)
+//                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.PHOTO)
+//            )
+//        }
+//        binding.btnImageFile.setOnClickListener {
+//            _chooseFile = BROWSE_PHOTO
+//            binding.chooseFile.text = "इमेज उप्लोडेड"
+//            val intent = Intent()
+//            intent.type = "image/*"
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_PHOTO)
+//        }
+//        binding.btnVideoDirect.setOnClickListener {
+//            _chooseFile = TAKE_VIDEO
+//            binding.chooseFile.text = "वीडियो उप्लोडेड"
+//            startActivity(
+//                Intent(this, CameraActivity::class.java)
+//                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.VIDEO)
+//            )
+//        }
+//        binding.btnVideoFile.setOnClickListener {
+//            _chooseFile = BROWSE_VIDEO
+//            binding.chooseFile.text = "वीडियो उप्लोडेड"
+//            val intent = Intent()
+//            intent.type = "video/*"
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_VIDEO)
+//        }
+//        binding.btnAudioFile.setOnClickListener {
+//            _chooseFile = BROWSE_AUDIO
+//            binding.chooseFile.text = "ऑडियो उप्लोडेड"
+//            val intent = Intent()
+//            intent.type = "audio/*"
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_AUDIO)
+//        }
 
         binding.btnSubmit.setOnClickListener {
             if (validation()) {
@@ -113,7 +153,7 @@ class GeneratePostActivity : BaseActivity() {
                     var video: File? = null
                     var audio: File? = null
 
-                    if (_chooseFile == TAKE_PHOTO) {
+                    /*if (_chooseFile == TAKE_PHOTO) {
                         if (AppConstant.pictureResult != null) {
                             AppConstant.pictureResult!!.toBitmap(1000, 1000) {
                                 try {
@@ -138,7 +178,7 @@ class GeneratePostActivity : BaseActivity() {
                     }
                     if (_chooseFile == BROWSE_AUDIO) {
                         audio = _file
-                    }
+                    }*/
 
                     var name = ""
                     if (photo == null)
@@ -312,20 +352,20 @@ class GeneratePostActivity : BaseActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
             if (resultCode == RESULT_OK) {
                 when (requestCode) {
                     REQUEST_PHOTO -> {
-                         val path = FilePath.getPath(this, data.data)
+                        val path = FilePath.getPath(this, data.data)
                         _file = File(path)
-                        /*data.data.let { returnUri ->
+                        *//*data.data.let { returnUri ->
                             contentResolver.query(returnUri!!, null, null, null, null)
                                 ?.use { cursor ->
 
                                 }
-                        }*/
+                        }*//*
                     }
                     REQUEST_VIDEO -> {
                         _file = File(data.data?.path!!)
@@ -336,6 +376,144 @@ class GeneratePostActivity : BaseActivity() {
                 }
             }
         }
+    }*/
+
+    // NEW CODE
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQ_CAPTURE -> {
+                if (isAllPermissionsGranted(grantResults)) {
+                    chooseImage()
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.permission_not_granted),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RES_IMAGE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    handleImageRequest(data)
+                }
+            }
+        }
+    }
+
+    private fun chooseImage() {
+        startActivityForResult(getPickImageIntent(), RES_IMAGE)
+    }
+
+    private fun getPickImageIntent(): Intent? {
+        var chooserIntent: Intent? = null
+
+        var intentList: MutableList<Intent> = ArrayList()
+
+        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri())
+
+        intentList = addIntentsToList(this, intentList, pickIntent)
+        intentList = addIntentsToList(this, intentList, takePhotoIntent)
+
+        if (intentList.size > 0) {
+            chooserIntent = Intent.createChooser(
+                intentList.removeAt(intentList.size - 1),
+                getString(R.string.select_capture_image)
+            )
+            chooserIntent!!.putExtra(
+                Intent.EXTRA_INITIAL_INTENTS,
+                intentList.toTypedArray<Parcelable>()
+            )
+        }
+
+        return chooserIntent
+    }
+
+    private fun setImageUri(): Uri {
+        val folder = File("${getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
+        folder.mkdirs()
+
+        val calendar = AppConstant.simpleDateFormat.format(Calendar.getInstance().time)
+
+        val file = File(folder, "Image_Tmp.jpg")
+        if (file.exists())
+            file.delete()
+        file.createNewFile()
+        imageUri = FileProvider.getUriForFile(
+            this,
+            BuildConfig.APPLICATION_ID + getString(R.string.file_provider_name),
+            file
+        )
+        imgPath = file.absolutePath
+        return imageUri!!
+    }
+
+
+    private fun addIntentsToList(
+        context: Context,
+        list: MutableList<Intent>,
+        intent: Intent
+    ): MutableList<Intent> {
+        val resInfo = context.packageManager.queryIntentActivities(intent, 0)
+        for (resolveInfo in resInfo) {
+            val packageName = resolveInfo.activityInfo.packageName
+            val targetedIntent = Intent(intent)
+            targetedIntent.setPackage(packageName)
+            list.add(targetedIntent)
+        }
+        return list
+    }
+
+    private fun handleImageRequest(data: Intent?) {
+        val exceptionHandler = CoroutineExceptionHandler { _, t ->
+            t.printStackTrace()
+            binding.progressBar.visibility = View.GONE
+            Toast.makeText(
+                this,
+                t.localizedMessage ?: getString(R.string.some_err),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        GlobalScope.launch(Dispatchers.Main + exceptionHandler) {
+            binding.progressBar.visibility = View.VISIBLE
+
+            if (data?.data != null) {     //Photo from gallery
+                imageUri = data.data
+                queryImageUrl = imageUri?.path!!
+                queryImageUrl = compressImageFile(queryImageUrl, false, imageUri!!)
+            } else {
+                queryImageUrl = imgPath ?: ""
+                compressImageFile(queryImageUrl, uri = imageUri!!)
+            }
+            imageUri = Uri.fromFile(File(queryImageUrl))
+
+            if (queryImageUrl.isNotEmpty()) {
+                /*Glide.with(this@GeneratePostActivity)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .load(queryImageUrl)
+                    .into(iv_img)*/
+
+            }
+            binding.progressBar.visibility = View.GONE
+        }
+
     }
 
     override fun onDestroy() {

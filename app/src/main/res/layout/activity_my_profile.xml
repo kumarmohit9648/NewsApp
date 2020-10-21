@@ -56,7 +56,9 @@
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -125,7 +127,7 @@
                     android:padding="15dp"
                     android:textColor="@android:color/black" />
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -136,9 +138,9 @@
                     android:text="Gender : "
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" />-->
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +151,7 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:padding="15dp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black" />-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,20 +180,18 @@
                     android:padding="15dp"
                     android:textColor="@android:color/black" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <Button
                     android:id="@+id/btnUpdateProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/orange"
+                    android:backgroundTint="@color/orange"
                     android:clickable="false"
-                    android:drawablePadding="15dp"
                     android:gravity="center"
-                    android:padding="15dp"
+                    android:paddingStart="24dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="5dp"
                     android:text="Update Profile"
                     android:textColor="@android:color/white" />
 

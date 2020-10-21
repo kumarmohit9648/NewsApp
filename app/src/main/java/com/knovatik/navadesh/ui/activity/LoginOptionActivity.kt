@@ -3,7 +3,9 @@ package com.knovatik.navadesh.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -23,12 +25,16 @@ import com.google.firebase.ktx.Firebase
 import com.knovatik.navadesh.R
 import com.knovatik.navadesh.constants.AppConstant
 import com.knovatik.navadesh.databinding.ActivityLoginOptionBinding
+import com.knovatik.navadesh.model.social.SocialLoginRequest
 import com.knovatik.navadesh.ui.BaseActivity
+import com.knovatik.navadesh.ui.vm.LoginOptionViewModel
 import com.knovatik.navadesh.util.snackbar
 import com.knovatik.navadesh.util.toast
 import com.pixplicity.easyprefs.library.Prefs
+import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
+@AndroidEntryPoint
 class LoginOptionActivity : BaseActivity() {
 
     companion object {
@@ -37,10 +43,14 @@ class LoginOptionActivity : BaseActivity() {
     }
 
     private lateinit var binding: ActivityLoginOptionBinding
+    private val viewModel: LoginOptionViewModel by viewModels()
+
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private var loginManager: LoginManager? = null
     private var callbackManager: CallbackManager? = null
     private lateinit var auth: FirebaseAuth
+
+    private var isSocial = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +84,47 @@ class LoginOptionActivity : BaseActivity() {
             startActivity(Intent(this@LoginOptionActivity, RegisterActivity::class.java))
         }
 
+        viewModel.socialRegistrationResponse.observe(this, {
+            try {
+                if (it.status) {
+                    if (it.data != null) {
+                        if (it.data.token.isNullOrEmpty()) {
+                            startActivity(
+                                Intent(this@LoginOptionActivity, RegisterActivity::class.java)
+                                    .putExtra(AppConstant.IS_SOCIAL, true)
+                                    .putExtra(AppConstant.USERNAME, it.data.username)
+                                    .putExtra(AppConstant.EMAIL, it.data.email)
+                            )
+                        } else {
+                            Prefs.putString(AppConstant.AUTH_TOKEN, it.data.token)
+                            Prefs.putBoolean(AppConstant.IS_LOGIN, true)
+                            startActivity(
+                                Intent(
+                                    this@LoginOptionActivity,
+                                    DashboardActivity::class.java
+                                )
+                            )
+                            finishAffinity()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
+
+    }
+
+    private fun apiSocialLogin(username: String, email: String) {
+        viewModel.socialRegistration(
+            SocialLoginRequest(
+                user_email = email,
+                user_name = username
+            )
+        )
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun startSocialSignIn() {
@@ -135,7 +186,8 @@ class LoginOptionActivity : BaseActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
-                    //updateUI(user)
+                    apiSocialLogin(username = user?.displayName!!, email = user.email!!)
+                    // updateUI(user)
                 } else {
                     Log.w(TAG, "firebaseAuthWithGoogle: ", task.exception)
                     binding.root.snackbar("Authentication Failed.")
@@ -158,7 +210,7 @@ class LoginOptionActivity : BaseActivity() {
             map["idToken"] = token
             map["imgURL"] = bFacebookData.getString("profile_pic")!!
             Log.d(TAG, "Map: $map")
-            loginFromSocial(map)
+            apiSocialLogin(username = map["name"]!!, email = map["email"]!!)
         } catch (e: java.lang.Exception) {
             toast("Social Login Failed")
             Log.e("SOCIAL LOGIN ERROR: %s", e.localizedMessage)
@@ -212,55 +264,6 @@ class LoginOptionActivity : BaseActivity() {
             }
         }
         callbackManager?.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private fun loginFromSocial(jsonBody: Map<String, String>) {/*
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Please wwait")
-        progressDialog.setCancelable(false)
-        progressDialog.show()
-        val url = "/api/v1/auth/loginsignup/fb/go/st1"
-        val apiService: ApiInterface =
-            ApiClient.getInstance().getClient(false).create(ApiInterface::class.java)
-        val call: Call<String> = apiService.makePostRequestForm(url, jsonbody)
-        call.enqueue(object : Callback<String?>() {
-            fun onResponse(@NonNull call: Call<String?>?, @NonNull response: Response<String?>) {
-                Log.d("Response login social: %s", response.body())
-                progressDialog.dismiss()
-                Log.d("Social Login response:   %s", response.body())
-                val response1: com.app.edugorillatestseries.Modals.Response =
-                    ApiClient.getResponseModal(response.body())
-                try {
-                    //JSONObject jsonObject = new JSONObject(response1.getResult().getData());
-                    if (response1.getStatus()) {
-                        val data: String = response1.getResult().getData()
-                        val data_ = JSONObject(data)
-                        //if (data_.getString("type").equals("login")) {
-                        val rawCookies: String = response.headers().get("X-Device-Logged-In-Auth")
-                        Log.d("cookies %s", rawCookies)
-                        if (rawCookies != null) {
-                            Prefs.putString(C.KEY_COOKIE, rawCookies)
-                            Prefs.putBoolean(C.KEY_IS_LOGGED_IN, true)
-                        }
-                        getProfileCard()
-                        *//* } else if (data_.getString("type").equals("signup")) {
-                            String token = data_.getString("token");
-                            String rawCookies = response.headers().get("X-Device-Signup-Auth");
-                            startActivity(new Intent(context, VerificationActivity.class).putExtra("token", token).putExtra("mode", VerificationActivity.MODE_SOCIAL_LOGIN).putExtra("X-Device-Signup-Auth", rawCookies));
-                        }*//*
-                    } else {
-                    }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }
-
-            fun onFailure(@NonNull call: Call<String?>?, @NonNull t: Throwable) {
-                progressDialog.dismiss()
-                Utils.showSnackBarLong(login, t.localizedMessage + " Please try again!")
-                Log.e("Social Login Error %s", t.localizedMessage)
-            }
-        })*/
     }
 
     override fun onStart() {

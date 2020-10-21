@@ -24,15 +24,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.common.Priority
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -47,6 +42,7 @@ import com.knovatik.navadesh.databinding.ActivityDashboardBinding
 import com.knovatik.navadesh.model.AuthToken
 import com.knovatik.navadesh.model.menu.Data
 import com.knovatik.navadesh.model.weather.Weather
+import com.knovatik.navadesh.network.interfaces.Api
 import com.knovatik.navadesh.network.utils.Coroutines
 import com.knovatik.navadesh.ui.BaseActivity
 import com.knovatik.navadesh.ui.adapter.MenuCategoryAdapter
@@ -57,9 +53,15 @@ import com.knovatik.navadesh.ui.fragment.TimePassFragment
 import com.knovatik.navadesh.ui.vm.DashboardViewModel
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONObject
+import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.text.DateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.min
 
 @AndroidEntryPoint
@@ -67,26 +69,29 @@ class DashboardActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "DashboardActivity"
+
+        // location updates interval - 10sec
+        private const val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 10000
+
+        // fastest updates interval - 5 sec
+        // location updates will be received if another app is requesting the locations
+        // than your app can handle
+        private const val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
+
+        private const val REQUEST_CHECK_SETTINGS = 100
     }
 
     private lateinit var binding: ActivityDashboardBinding
     private val viewModel: DashboardViewModel by viewModels()
+
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
 
     // TODO: LOCATION MANAGER
 
     // TODO: LOCATION MANAGER
     // location last updated time
     private var mLastUpdateTime: String? = null
-
-    // location updates interval - 10sec
-    private val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 10000
-
-    // fastest updates interval - 5 sec
-    // location updates will be received if another app is requesting the locations
-    // than your app can handle
-    private val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
-
-    private val REQUEST_CHECK_SETTINGS = 100
 
     // bunch of location related apis
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -207,27 +212,47 @@ class DashboardActivity : BaseActivity() {
     private fun getWeather(district: String) {
         try {
             val key = "6daaaed95ed5407ca34104057202010"
-            val url = "http://api.weatherapi.com/v1/current.json?key=$key&q=$district"
+            // val url = "http://api.weatherapi.com/v1/current.json?key=$key&q=$district"
 
-            AndroidNetworking.get(url)
-                .setPriority(Priority.MEDIUM)
+            // Log.d(TAG, "getWeather: url: $url")
+
+            val api = Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl("http://api.weatherapi.com/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .getAsJSONObject(object : JSONObjectRequestListener {
-                    override fun onResponse(response: JSONObject) {
-                        val weather = Gson().fromJson(response.toString(), Weather::class.java)
-                        if (weather.error != null) {
-                            return
-                        }
-                        binding.drawer.weatherTemperature.text = " ${weather.current.temp_c}℃"
-                        Glide.with(this@DashboardActivity)
-                            .load(weather.current.condition.icon.substring(2))
-                            .into(binding.drawer.weatherImage)
-                    }
+                .create(Api::class.java)
 
-                    override fun onError(error: ANError?) {
-                        Log.e(TAG, "onError: ", error)
+            val request = api.weather(
+                key,
+                district
+            )
+
+            request.enqueue(object : Callback<Weather> {
+                override fun onResponse(call: Call<Weather>, response: Response<Weather>) {
+                    // Log.d(TAG, "onResponse: ${response.body()}")
+                    val weather = response.body() ?: return
+                    binding.drawer.weatherTemperature.text = " ${weather.current.temp_c}℃"
+                    Glide.with(this@DashboardActivity)
+                        .load("http:${weather.current.condition.icon}")
+                        .into(binding.drawer.weatherImage)
+                    if (weather.current.is_day.toInt() == 1) {
+                        Glide.with(this@DashboardActivity)
+                            .load(R.drawable.sunny)
+                            .into(binding.drawer.weatherBackground)
+                    } else {
+                        Glide.with(this@DashboardActivity)
+                            .load(R.drawable.night)
+                            .into(binding.drawer.weatherBackground)
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<Weather>, t: Throwable) {
+                    Log.e(TAG, "onFailure: ", t)
+                }
+
+            })
+
         } catch (e: Exception) {
             Log.e(TAG, "getWeather: ", e)
         }
@@ -432,6 +457,7 @@ class DashboardActivity : BaseActivity() {
                 .setTitle("Alert")
                 .setMessage("Do you really want to logout? ")
                 .setPositiveButton(android.R.string.ok) { _, _ ->
+                    Prefs.putString(AppConstant.AUTH_TOKEN, "")
                     Prefs.putBoolean(AppConstant.IS_LOGIN, false)
                     startActivity(Intent(this@DashboardActivity, LoginOptionActivity::class.java))
                     finishAffinity()

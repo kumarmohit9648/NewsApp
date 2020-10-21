@@ -43,6 +43,7 @@ class MyProfileActivity : BaseActivity(),
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbar.titleName.text = "My Profile"
         binding.toolbar.ivBack.setOnClickListener {
             finish()
         }
@@ -54,16 +55,12 @@ class MyProfileActivity : BaseActivity(),
                     userDetail = it.data
                     if (!it.data.profile_image.isNullOrEmpty())
                         Glide.with(this).load(it.data.profile_image).into(binding.userProfileImage)
-                    binding.userName.text = it.data.full_name
+                    binding.userName.text = it.data.username
                     binding.mobileNumber.text = it.data.mobile_no
-                    binding.email.text = it.data.email_id
-                    binding.gender.text = it.data.gender
-                    if (it.data.pin_code == "0")
-                        binding.address.text =
-                            "${it.data.address} ${it.data.city} ${it.data.state} ${it.data.country}"
-                    else
-                        binding.address.text =
-                            "${it.data.address} ${it.data.city} ${it.data.state} ${it.data.country}\nPin Code: ${it.data.pin_code}"
+                    binding.email.text = it.data.email
+                    // binding.gender.text = it.data.gender
+                    if (it.data.address != null)
+                        binding.address.text = it.data.address
                 }
             }
         })

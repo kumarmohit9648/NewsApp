@@ -19,6 +19,8 @@ import com.knovatik.navadesh.model.register.RegisterResponse
 import com.knovatik.navadesh.model.search.SearchRequest
 import com.knovatik.navadesh.model.section.SectionItem
 import com.knovatik.navadesh.model.section.SectionItemRequest
+import com.knovatik.navadesh.model.social.SocialLoginRequest
+import com.knovatik.navadesh.model.social.SocialProfileDetail
 import com.knovatik.navadesh.model.submenu.SubMenuCategories
 import com.knovatik.navadesh.model.submenu.SubMenuRequest
 import com.knovatik.navadesh.network.interfaces.Api
@@ -183,6 +185,16 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         var response = CommonResponse(null, "Network Error", false, "")
         try {
             response = apiRequest { _api.updateNotificationStatus(request) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun socialRegistration(request: SocialLoginRequest): SocialProfileDetail {
+        var response = SocialProfileDetail(null, "Network Error", false, "")
+        try {
+            response = apiRequest { _api.socialRegistration(request) }
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -34,21 +34,10 @@ class UpdateProfileActivity : BaseActivity() {
 
         val userDetail = intent.getSerializableExtra(AppConstant.PROFILE_DETAIL) as Data
 
-        binding.userName.setText(userDetail.full_name)
-        binding.userEmail.setText(userDetail.email_id)
-        // binding.user_number.setText(userDetail.mobile_no)
+        binding.userName.setText(userDetail.username)
+        binding.userEmail.setText(userDetail.email)
+        binding.userMobile.setText(userDetail.mobile_no)
         binding.userAddress.setText(userDetail.address)
-        binding.userPinCode.setText(userDetail.pin_code)
-        binding.userCountry.setText(userDetail.country)
-        binding.userState.setText(userDetail.state)
-        binding.userCity.setText(userDetail.city)
-
-        if (!userDetail.gender.isBlank()) {
-            if (userDetail.gender.equals("male", ignoreCase = true))
-                binding.male.isChecked = true
-            else
-                binding.female.isChecked = true
-        }
 
         hideKeyboard(binding.root)
 
@@ -60,27 +49,15 @@ class UpdateProfileActivity : BaseActivity() {
         })
 
         binding.userBtn.setOnClickListener {
-            binding.progressBar.visibility = View.VISIBLE
             if (validation()) {
-
-                val gender = if (binding.male.isChecked)
-                    "Male"
-                else
-                    "Female"
-
                 viewModel.updateProfile(
                     UpdateProfile(
-                        binding.userAddress.text.toString(),
                         Prefs.getString(AppConstant.AUTH_TOKEN, ""),
-                        binding.userCity.text.toString(),
-                        binding.userCountry.text.toString(),
-                        binding.userEmail.text.toString(),
-                        gender,
                         binding.userName.text.toString(),
-                        binding.userPinCode.text.toString(),
-                        binding.userState.text.toString()
+                        binding.userAddress.text.toString()
                     )
                 )
+                binding.progressBar.visibility = View.VISIBLE
             }
         }
 
@@ -93,23 +70,8 @@ class UpdateProfileActivity : BaseActivity() {
         } else if (TextUtils.isEmpty(binding.userEmail.text)) {
             binding.userEmail.setErrorWithFocus("Enter Email")
             return false
-        } /*else if (TextUtils.isEmpty(user_number.text)) {
-            user_number.setErrorWithFocus("Enter Mobile number")
-            return false
-        }*/ else if (TextUtils.isEmpty(binding.userAddress.text)) {
+        } else if (TextUtils.isEmpty(binding.userAddress.text)) {
             binding.userAddress.setErrorWithFocus("Enter Address")
-            return false
-        } else if (TextUtils.isEmpty(binding.userPinCode.text)) {
-            binding.userPinCode.setErrorWithFocus("Enter Pin Code")
-            return false
-        } else if (TextUtils.isEmpty(binding.userCity.text)) {
-            binding.userCity.setErrorWithFocus("Enter City")
-            return false
-        } else if (TextUtils.isEmpty(binding.userState.text)) {
-            binding.userState.setErrorWithFocus("Enter State")
-            return false
-        } else if (TextUtils.isEmpty(binding.userCountry.text)) {
-            binding.userCountry.setErrorWithFocus("Enter Country")
             return false
         }
         return true

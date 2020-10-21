@@ -30,6 +30,11 @@ class AppConstant {
         const val SECTION_NAME = "section_name"
         const val SECTION_ID = "section_id"
 
+        const val IS_SOCIAL = "is_social"
+        const val USERNAME = "username"
+        const val EMAIL = "email"
+        const val MOBILE_NUMBER = "mobile_number"
+
         var pictureResult: PictureResult? = null
         var videoResult: VideoResult? = null
 

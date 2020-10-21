@@ -16,8 +16,8 @@ class AppController : Application() {
         // Initialize Easy Preference
         initSharedPref()
 
-        AndroidNetworking.initialize(applicationContext);
-        AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
+        // AndroidNetworking.initialize(applicationContext);
+        // AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
     }
 
     private fun initSharedPref() {

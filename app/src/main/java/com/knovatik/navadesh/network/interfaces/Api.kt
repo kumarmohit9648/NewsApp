@@ -19,15 +19,25 @@ import com.knovatik.navadesh.model.register.RegisterResponse
 import com.knovatik.navadesh.model.search.SearchRequest
 import com.knovatik.navadesh.model.section.SectionItem
 import com.knovatik.navadesh.model.section.SectionItemRequest
+import com.knovatik.navadesh.model.social.SocialLoginRequest
+import com.knovatik.navadesh.model.social.SocialProfileDetail
 import com.knovatik.navadesh.model.submenu.SubMenuCategories
 import com.knovatik.navadesh.model.submenu.SubMenuRequest
+import com.knovatik.navadesh.model.weather.Weather
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface Api {
+
+    @GET("current.json?")
+    fun weather(
+        @Query("key") key: String,
+        @Query("q") district: String
+    ): Call<Weather>
 
     @POST("get-category-list")
     suspend fun getMenuCategory(): Response<MenuCategories>
@@ -76,6 +86,9 @@ interface Api {
 
     @POST("update-notification-status")
     suspend fun updateNotificationStatus(@Body request: NotificationStatus): Response<CommonResponse>
+
+    @POST("social-registration")
+    suspend fun socialRegistration(@Body request: SocialLoginRequest): Response<SocialProfileDetail>
 
     @Multipart
     @POST("upload-content")

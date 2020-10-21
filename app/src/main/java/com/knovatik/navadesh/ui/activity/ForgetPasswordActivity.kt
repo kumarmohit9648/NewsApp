@@ -1,22 +1,26 @@
 package com.knovatik.navadesh.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.knovatik.navadesh.constants.AppConstant
 import com.knovatik.navadesh.databinding.ActivityForgetPasswordBinding
 import com.knovatik.navadesh.ui.BaseActivity
 import com.knovatik.navadesh.util.hideKeyboard
 import com.knovatik.navadesh.util.setErrorWithFocus
 import com.knovatik.navadesh.util.snackbar
+import com.pixplicity.easyprefs.library.Prefs
 import org.json.JSONObject
 
 class ForgetPasswordActivity : BaseActivity() {
 
     private lateinit var binding: ActivityForgetPasswordBinding
     private var mobile = ""
+    private var email = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,15 @@ class ForgetPasswordActivity : BaseActivity() {
             onBackPressed()
         }
 
+        val mobileNumber = intent.getStringExtra(AppConstant.MOBILE_NUMBER)
+        val emailAddress = intent.getStringExtra(AppConstant.EMAIL)
+        if (mobileNumber != null) {
+            binding.inputMobile.setText(mobileNumber)
+            mobile = mobileNumber
+            binding.inputMobile.isEnabled = false
+        }
+        if (emailAddress != null)
+            email = emailAddress
         binding.sendOtpConstraint.visibility = View.VISIBLE
 
         binding.btnSendOtp.setOnClickListener {
@@ -115,8 +128,55 @@ class ForgetPasswordActivity : BaseActivity() {
                     binding.progressBar.visibility = View.GONE
                     if (response.getBoolean("status")) {
                         binding.root.snackbar("Success")
-                        binding.verifyOtpConstraint.visibility = View.GONE
-                        binding.changePasswordConstraint.visibility = View.GONE
+                        // binding.verifyOtpConstraint.visibility = View.GONE
+                        // binding.changePasswordConstraint.visibility = View.GONE
+                        apiSocialLogin()
+                    } else {
+                        binding.root.snackbar(response.getString("message"))
+                    }
+                }
+
+                override fun onError(error: ANError?) {
+                    binding.progressBar.visibility = View.GONE
+                    binding.root.snackbar("Error occurred while saving data")
+                }
+            })
+    }
+
+    private fun apiSocialLogin() {
+        binding.progressBar.visibility = View.VISIBLE
+
+        val url = "http://dbpnews.knovatik.com/Api/" + "social-login"
+
+        val request = JSONObject()
+        request.put("user_email", email)
+        request.put("mobile_no", mobile)
+
+        AndroidNetworking.post(url)
+            .addJSONObjectBody(request)
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject) {
+                    binding.progressBar.visibility = View.GONE
+                    if (response.getBoolean("status")) {
+                        binding.root.snackbar("Success")
+                        // binding.verifyOtpConstraint.visibility = View.GONE
+                        // binding.changePasswordConstraint.visibility = View.GONE
+                        if (response.getJSONObject("data") != null) {
+                            Prefs.putString(
+                                AppConstant.AUTH_TOKEN,
+                                response.getJSONObject("data").getString("token")
+                            )
+                            Prefs.putBoolean(AppConstant.IS_LOGIN, true)
+                            startActivity(
+                                Intent(
+                                    this@ForgetPasswordActivity,
+                                    DashboardActivity::class.java
+                                )
+                            )
+                            finishAffinity()
+                        }
                     } else {
                         binding.root.snackbar(response.getString("message"))
                     }
@@ -132,7 +192,7 @@ class ForgetPasswordActivity : BaseActivity() {
     private fun sendOtp(mobile: String) {
         binding.progressBar.visibility = View.VISIBLE
 
-        val url = "http://dbpnews.knovatik.com/Api/" + "send-forgot-password-otp"
+        val url = "http://dbpnews.knovatik.com/Api/" + "send-otp"
 
         val request = JSONObject()
         request.put("mobile_no", mobile)

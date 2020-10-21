@@ -60,7 +60,7 @@ class JokesActivity : BaseActivity() {
         viewModel.getSectionItemResponse.observe(this, {
             if (it.status) {
                 if (it.data != null) {
-                    if (sectionId == "3")
+                    if (sectionId == "3" || sectionId == "4")
                         binding.recyclerJokes.layoutManager = viewPagerLayoutManager
                     else
                         binding.recyclerJokes.layoutManager = linearLayoutManager

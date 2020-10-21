@@ -157,12 +157,12 @@
                         android:text="Upload Image"
                         android:textStyle="bold" />
 
-                    <View
+                    <!--<View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1" />-->
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/btn_image_direct"
                         android:layout_width="100dp"
                         android:layout_height="32dp"
@@ -172,7 +172,7 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         android:text="CAPTURE"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white" />-->
 
                     <View
                         android:layout_width="0dp"
@@ -180,7 +180,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/btn_image_file"
+                        android:id="@+id/btn_image"
                         android:layout_width="100dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"
@@ -211,12 +211,12 @@
                         android:text="Upload Video"
                         android:textStyle="bold" />
 
-                    <View
+                    <!--<View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1" />-->
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/btn_video_direct"
                         android:layout_width="100dp"
                         android:layout_height="32dp"
@@ -226,7 +226,7 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         android:text="RECORD"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white" />-->
 
                     <View
                         android:layout_width="0dp"
@@ -234,7 +234,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/btn_video_file"
+                        android:id="@+id/btn_video"
                         android:layout_width="100dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"
@@ -271,7 +271,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/btn_audio_file"
+                        android:id="@+id/btn_audio"
                         android:layout_width="100dp"
                         android:layout_height="32dp"
                         android:layout_gravity="center"

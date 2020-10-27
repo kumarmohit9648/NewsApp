@@ -92,10 +92,34 @@ interface Api {
 
     @Multipart
     @POST("upload-content")
-    suspend fun uploadContent(
+    suspend fun uploadImageContent(
         @Part image_file: MultipartBody.Part,
-        @Part video_file: MultipartBody.Part,
+        @Part("auth_token") auth_token: RequestBody,
+        @Part("title") title: RequestBody,
+        @Part("content") content: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("district") district: RequestBody,
+        @Part("village") village: RequestBody,
+        @Part("address") address: RequestBody,
+    ): Response<CommonResponse>
+
+    @Multipart
+    @POST("upload-content")
+    suspend fun uploadAudioContent(
         @Part audio_file: MultipartBody.Part,
+        @Part("auth_token") auth_token: RequestBody,
+        @Part("title") title: RequestBody,
+        @Part("content") content: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("district") district: RequestBody,
+        @Part("village") village: RequestBody,
+        @Part("address") address: RequestBody,
+    ): Response<CommonResponse>
+
+    @Multipart
+    @POST("upload-content")
+    suspend fun uploadVideoContent(
+        @Part video_file: MultipartBody.Part,
         @Part("auth_token") auth_token: RequestBody,
         @Part("title") title: RequestBody,
         @Part("content") content: RequestBody,

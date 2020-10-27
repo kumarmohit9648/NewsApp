@@ -201,9 +201,37 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         return response
     }
 
-    suspend fun uploadContent(
+    suspend fun uploadImageContent(
         image_file: MultipartBody.Part,
-        video_file: MultipartBody.Part,
+        auth_token: RequestBody,
+        title: RequestBody,
+        content: RequestBody,
+        state: RequestBody,
+        district: RequestBody,
+        village: RequestBody,
+        address: RequestBody
+    ): CommonResponse {
+        var response = CommonResponse(null, "Network Error", false, "")
+        try {
+            response = apiRequest {
+                _api.uploadImageContent(
+                    image_file,
+                    auth_token,
+                    title,
+                    content,
+                    state,
+                    district,
+                    village,
+                    address
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun uploadAudioContent(
         audio_file: MultipartBody.Part,
         auth_token: RequestBody,
         title: RequestBody,
@@ -216,10 +244,38 @@ class Repository @Inject constructor(private val _api: Api) : SafeApiRequest() {
         var response = CommonResponse(null, "Network Error", false, "")
         try {
             response = apiRequest {
-                _api.uploadContent(
-                    image_file,
-                    video_file,
+                _api.uploadAudioContent(
                     audio_file,
+                    auth_token,
+                    title,
+                    content,
+                    state,
+                    district,
+                    village,
+                    address
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return response
+    }
+
+    suspend fun uploadVideoContent(
+        video_file: MultipartBody.Part,
+        auth_token: RequestBody,
+        title: RequestBody,
+        content: RequestBody,
+        state: RequestBody,
+        district: RequestBody,
+        village: RequestBody,
+        address: RequestBody
+    ): CommonResponse {
+        var response = CommonResponse(null, "Network Error", false, "")
+        try {
+            response = apiRequest {
+                _api.uploadVideoContent(
+                    video_file,
                     auth_token,
                     title,
                     content,

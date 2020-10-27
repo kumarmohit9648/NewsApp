@@ -18,9 +18,33 @@ class GeneratePostViewModel @ViewModelInject constructor(
 
     private var _uploadContentResponse = MutableLiveData<CommonResponse>()
     val uploadContentResponse get() = _uploadContentResponse
-    fun uploadContent(
+    fun uploadImageContent(
         image_file: MultipartBody.Part,
-        video_file: MultipartBody.Part,
+        auth_token: RequestBody,
+        title: RequestBody,
+        content: RequestBody,
+        state: RequestBody,
+        district: RequestBody,
+        village: RequestBody,
+        address: RequestBody
+    ) {
+        Coroutines.main {
+            _uploadContentResponse.postValue(
+                repository.uploadImageContent(
+                    image_file,
+                    auth_token,
+                    title,
+                    content,
+                    state,
+                    district,
+                    village,
+                    address
+                )
+            )
+        }
+    }
+
+    fun uploadAudioContent(
         audio_file: MultipartBody.Part,
         auth_token: RequestBody,
         title: RequestBody,
@@ -32,10 +56,34 @@ class GeneratePostViewModel @ViewModelInject constructor(
     ) {
         Coroutines.main {
             _uploadContentResponse.postValue(
-                repository.uploadContent(
-                    image_file,
-                    video_file,
+                repository.uploadAudioContent(
                     audio_file,
+                    auth_token,
+                    title,
+                    content,
+                    state,
+                    district,
+                    village,
+                    address
+                )
+            )
+        }
+    }
+
+    fun uploadVideoContent(
+        video_file: MultipartBody.Part,
+        auth_token: RequestBody,
+        title: RequestBody,
+        content: RequestBody,
+        state: RequestBody,
+        district: RequestBody,
+        village: RequestBody,
+        address: RequestBody
+    ) {
+        Coroutines.main {
+            _uploadContentResponse.postValue(
+                repository.uploadVideoContent(
+                    video_file,
                     auth_token,
                     title,
                     content,

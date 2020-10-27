@@ -1,46 +1,36 @@
 package com.knovatik.navadesh.ui.activity
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Parcelable
-import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
-import com.knovatik.navadesh.BuildConfig
 import com.knovatik.navadesh.R
 import com.knovatik.navadesh.constants.AppConstant
 import com.knovatik.navadesh.databinding.ActivityGeneratePostBinding
 import com.knovatik.navadesh.ui.vm.GeneratePostViewModel
-import com.knovatik.navadesh.util.compressImageFile
+import com.knovatik.navadesh.util.RealPathUtil
 import com.knovatik.navadesh.util.toast
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
-import java.util.*
+import java.io.*
 
 @AndroidEntryPoint
 class GeneratePostActivity : ParentActivity() {
 
     companion object {
         private const val TAG = "GeneratePostActivity"
-        private const val IS_PHOTO = "91"
-        private const val IS_VIDEO = "92"
-        private const val IS_AUDIO = "93"
+        const val PHOTO = 91
+        const val VIDEO = 92
+        const val AUDIO = 93
         // private const val TAKE_PHOTO = "1"
         // private const val TAKE_VIDEO = "2"
         // private const val BROWSE_PHOTO = "3"
@@ -50,20 +40,24 @@ class GeneratePostActivity : ParentActivity() {
         // private const val REQUEST_VIDEO = 98
         // private const val REQUEST_AUDIO = 99
 
-        private const val REQ_CAPTURE = 100
-        private const val RES_IMAGE = 100
+        // private const val REQ_CAPTURE = 100
+        // private const val RES_IMAGE = 100
     }
 
-    private var queryImageUrl: String = ""
-    private var imgPath: String = ""
-    private var imageUri: Uri? = null
-    private val permissions = arrayOf(Manifest.permission.CAMERA)
+    private var photo: File? = null
+    private var video: File? = null
+    private var audio: File? = null
+
+    // private var queryImageUrl: String = ""
+    // private var imgPath: String = ""
+    // private var imageUri: Uri? = null
+    // private val permissions = arrayOf(Manifest.permission.CAMERA)
 
     private val viewModel: GeneratePostViewModel by viewModels()
     private lateinit var binding: ActivityGeneratePostBinding
 
-    private var _chooseFile: String? = null
-    private var _file: File? = null
+    // private var _chooseFile: String? = null
+    // private var _file: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,179 +82,155 @@ class GeneratePostActivity : ParentActivity() {
         })
 
         binding.btnImage.setOnClickListener {
-            if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
-                chooseImage()
-            }
+            startActivityForResult(Intent(this, ImageActivity::class.java), PHOTO)
         }
 
         binding.btnVideo.setOnClickListener {
-            /*if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
-                chooseImage()
-            }*/
+            startActivityForResult(Intent(this, VideoActivity::class.java), VIDEO)
         }
 
         binding.btnAudio.setOnClickListener {
-            /*if (isPermissionsAllowed(permissions, true, REQ_CAPTURE)) {
-                chooseImage()
-            }*/
+            startActivityForResult(Intent(this, AudioActivity::class.java), AUDIO)
         }
-
-//        binding.btnImageDirect.setOnClickListener {
-//            _chooseFile = TAKE_PHOTO
-//            binding.chooseFile.text = "इमेज उप्लोडेड"
-//            startActivity(
-//                Intent(this, CameraActivity::class.java)
-//                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.PHOTO)
-//            )
-//        }
-//        binding.btnImageFile.setOnClickListener {
-//            _chooseFile = BROWSE_PHOTO
-//            binding.chooseFile.text = "इमेज उप्लोडेड"
-//            val intent = Intent()
-//            intent.type = "image/*"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_PHOTO)
-//        }
-//        binding.btnVideoDirect.setOnClickListener {
-//            _chooseFile = TAKE_VIDEO
-//            binding.chooseFile.text = "वीडियो उप्लोडेड"
-//            startActivity(
-//                Intent(this, CameraActivity::class.java)
-//                    .putExtra(AppConstant.CAMERA_TYPE, AppConstant.VIDEO)
-//            )
-//        }
-//        binding.btnVideoFile.setOnClickListener {
-//            _chooseFile = BROWSE_VIDEO
-//            binding.chooseFile.text = "वीडियो उप्लोडेड"
-//            val intent = Intent()
-//            intent.type = "video/*"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_VIDEO)
-//        }
-//        binding.btnAudioFile.setOnClickListener {
-//            _chooseFile = BROWSE_AUDIO
-//            binding.chooseFile.text = "ऑडियो उप्लोडेड"
-//            val intent = Intent()
-//            intent.type = "audio/*"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_AUDIO)
-//        }
 
         binding.btnSubmit.setOnClickListener {
             if (validation()) {
                 try {
-                    var photo: File? = null
-                    var video: File? = null
-                    var audio: File? = null
+                    if (photo != null) {
+                        val photoRequestFile: RequestBody =
+                            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), photo!!)
 
-                    /*if (_chooseFile == TAKE_PHOTO) {
-                        if (AppConstant.pictureResult != null) {
-                            AppConstant.pictureResult!!.toBitmap(1000, 1000) {
-                                try {
-                                    photo = File(
-                                        Environment.getExternalStorageDirectory(),
-                                        AppConstant.simpleDateFormat.format(Calendar.getInstance().time)
-                                    )
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                            }
-                        }
-                    }
-                    if (_chooseFile == TAKE_VIDEO) {
-                        video = AppConstant.videoResult!!.file
-                    }
-                    if (_chooseFile == BROWSE_PHOTO) {
-                        photo = _file
-                    }
-                    if (_chooseFile == BROWSE_VIDEO) {
-                        video = _file
-                    }
-                    if (_chooseFile == BROWSE_AUDIO) {
-                        audio = _file
-                    }*/
+                        val photoBody: MultipartBody.Part =
+                            MultipartBody.Part.createFormData(
+                                "profile_pic",
+                                photo!!.name,
+                                photoRequestFile
+                            )
 
-                    var name = ""
-                    if (photo == null)
-                        photo = File("")
-                    else
-                        name = photo!!.name
-
-                    val photoRequestFile: RequestBody =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), photo!!)
-
-                    val photoBody: MultipartBody.Part =
-                        MultipartBody.Part.createFormData(
-                            "profile_pic",
-                            name,
-                            photoRequestFile
+                        viewModel.uploadImageContent(
+                            photoBody,
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edTitle.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edDescription.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etState.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etDistrict.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idVillage.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idAddress.text.toString().trim()
+                            ),
                         )
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
 
-                    if (video == null)
-                        video = File("")
-                    else
-                        name = video.name
+                    if (video != null) {
+                        val videoRequestFile: RequestBody =
+                            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), video!!)
 
-                    val videoRequestFile: RequestBody =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), video)
+                        val videoBody: MultipartBody.Part =
+                            MultipartBody.Part.createFormData(
+                                "profile_pic",
+                                video!!.name,
+                                videoRequestFile
+                            )
 
-                    val videoBody: MultipartBody.Part =
-                        MultipartBody.Part.createFormData(
-                            "profile_pic",
-                            name,
-                            videoRequestFile
+                        viewModel.uploadVideoContent(
+                            videoBody,
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edTitle.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edDescription.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etState.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etDistrict.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idVillage.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idAddress.text.toString().trim()
+                            ),
                         )
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
 
-                    if (audio == null)
-                        audio = File("")
-                    else
-                        name = audio.name
 
-                    val audioRequestFile: RequestBody =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), audio)
+                    if (audio != null) {
+                        val audioRequestFile: RequestBody =
+                            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), audio!!)
 
-                    val audioBody: MultipartBody.Part =
-                        MultipartBody.Part.createFormData(
-                            "profile_pic",
-                            name,
-                            audioRequestFile
+                        val audioBody: MultipartBody.Part =
+                            MultipartBody.Part.createFormData(
+                                "profile_pic",
+                                audio!!.name,
+                                audioRequestFile
+                            )
+
+                        viewModel.uploadAudioContent(
+                            audioBody,
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edTitle.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.edDescription.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etState.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.etDistrict.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idVillage.text.toString().trim()
+                            ),
+                            RequestBody.create(
+                                "multipart/form-data".toMediaTypeOrNull(),
+                                binding.idAddress.text.toString().trim()
+                            ),
                         )
-
-
-                    viewModel.uploadContent(
-                        photoBody,
-                        videoBody,
-                        audioBody,
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            Prefs.getString(AppConstant.AUTH_TOKEN, "")
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.edTitle.text.toString().trim()
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.edDescription.text.toString().trim()
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.etState.text.toString().trim()
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.etDistrict.text.toString().trim()
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.idVillage.text.toString().trim()
-                        ),
-                        RequestBody.create(
-                            "multipart/form-data".toMediaTypeOrNull(),
-                            binding.idAddress.text.toString().trim()
-                        ),
-                    )
-                    binding.progressBar.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
 
                     /*AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
                         .addMultipartFile("image_file", photo ?: File(""))
@@ -352,6 +322,25 @@ class GeneratePostActivity : ParentActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+        when (requestCode) {
+            PHOTO -> {
+                // photo = saveFileIntoExternalStorageByUri(this, Uri.parse(data.getStringExtra("")!!))
+                photo = RealPathUtil.getFileFromUri(this, Uri.parse(data.getStringExtra("PHOTO")))
+            }
+            AUDIO -> {
+                audio = RealPathUtil.getFileFromUri(this, Uri.parse(data.getStringExtra("AUDIO")))
+            }
+            VIDEO -> {
+                video = RealPathUtil.getFileFromUri(this, Uri.parse(data.getStringExtra("VIDEO")))
+            }
+        }
+    }
+
     /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
@@ -380,7 +369,7 @@ class GeneratePostActivity : ParentActivity() {
 
     // NEW CODE
 
-    override fun onRequestPermissionsResult(
+    /*override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
@@ -399,9 +388,9 @@ class GeneratePostActivity : ParentActivity() {
                 }
             }
         }
-    }
+    }*/
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             RES_IMAGE -> {
@@ -410,18 +399,19 @@ class GeneratePostActivity : ParentActivity() {
                 }
             }
         }
-    }
+    }*/
 
-    private fun chooseImage() {
+    /*private fun chooseImage() {
         startActivityForResult(getPickImageIntent(), RES_IMAGE)
-    }
+    }*/
 
-    private fun getPickImageIntent(): Intent? {
+    /*private fun getPickImageIntent(): Intent? {
         var chooserIntent: Intent? = null
 
         var intentList: MutableList<Intent> = ArrayList()
 
-        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val pickIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
         val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri())
@@ -441,9 +431,9 @@ class GeneratePostActivity : ParentActivity() {
         }
 
         return chooserIntent
-    }
+    }*/
 
-    private fun setImageUri(): Uri {
+    /*private fun setImageUri(): Uri {
         val folder = File("${getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
         folder.mkdirs()
 
@@ -460,10 +450,10 @@ class GeneratePostActivity : ParentActivity() {
         )
         imgPath = file.absolutePath
         return imageUri!!
-    }
+    }*/
 
 
-    private fun addIntentsToList(
+    /*private fun addIntentsToList(
         context: Context,
         list: MutableList<Intent>,
         intent: Intent
@@ -476,9 +466,9 @@ class GeneratePostActivity : ParentActivity() {
             list.add(targetedIntent)
         }
         return list
-    }
+    }*/
 
-    private fun handleImageRequest(data: Intent?) {
+    /*private fun handleImageRequest(data: Intent?) {
         val exceptionHandler = CoroutineExceptionHandler { _, t ->
             t.printStackTrace()
             binding.progressBar.visibility = View.GONE
@@ -503,17 +493,69 @@ class GeneratePostActivity : ParentActivity() {
             imageUri = Uri.fromFile(File(queryImageUrl))
 
             if (queryImageUrl.isNotEmpty()) {
-                /*Glide.with(this@GeneratePostActivity)
+                *//*Glide.with(this@GeneratePostActivity)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .load(queryImageUrl)
-                    .into(iv_img)*/
+                    .into(iv_img)*//*
 
             }
             binding.progressBar.visibility = View.GONE
         }
 
+    }*/
+
+    fun makeEmptyFileIntoExternalStorageWithTitle(title: String?): File {
+        val root: String = Environment.getExternalStorageDirectory().getAbsolutePath()
+        return File(root, title)
+    }
+
+    fun getFileName(context: Context, uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                }
+            } finally {
+                cursor!!.close()
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result!!.lastIndexOf('/')
+            if (cut != -1) {
+                result = result.substring(cut + 1)
+            }
+        }
+        return result
+    }
+
+    @Throws(java.lang.Exception::class)
+    fun saveFileIntoExternalStorageByUri(context: Context, uri: Uri?): File? {
+        val inputStream: InputStream = contentResolver.openInputStream(uri!!)!!
+        val originalSize: Int = inputStream.available()
+        var bis: BufferedInputStream? = null
+        var bos: BufferedOutputStream? = null
+        val fileName: String = getFileName(context, uri!!)
+        val file: File = makeEmptyFileIntoExternalStorageWithTitle(fileName)
+        bis = BufferedInputStream(inputStream)
+        bos = BufferedOutputStream(
+            FileOutputStream(
+                file, false
+            )
+        )
+        val buf = ByteArray(originalSize)
+        bis.read(buf)
+        do {
+            bos.write(buf)
+        } while (bis.read(buf) !== -1)
+        bos.flush()
+        bos.close()
+        bis.close()
+        return file
     }
 
     override fun onDestroy() {

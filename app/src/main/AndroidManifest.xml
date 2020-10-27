@@ -32,7 +32,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.ForgetPasswordActivity"></activity>
+        <activity android:name=".ui.activity.VideoActivity" />
+        <activity android:name=".ui.activity.AudioActivity" />
+        <activity android:name=".ui.activity.ImageActivity" />
+        <activity android:name=".ui.activity.ForgetPasswordActivity" />
         <activity android:name=".ui.activity.MusicPlayerActivity" />
         <activity android:name=".ui.activity.UpdateProfileActivity" />
         <activity android:name=".ui.activity.MyProfileActivity" />
@@ -95,8 +98,9 @@
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/providers_paths"/>
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/providers_paths" />
         </provider>
     </application>
 

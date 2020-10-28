@@ -7,8 +7,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.bumptech.glide.Glide
 import com.knovatik.navadesh.R
 import com.knovatik.navadesh.constants.AppConstant
@@ -18,9 +23,8 @@ import com.knovatik.navadesh.util.RealPathUtil
 import com.knovatik.navadesh.util.toast
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import kotlinx.android.synthetic.main.activity_generate_post.*
+import org.json.JSONObject
 import java.io.*
 
 @AndroidEntryPoint
@@ -31,17 +35,6 @@ class GeneratePostActivity : ParentActivity() {
         const val PHOTO = 91
         const val VIDEO = 92
         const val AUDIO = 93
-        // private const val TAKE_PHOTO = "1"
-        // private const val TAKE_VIDEO = "2"
-        // private const val BROWSE_PHOTO = "3"
-        // private const val BROWSE_VIDEO = "4"
-        // private const val BROWSE_AUDIO = "5"
-        // private const val REQUEST_PHOTO = 97
-        // private const val REQUEST_VIDEO = 98
-        // private const val REQUEST_AUDIO = 99
-
-        // private const val REQ_CAPTURE = 100
-        // private const val RES_IMAGE = 100
     }
 
     private var photo: File? = null
@@ -97,7 +90,7 @@ class GeneratePostActivity : ParentActivity() {
             if (validation()) {
                 try {
                     if (photo != null) {
-                        val photoRequestFile: RequestBody =
+                        /*val photoRequestFile: RequestBody =
                             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), photo!!)
 
                         val photoBody: MultipartBody.Part =
@@ -136,13 +129,64 @@ class GeneratePostActivity : ParentActivity() {
                             RequestBody.create(
                                 "multipart/form-data".toMediaTypeOrNull(),
                                 binding.idAddress.text.toString().trim()
-                            ),
-                        )
+                            )
+                        )*/
+                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                            .addMultipartFile("image_file", photo ?: File(""))
+                            .addMultipartParameter(
+                                "auth_token",
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            )
+                            .addMultipartParameter("title", binding.edTitle.text.toString().trim())
+                            .addMultipartParameter(
+                                "content",
+                                binding.edDescription.text.toString().trim()
+                            )
+                            .addMultipartParameter("state", binding.etState.text.toString().trim())
+                            .addMultipartParameter(
+                                "district",
+                                binding.etDistrict.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "village",
+                                binding.idVillage.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "address",
+                                binding.idAddress.text.toString().trim()
+                            )
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .setUploadProgressListener { bytesUploaded, totalBytes ->
+                                Log.d(TAG, "bytesUploaded: $bytesUploaded")
+                                // do anything with progress
+                                val per =
+                                    (bytesUploaded.toDouble() / totalBytes.toDouble() * 100).toInt()
+                                progressBar.max = 100
+                                progressBar.progress = per
+                            }
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject) {
+                                    // do anything with response
+                                    binding.progressBar.visibility = View.GONE
+                                    Log.d(TAG, "onResponse: $response")
+                                    if (response.getBoolean("status")) {
+                                        finish()
+                                    }
+                                    toast(response.getString("message"))
+                                }
+
+                                override fun onError(error: ANError) {
+                                    // handle error
+                                    binding.progressBar.visibility = View.GONE
+                                    toast(error.message!!)
+                                }
+                            })
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
                     if (video != null) {
-                        val videoRequestFile: RequestBody =
+                        /*val videoRequestFile: RequestBody =
                             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), video!!)
 
                         val videoBody: MultipartBody.Part =
@@ -181,14 +225,64 @@ class GeneratePostActivity : ParentActivity() {
                             RequestBody.create(
                                 "multipart/form-data".toMediaTypeOrNull(),
                                 binding.idAddress.text.toString().trim()
-                            ),
-                        )
+                            )
+                        )*/
+                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                            .addMultipartFile("video_file", video ?: File(""))
+                            .addMultipartParameter(
+                                "auth_token",
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            )
+                            .addMultipartParameter("title", binding.edTitle.text.toString().trim())
+                            .addMultipartParameter(
+                                "content",
+                                binding.edDescription.text.toString().trim()
+                            )
+                            .addMultipartParameter("state", binding.etState.text.toString().trim())
+                            .addMultipartParameter(
+                                "district",
+                                binding.etDistrict.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "village",
+                                binding.idVillage.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "address",
+                                binding.idAddress.text.toString().trim()
+                            )
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .setUploadProgressListener { bytesUploaded, totalBytes ->
+                                Log.d(TAG, "bytesUploaded: $bytesUploaded")
+                                // do anything with progress
+                                val per =
+                                    (bytesUploaded.toDouble() / totalBytes.toDouble() * 100).toInt()
+                                progressBar.max = 100
+                                progressBar.progress = per
+                            }
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject) {
+                                    // do anything with response
+                                    binding.progressBar.visibility = View.GONE
+                                    Log.d(TAG, "onResponse: $response")
+                                    if (response.getBoolean("status")) {
+                                        finish()
+                                    }
+                                    toast(response.getString("message"))
+                                }
+
+                                override fun onError(error: ANError) {
+                                    // handle error
+                                    binding.progressBar.visibility = View.GONE
+                                    toast(error.message!!)
+                                }
+                            })
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
-
                     if (audio != null) {
-                        val audioRequestFile: RequestBody =
+                        /*val audioRequestFile: RequestBody =
                             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), audio!!)
 
                         val audioBody: MultipartBody.Part =
@@ -227,63 +321,61 @@ class GeneratePostActivity : ParentActivity() {
                             RequestBody.create(
                                 "multipart/form-data".toMediaTypeOrNull(),
                                 binding.idAddress.text.toString().trim()
-                            ),
-                        )
+                            )
+                        )*/
+                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                            .addMultipartFile("audio_file", audio ?: File(""))
+                            .addMultipartParameter(
+                                "auth_token",
+                                Prefs.getString(AppConstant.AUTH_TOKEN, "")
+                            )
+                            .addMultipartParameter("title", binding.edTitle.text.toString().trim())
+                            .addMultipartParameter(
+                                "content",
+                                binding.edDescription.text.toString().trim()
+                            )
+                            .addMultipartParameter("state", binding.etState.text.toString().trim())
+                            .addMultipartParameter(
+                                "district",
+                                binding.etDistrict.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "village",
+                                binding.idVillage.text.toString().trim()
+                            )
+                            .addMultipartParameter(
+                                "address",
+                                binding.idAddress.text.toString().trim()
+                            )
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .setUploadProgressListener { bytesUploaded, totalBytes ->
+                                Log.d(TAG, "bytesUploaded: $bytesUploaded")
+                                // do anything with progress
+                                val per =
+                                    (bytesUploaded.toDouble() / totalBytes.toDouble() * 100).toInt()
+                                progressBar.max = 100
+                                progressBar.progress = per
+                            }
+                            .getAsJSONObject(object : JSONObjectRequestListener {
+                                override fun onResponse(response: JSONObject) {
+                                    // do anything with response
+                                    binding.progressBar.visibility = View.GONE
+                                    Log.d(TAG, "onResponse: $response")
+                                    if (response.getBoolean("status")) {
+                                        finish()
+                                    }
+                                    toast(response.getString("message"))
+                                }
+
+                                override fun onError(error: ANError) {
+                                    // handle error
+                                    binding.progressBar.visibility = View.GONE
+                                    toast(error.message!!)
+                                }
+                            })
                         binding.progressBar.visibility = View.VISIBLE
                     }
-
-                    /*AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
-                        .addMultipartFile("image_file", photo ?: File(""))
-                        *//*  .addMultipartFile("video_file", video ?: File(""))
-                          .addMultipartFile("audio_file", audio ?: File(""))*//*
-                        .addMultipartParameter(
-                            "auth_token",
-                            Prefs.getString(AppConstant.AUTH_TOKEN, "")
-                        )
-                        .addMultipartParameter("title", binding.edTitle.text.toString().trim())
-                        .addMultipartParameter(
-                            "content",
-                            binding.edDescription.text.toString().trim()
-                        )
-                        .addMultipartParameter("state", binding.etState.text.toString().trim())
-                        .addMultipartParameter(
-                            "district",
-                            binding.etDistrict.text.toString().trim()
-                        )
-                        .addMultipartParameter(
-                            "village",
-                            binding.idVillage.text.toString().trim()
-                        )
-                        .addMultipartParameter(
-                            "address",
-                            binding.idAddress.text.toString().trim()
-                        )
-                        .setPriority(Priority.HIGH)
-                        .build()
-                        .setUploadProgressListener { bytesUploaded, totalBytes ->
-                            Log.d(TAG, "bytesUploaded: $bytesUploaded")
-                            // do anything with progress
-                            *//*val per = (bytesUploaded.toDouble() / totalBytes.toDouble() * 100).toInt()
-                            progressBar.max = 100
-                            progressBar.progress = per*//*
-                        }
-                        .getAsJSONObject(object : JSONObjectRequestListener {
-                            override fun onResponse(response: JSONObject) {
-                                // do anything with response
-                                binding.progressBar.visibility = View.GONE
-                                Log.d(TAG, "onResponse: $response")
-                                if (response.getBoolean("status")) {
-                                    finish()
-                                }
-                                toast(response.getString("message"))
-                            }
-
-                            override fun onError(error: ANError) {
-                                // handle error
-                                binding.progressBar.visibility = View.GONE
-                                toast(error.message!!)
-                            }
-                        })*/
                 } catch (e: Exception) {
                     toast(e.message!!)
                 }

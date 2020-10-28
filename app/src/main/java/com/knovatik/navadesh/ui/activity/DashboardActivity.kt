@@ -159,9 +159,9 @@ class DashboardActivity : BaseActivity() {
         }
         mRequestingLocationUpdates = false
         mLocationRequest = LocationRequest()
-        mLocationRequest!!.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS)
-        mLocationRequest!!.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS)
-        mLocationRequest!!.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        mLocationRequest!!.interval = UPDATE_INTERVAL_IN_MILLISECONDS
+        mLocationRequest!!.fastestInterval = FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS
+        mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         val builder = LocationSettingsRequest.Builder()
         builder.addLocationRequest(mLocationRequest!!)
         mLocationSettingsRequest = builder.build()
@@ -245,6 +245,7 @@ class DashboardActivity : BaseActivity() {
                             .load(R.drawable.night)
                             .into(binding.drawer.weatherBackground)
                     }
+                    stopLocationUpdates()
                 }
 
                 override fun onFailure(call: Call<Weather>, t: Throwable) {
@@ -280,7 +281,8 @@ class DashboardActivity : BaseActivity() {
                 // Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
                 mFusedLocationClient!!.requestLocationUpdates(
                     mLocationRequest,
-                    mLocationCallback, Looper.myLooper()
+                    mLocationCallback,
+                    null
                 )
                 updateLocation()
             }
@@ -448,10 +450,18 @@ class DashboardActivity : BaseActivity() {
             startActivity(Intent(this@DashboardActivity, SettingActivity::class.java))
         }
 
+        if (Prefs.getBoolean(AppConstant.IS_LOGIN, false))
+            binding.drawer.profile.visibility = View.VISIBLE
+        else
+            binding.drawer.profile.visibility = View.GONE
         binding.drawer.profile.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, MyProfileActivity::class.java))
         }
 
+        if (Prefs.getBoolean(AppConstant.IS_LOGIN, false))
+            binding.drawer.logout.visibility = View.VISIBLE
+        else
+            binding.drawer.logout.visibility = View.GONE
         binding.drawer.logout.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Alert")

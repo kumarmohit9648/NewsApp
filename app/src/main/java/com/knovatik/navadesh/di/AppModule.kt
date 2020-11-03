@@ -31,7 +31,7 @@ object AppModule {
     fun provideApi(okHttpClient: OkHttpClient): Api {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://dbpnews.knovatik.com/Api/")
+            .baseUrl("http://navadesh.com/Api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)

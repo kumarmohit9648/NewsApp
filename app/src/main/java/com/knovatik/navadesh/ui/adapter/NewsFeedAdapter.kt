@@ -35,7 +35,7 @@ class NewsFeedAdapter(private val context: Context, private var list: MutableLis
     override fun onBindViewHolder(holder: NewsFeedHolder, position: Int) {
         val model = list[position]
 
-        Glide.with(context).load("http://dbpnews.knovatik.com/" + model.image_big)
+        Glide.with(context).load("http://navadesh.com/" + model.image_big)
             .into(holder.itemView.imageView)
         holder.itemView.textView3.text = model.title
         holder.itemView.updatedTime.text = model.aging

@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:570623274528:android:d72ad7f82d952faa431645",
+        "mobilesdk_app_id": "1:570623274528:android:9458f94b8e1504ba431645",
         "android_client_info": {
-          "package_name": "com.newsapp"
+          "package_name": "com.knovatik.navadesh"
         }
       },
       "oauth_client": [
         {
-          "client_id": "570623274528-vi0r0t653g1u51vpn4d448jm5hgp60d8.apps.googleusercontent.com",
+          "client_id": "570623274528-als8qo6qccfifj8o2oa1i989obg20j27.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.newsapp",
+            "package_name": "com.knovatik.navadesh",
             "certificate_hash": "a7eeab0d3833af4d77d2b0a47184b7761cb20b2f"
           }
         },
@@ -36,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "570623274528-61oct44ooiqglrtgnqki6qqre1kkjkkp.apps.googleusercontent.com",
+              "client_id": "570623274528-nh2fsm3ussanb56ufskouru4h77gmuoh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

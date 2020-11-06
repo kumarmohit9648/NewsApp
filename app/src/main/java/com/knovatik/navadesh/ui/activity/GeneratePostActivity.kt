@@ -88,6 +88,20 @@ class GeneratePostActivity : ParentActivity() {
 
         binding.btnSubmit.setOnClickListener {
             if (validation()) {
+                if (Prefs.getString(AppConstant.AUTH_TOKEN, "") == null
+                    || Prefs.getString(AppConstant.AUTH_TOKEN, "").equals("null", ignoreCase = true)
+                    || Prefs.getString(AppConstant.AUTH_TOKEN, "").equals("")
+                ) {
+                    Prefs.clear()
+                    toast("User session expired")
+                    startActivity(
+                        Intent(
+                            this@GeneratePostActivity,
+                            LoginOptionActivity::class.java
+                        )
+                    )
+                    finishAffinity()
+                }
                 try {
                     if (photo != null) {
                         /*val photoRequestFile: RequestBody =

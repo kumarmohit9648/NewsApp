@@ -131,7 +131,7 @@ class GeneratePostActivity : ParentActivity() {
                                 binding.idAddress.text.toString().trim()
                             )
                         )*/
-                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                        AndroidNetworking.upload("http://navadesh.com/Api/upload-content")
                             .addMultipartFile("image_file", photo ?: File(""))
                             .addMultipartParameter(
                                 "auth_token",
@@ -227,7 +227,7 @@ class GeneratePostActivity : ParentActivity() {
                                 binding.idAddress.text.toString().trim()
                             )
                         )*/
-                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                        AndroidNetworking.upload("http://navadesh.com/Api/upload-content")
                             .addMultipartFile("video_file", video ?: File(""))
                             .addMultipartParameter(
                                 "auth_token",
@@ -323,7 +323,7 @@ class GeneratePostActivity : ParentActivity() {
                                 binding.idAddress.text.toString().trim()
                             )
                         )*/
-                        AndroidNetworking.upload("http://dbpnews.knovatik.com/Api/upload-content")
+                        AndroidNetworking.upload("http://navadesh.com/Api/upload-content")
                             .addMultipartFile("audio_file", audio ?: File(""))
                             .addMultipartParameter(
                                 "auth_token",

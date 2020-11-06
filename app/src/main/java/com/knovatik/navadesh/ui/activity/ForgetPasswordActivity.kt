@@ -34,6 +34,7 @@ class ForgetPasswordActivity : BaseActivity() {
         val mobileNumber = intent.getStringExtra(AppConstant.MOBILE_NUMBER)
         val emailAddress = intent.getStringExtra(AppConstant.EMAIL)
         if (mobileNumber != null) {
+            binding.textView72.text = "Verify Number"
             binding.inputMobile.setText(mobileNumber)
             mobile = mobileNumber
             binding.inputMobile.isEnabled = false
@@ -82,7 +83,7 @@ class ForgetPasswordActivity : BaseActivity() {
     private fun resetPassword(password: String) {
         binding.progressBar.visibility = View.VISIBLE
 
-        val url = "http://dbpnews.knovatik.com/Api/" + "forgot-password"
+        val url = "http://navadesh.com/Api/" + "forgot-password"
 
         val request = JSONObject()
         request.put("mobile_no", mobile)
@@ -113,7 +114,7 @@ class ForgetPasswordActivity : BaseActivity() {
     private fun verifyOtp(otp: String) {
         binding.progressBar.visibility = View.VISIBLE
 
-        val url = "http://dbpnews.knovatik.com/Api/" + "verify-otp"
+        val url = "http://navadesh.com/Api/" + "verify-otp"
 
         val request = JSONObject()
         request.put("mobile_no", mobile)
@@ -146,7 +147,7 @@ class ForgetPasswordActivity : BaseActivity() {
     private fun apiSocialLogin() {
         binding.progressBar.visibility = View.VISIBLE
 
-        val url = "http://dbpnews.knovatik.com/Api/" + "social-login"
+        val url = "http://navadesh.com/Api/" + "social-login"
 
         val request = JSONObject()
         request.put("user_email", email)
@@ -192,7 +193,7 @@ class ForgetPasswordActivity : BaseActivity() {
     private fun sendOtp(mobile: String) {
         binding.progressBar.visibility = View.VISIBLE
 
-        val url = "http://dbpnews.knovatik.com/Api/" + "send-otp"
+        val url = "http://navadesh.com/Api/" + "send-otp"
 
         val request = JSONObject()
         request.put("mobile_no", mobile)
